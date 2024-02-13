@@ -18,7 +18,7 @@ This project aims to resolve the issue of table football enthusiasts struggling 
 
 4. As a user, I want to see a dashboard with team and individual player statistics so that I can see who is the ultimate champion.
 #
-[View the full project documentation here](docs/table-football-react-updated.pdf)
+[View the full project documentation here](./docs/table-football-react-updated.pdf)
 #
 ## [Roadmap](./docs/roadmap.md)
 ## Installation and Setup Instructions
