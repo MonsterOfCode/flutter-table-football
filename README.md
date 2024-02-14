@@ -21,6 +21,12 @@ This project aims to resolve the issue of table football enthusiasts struggling 
 [View the full project documentation here](./docs/table-football-react-updated.pdf)
 #
 ## [Roadmap](./docs/roadmap.md)
+
+## Decisions
+
+### GoRouter
+GoRouter is a package that allows us to navigate between screens in our app using URLs and route names, which simplifies navigation. I have also used it in other projects, and it meets all the requirements for this project. 
+
 ## Installation and Setup Instructions
 ## Getting Started with the Application (Flutter)
 
