@@ -1,4 +1,35 @@
-# Roadmap
+# Planning Roadmap
+
+## Geral Issues to be created
+- [ ] Create and configure flutter project
+- [ ] Create screen route system
+- [ ] Create navigation bar for app
+    - we can use the widget bottomNavigationBar
+    - [ ] Create a Empty Dashboard/Home Screen
+    - [ ] Create a Empty Teams Screen
+    - [ ] Create a Empty Games Screen
+    - [ ] Create a Empty Profile Screen
+- [ ] Implement a statement system
+- [ ] Implement a local storage system
+- [ ] Create models:
+    - [ ] Create Player Model
+        - [string] Name (unique)
+    - [ ] Create Team Model
+        - [increment] id (unique)
+        - [string] Name
+        - [int] wins
+        - [int] losses
+        - [double] [Calculated] Ratio (Games Played/Win)
+        - [int] GF (Goals For)
+        - [int] GA (Goals Against)
+        - [int] [Calculated] GD (Goals Difference)
+    - [ ] Create Game Model
+        - [increment] (idTeam1) (Composed  Key, Unique Constraint)
+        - [increment] (idTeam2) (Composed  Key, Unique Constraint)
+        - [int] ScoreTeam1
+        - [int] ScoreTeam2
+        - [int] [computed] winTeam
+        - [DateTime] DateTime
 
 
 ## User Story 1: Create a Team
@@ -27,6 +58,9 @@ This is the US#3 from the requested US.
 8. [Action] Select player 1 ( and 2 optional)
 9. [Action] Create team
 10. [Screen] Team
+
+## Required Issues
+- Create 
 
 
 ## User Story 2: Create Dashboard Screen
