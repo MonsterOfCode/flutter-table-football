@@ -2,23 +2,26 @@
 
 ## Geral Issues to be created
 - [ ] Create and configure flutter project
+
 - [ ] Create screen route system
+
 - [ ] Create navigation bar for app
     - we can use the widget bottomNavigationBar
     - [ ] Create a Empty Dashboard/Home Screen
     - [ ] Create a Empty Teams Screen
     - [ ] Create a Empty Games Screen
     - [ ] Create a Empty Profile Screen
-- [ ] Implement a statement system
-- [ ] Implement a local storage system
+
 - [ ] Create models:
     - [ ] Create Player Model
         - [string] Name (unique)
+        - [int] points (to help calculate rankings)
     - [ ] Create Team Model
         - [increment] id (unique)
         - [string] Name
         - [int] wins
         - [int] losses
+        - [int] points (to help  calculate rankings)
         - [double] [Calculated] Ratio (Games Played/Win)
         - [int] GF (Goals For)
         - [int] GA (Goals Against)
@@ -30,6 +33,101 @@
         - [int] ScoreTeam2
         - [int] [computed] winTeam
         - [DateTime] DateTime
+        - [bool] done
+
+- [ ] Create searchable data for Team, player and game models
+
+- [ ] Create searchable list widget
+
+- [ ] Create User story 1 widgets
+    - [ ] Create Team button
+    - [ ] Create form to create Team
+        - [ ] Prompt by team name
+        - [ ] Selectable list to select team 1
+        - [ ] Selectable list to select team 2
+        - [ ] Option to Create and Start Game
+
+- [ ] Create User story 1 widgets
+    - [ ] Create Team button
+    - [ ] Create form to create Team
+        - [ ] Prompt by team name
+        - [ ] Option to check if is for 1 or 2 players
+        - [ ] Selectable list to select player 1
+        - [ ] Selectable list to select player 2 (Optional)
+        - [ ] Option to create team
+        - [ ] Navigate to Team View
+    - [ ] Create Team View widgets
+        - [ ] Title
+        - [ ] members of team
+        - [ ] Show stats about the team
+            - [ ] Games Played
+            - [ ] Goals For
+            - [ ] Goals Against
+            - [ ] Winning percentage
+        - [ ] Last games played
+            - [ ] Show the last X games played
+            - [ ] Result of the games
+            - [ ] Other team of the game
+
+- [ ] Create User story 2 widgets
+    - [ ] Title
+    - [ ] My ranking compared to other players
+    - [ ] Number of games played
+    - [ ] GF
+    - [ ] GA
+    - [ ] % of wins
+    - [ ] % of losses
+    - [ ] My best team
+        - [ ] Number of games played
+        - [ ] GF
+        - [ ] GA
+        - [ ] Position on ranking 
+        - [ ] % of wins
+        - [ ] % of losses
+    - [ ] Top Teams List
+
+- [ ] Create User story 3 widgets
+    - [ ] Create Game button
+    - [ ] Create form to create Game
+        - [ ] Selectable list to select Team 1
+        - [ ] Selectable list to select Team 2
+        - [ ] Option to Create and Start Game
+    - [ ] Create Game View Widget
+        - [ ] Title
+        - [ ] Team members
+        - [ ] Show stats about the team
+            - [ ] Goals For
+            - [ ] Goals Against
+        - Game still running
+            - [ ] Option increment goals of each team
+            - [ ] Option to end the game manually
+            - [ ] Implement auto end game
+                - If the sum of the goals is 9 the game ends automatically.
+
+- [ ] Create User story 4 widgets
+    - [ ] At form to create Game
+        - [ ] Add option to mark the game as finished already
+        - [ ] After that request to insert game result.
+        - [ ] Create Game
+
+- [ ] Implement a statement system
+    - [ ] User Story 1
+    - [ ] User Story 2
+    - [ ] User Story 3
+    - [ ] User Story 4
+
+- [ ] Implement a local storage system 
+    - [ ] User Story 1
+    - [ ] User Story 2
+    - [ ] User Story 3
+    - [ ] User Story 4
+
+- [ ] Create a simple way to user identify himself in order to access to private data (like his own teams)
+
+- [ ] Implement error validations in forms
+    - [ ] Create Player form
+    - [ ] Create Game form
+    - [ ] User identification form
 
 
 ## User Story 1: Create a Team
@@ -71,10 +169,10 @@ This is the US#4 from the requested US.
 
 1. The user is at the Dashboard Screen
 2. In the dashboard the user have multiple sections with information about the games and teams.
-    1. My Last Games
+    1. My Games
         1. % of wins
         2. % of losses 
-        3. Top 3 team that the player belongs with best results
+        3. My position on based in points
     2. Best Teams
         1. % of wins
         2. % of losses
