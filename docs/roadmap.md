@@ -1,6 +1,6 @@
 # Planning Roadmap
 
-## Geral Issues to be created
+## Issues
 - [ ] Create and configure flutter project
 
 - [ ] Create screen route system
@@ -38,14 +38,6 @@
 - [ ] Create searchable data for Team, player and game models
 
 - [ ] Create searchable list widget
-
-- [ ] Create User story 1 widgets
-    - [ ] Create Team button
-    - [ ] Create form to create Team
-        - [ ] Prompt by team name
-        - [ ] Selectable list to select team 1
-        - [ ] Selectable list to select team 2
-        - [ ] Option to Create and Start Game
 
 - [ ] Create User story 1 widgets
     - [ ] Create Team button
@@ -129,6 +121,10 @@
     - [ ] Create Game form
     - [ ] User identification form
 
+## Other Issues that was nice/important to implement
+- [ ] Test
+- [ ] Git hooks
+
 
 ## User Story 1: Create a Team
 Objective: Allow the creation of teams with one or two players.
@@ -156,10 +152,6 @@ This is the US#3 from the requested US.
 8. [Action] Select player 1 ( and 2 optional)
 9. [Action] Create team
 10. [Screen] Team
-
-## Required Issues
-- Create 
-
 
 ## User Story 2: Create Dashboard Screen
 Objective: Provide a dashboard displaying team and individual player statistics to identify top performers.
