@@ -39,6 +39,9 @@ class Player {
     );
   }
 
+  /// Computed property to be used during the search process
+  String get searchable => name.toLowerCase();
+
   @override
   String toString() => 'Player(name: $name, points: $points)';
 

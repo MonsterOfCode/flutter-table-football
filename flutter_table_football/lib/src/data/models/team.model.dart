@@ -64,7 +64,7 @@ class Team {
   int get goalsDiference => (goalsFor - goalsAgainst).abs();
 
   /// Computed property to be used during the search process
-  String get searchable => name.toLowerCase();
+  String get searchable => "${name.toLowerCase()} ${players.map((p) => p.searchable).join(' ')}";
 
   Team copyWith({
     int? id,
