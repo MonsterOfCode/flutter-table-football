@@ -41,12 +41,12 @@ class Team implements Searchable {
   const Team({
     required this.id,
     required this.name,
-    required this.wins,
-    required this.losses,
-    required this.ties,
-    required this.points,
-    required this.goalsFor,
-    required this.goalsAgainst,
+    this.wins = 0,
+    this.losses = 0,
+    this.ties = 0,
+    this.points = 0,
+    this.goalsFor = 0,
+    this.goalsAgainst = 0,
     required this.players,
   });
 
@@ -110,12 +110,12 @@ class Team implements Searchable {
     return Team(
       id: map['id'] as int,
       name: map['name'] as String,
-      wins: map['wins'] as int,
-      losses: map['losses'] as int,
-      ties: map['ties'] as int,
-      points: map['points'] as int,
-      goalsFor: map['goalsFor'] as int,
-      goalsAgainst: map['goalsAgainst'] as int,
+      wins: map.containsKey('wins') ? map['wins'] as int : 0,
+      losses: map.containsKey('losses') ? map['losses'] as int : 0,
+      ties: map.containsKey('ties') ? map['ties'] as int : 0,
+      points: map.containsKey('points') ? map['points'] as int : 0,
+      goalsFor: map.containsKey('goalsFor') ? map['goalsFor'] as int : 0,
+      goalsAgainst: map.containsKey('goalsAgainst') ? map['goalsAgainst'] as int : 0,
       players: players,
     );
   }

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/constants/constants.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
 import 'package:flutter_table_football/src/data/models/player.model.dart';
+import 'package:flutter_table_football/src/data/models/team.model.dart';
+import 'package:flutter_table_football/src/views/dashboard/Team/team.view.dart';
 import 'package:flutter_table_football/src/widgets/bottom_draggable_container.widget.dart';
 import 'package:flutter_table_football/src/widgets/list_items/player_searchable_list_item.dart';
 import 'package:go_router/go_router.dart';
@@ -102,6 +104,18 @@ class _CreateTeamViewState extends State<CreateTeamView> {
     }
   }
 
+  // handle the click of next buttons
+  void nextStep(ControlsDetails details) {
+    if (details.currentStep == steps - 1) {
+      // create the team and navigate to the game page
+      Team newTeam = Team(id: 1, name: _nameController.text, players: players);
+      // and navigates to the Team view
+      context.replace(TeamView.routePath, extra: newTeam);
+      return;
+    }
+    details.onStepContinue?.call();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,7 +133,7 @@ class _CreateTeamViewState extends State<CreateTeamView> {
             child: Row(
               children: <Widget>[
                 ElevatedButton(
-                  onPressed: details.currentStep == steps - 1 ? context.pop : details.onStepContinue,
+                  onPressed: () => nextStep(details),
                   child: Text(details.currentStep == steps - 1 ? 'Create' : 'Next'),
                 ),
                 // Only show Back button if not on the first step

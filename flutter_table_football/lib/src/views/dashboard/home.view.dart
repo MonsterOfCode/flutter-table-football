@@ -43,10 +43,6 @@ class HomeView extends StatelessWidget {
           },
           child: "SearchableList".h1(context),
         ),
-        TextButton(
-          onPressed: () => context.pushNamed(CreateTeamView.routeName),
-          child: "Create Team".h1(context),
-        ),
       ],
     );
   }
