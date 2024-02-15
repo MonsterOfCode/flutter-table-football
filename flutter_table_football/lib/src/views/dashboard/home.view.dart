@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
 import 'package:flutter_table_football/src/data/models/player.model.dart';
+import 'package:flutter_table_football/src/views/dashboard/Team/create_team.view.dart';
 import 'package:flutter_table_football/src/widgets/bottom_draggable_container.widget.dart';
 import 'package:flutter_table_football/src/widgets/list_items/player_searchable_list_item.dart';
+import 'package:go_router/go_router.dart';
 
 List<Player> players = [
   const Player(name: "Player 1", points: 150),
@@ -39,7 +41,11 @@ class HomeView extends StatelessWidget {
                   );
                 });
           },
-          child: "Continue".h1(context),
+          child: "SearchableList".h1(context),
+        ),
+        TextButton(
+          onPressed: () => context.pushNamed(CreateTeamView.routeName),
+          child: "Create Team".h1(context),
         ),
       ],
     );

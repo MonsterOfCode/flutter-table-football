@@ -1,6 +1,6 @@
 import 'package:flutter_table_football/src/core/routes/middlewares/middleware.dart';
+import 'package:flutter_table_football/src/views/dashboard/Team/create_team.view.dart';
 import 'package:flutter_table_football/src/views/dashboard/dashboard.view.dart';
-import 'package:flutter_table_football/src/views/dashboard/player.view.dart';
 import 'package:flutter_table_football/src/views/errors/error.view.dart';
 import 'package:flutter_table_football/src/views/welcome.view.dart';
 import 'package:go_router/go_router.dart';
@@ -25,6 +25,7 @@ final GoRouter router = GoRouter(
       routes: [
         // Home
         GoRoute(name: DashboardView.routeName, path: DashboardView.routeName, builder: (context, state) => const DashboardView()),
+        GoRoute(name: CreateTeamView.routeName, path: CreateTeamView.routeName, builder: (context, state) => const CreateTeamView()),
       ],
       redirect: AuthenticatedRoutes,
     ),
