@@ -27,6 +27,8 @@ import 'package:flutter_table_football/src/data/models/player.model.dart';
 /// [int] GA (Goals Against)
 ///
 /// [int] [computed] GD (Goals Difference)
+///
+/// [List<Players>] Players
 
 @immutable
 class Team {

@@ -26,6 +26,7 @@
         - [int] GF (Goals For)
         - [int] GA (Goals Against)
         - [int] [Calculated] GD (Goals Difference)
+        - [List<Player>] Players
     - [ ] Create Game Model
         - [increment] (idTeam1) (Composed  Key, Unique Constraint)
         - [increment] (idTeam2) (Composed  Key, Unique Constraint)
