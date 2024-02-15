@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_table_football/src/data/models/searchable.model.dart';
 
 /// Player Model
 ///
@@ -6,7 +7,7 @@ import 'package:flutter/material.dart';
 ///
 /// [int] points (to help calculate rankings)
 @immutable
-class Player {
+class Player implements Searchable {
   final String name;
   final int points;
 
@@ -39,7 +40,7 @@ class Player {
     );
   }
 
-  /// Computed property to be used during the search process
+  @override
   String get searchable => name.toLowerCase();
 
   @override

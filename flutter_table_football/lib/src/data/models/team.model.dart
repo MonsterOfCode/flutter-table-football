@@ -1,10 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-
-import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/data/models/player.model.dart';
+import 'package:flutter_table_football/src/data/models/searchable.model.dart';
 
 /// Team Model
 ///
@@ -31,7 +27,7 @@ import 'package:flutter_table_football/src/data/models/player.model.dart';
 /// [List<Players>] Players
 
 @immutable
-class Team {
+class Team implements Searchable {
   final int id; // Unique identifier
   final String name;
   final int wins;
@@ -63,7 +59,7 @@ class Team {
   /// Get the number of goals between the Goals for and against the team.
   int get goalsDiference => (goalsFor - goalsAgainst).abs();
 
-  /// Computed property to be used during the search process
+  @override
   String get searchable => "${name.toLowerCase()} ${players.map((p) => p.searchable).join(' ')}";
 
   Team copyWith({
