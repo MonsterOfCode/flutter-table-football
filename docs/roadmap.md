@@ -97,6 +97,14 @@
                 - If the sum of the goals is 9 the game ends automatically.
 
 - [ ] Create User story 4 widgets
+    - [ ] Create a simple form that allow the user to identify himself
+        - [ ] input to insert the nickname
+        - [ ] Continue (create or authentication)
+    - The user is already authenticated
+        - [ ] button to delete account
+        - [ ] input that allow edit the player nickname
+
+- [ ] Create User story 5 widgets
     - [ ] At form to create Game
         - [ ] Add option to mark the game as finished already
         - [ ] After that request to insert game result.
@@ -107,12 +115,14 @@
     - [ ] User Story 2
     - [ ] User Story 3
     - [ ] User Story 4
+    - [ ] User Story 5
 
 - [ ] Implement a local storage system 
     - [ ] User Story 1
     - [ ] User Story 2
     - [ ] User Story 3
     - [ ] User Story 4
+    - [ ] User Story 5
 
 - [ ] Create a simple way to user identify himself in order to access to private data (like his own teams)
 
@@ -200,9 +210,28 @@ This is the US#1 from the requested US.
 7. [Action] Create and Start the game
 8. [Screen] Game page
 
+## User Story 4: Authenticated Player
+Objective: Allow users to identify (Authentication) thyself with their player profile. The users can also remove they identification (UnAuthentication).
 
+## Steps
 
-## User Story 4: Create a Past Game
+1. The user click on "Me" in the bottom menu.
+2. If not authenticated
+    1. The user insert his nickname and submit
+    2. If the nickname exists is authenticated
+    3. If the nickname do not exists it creates a new player with this nickname
+3. If is already authenticated
+    1. Can edit the nickname to change/create profile
+
+## Required Features
+
+1. [Screen] Dashboard
+2. [Screen] Me
+3. [Widget] Form to create/edit nickname
+4. [Action] insert nickname
+5. [Action] Submit Nickname
+
+## User Story 5: Create a Past Game
 Objective: Allow users to input results of games that have already been played.
 This is the US#2 from the requested US.
 
