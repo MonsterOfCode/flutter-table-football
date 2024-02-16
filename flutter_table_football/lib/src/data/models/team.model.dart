@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_table_football/src/data/models/game.model.dart';
 import 'package:flutter_table_football/src/data/models/player.model.dart';
 import 'package:flutter_table_football/src/data/models/searchable.model.dart';
 
@@ -37,6 +38,7 @@ class Team implements Searchable {
   final int goalsFor;
   final int goalsAgainst;
   final List<Player> players;
+  final List<int> lastGamesId;
 
   const Team({
     required this.id,
@@ -47,14 +49,15 @@ class Team implements Searchable {
     this.points = 0,
     this.goalsFor = 0,
     this.goalsAgainst = 0,
+    this.lastGamesId = const [],
     required this.players,
   });
 
   /// Computed property for the team's games
-  int get match => wins + losses + ties;
+  int get matches => wins + losses + ties;
 
   /// Computed property for the team's win percentage.
-  double get ration => match / wins;
+  double get ration => wins != 0 ? matches / wins : 0.0;
 
   /// Get the number of goals between the Goals for and against the team.
   int get goalsDiference => (goalsFor - goalsAgainst).abs();
@@ -72,6 +75,7 @@ class Team implements Searchable {
     int? goalsFor,
     int? goalsAgainst,
     List<Player>? players,
+    List<int>? lastGamesId,
   }) {
     return Team(
       id: id ?? this.id,
@@ -83,6 +87,7 @@ class Team implements Searchable {
       goalsFor: goalsFor ?? this.goalsFor,
       goalsAgainst: goalsAgainst ?? this.goalsAgainst,
       players: players ?? this.players,
+      lastGamesId: lastGamesId ?? this.lastGamesId,
     );
   }
 
@@ -97,6 +102,7 @@ class Team implements Searchable {
       'goalsFor': goalsFor,
       'goalsAgainst': goalsAgainst,
       'players': players.map((x) => x.toMap()).toList(),
+      'lastGamesId': lastGamesId,
     };
   }
 
@@ -105,6 +111,13 @@ class Team implements Searchable {
     List<Player> players = List.empty(growable: true);
     for (var player in map['players']) {
       players.add(Player.fromMap(player));
+    }
+
+    List<int> lastGamesId = List.empty(growable: true);
+
+    for (var gameId in map["lastGames"]) {
+      var id = gameId is int ? gameId : gameId["id"];
+      lastGamesId.add(id);
     }
 
     return Team(
@@ -117,22 +130,23 @@ class Team implements Searchable {
       goalsFor: map.containsKey('goalsFor') ? map['goalsFor'] as int : 0,
       goalsAgainst: map.containsKey('goalsAgainst') ? map['goalsAgainst'] as int : 0,
       players: players,
+      lastGamesId: lastGamesId,
     );
   }
 
   @override
   String toString() {
-    return 'Team(id: $id, name: $name, wins: $wins, losses: $losses, ties: $ties, points: $points, goalsFor: $goalsFor, goalsAgainst: $goalsAgainst, players: $players)';
+    return 'Team(id: $id, name: $name, wins: $wins, losses: $losses, ties: $ties, points: $points, goalsFor: $goalsFor, goalsAgainst: $goalsAgainst, players: $players, lastGamesId: $lastGamesId)';
   }
 
   @override
   bool operator ==(covariant Team other) {
     if (identical(this, other)) return true;
-    return other.id == id && other.name == name && other.wins == wins && other.losses == losses && other.ties == ties && other.points == points && other.goalsFor == goalsFor && other.goalsAgainst == goalsAgainst && listEquals(other.players, players);
+    return other.id == id && other.name == name && other.wins == wins && other.losses == losses && other.ties == ties && other.points == points && other.goalsFor == goalsFor && other.goalsAgainst == goalsAgainst && listEquals(other.players, players) && listEquals(other.lastGamesId, lastGamesId);
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ name.hashCode ^ wins.hashCode ^ losses.hashCode ^ ties.hashCode ^ points.hashCode ^ goalsFor.hashCode ^ goalsAgainst.hashCode ^ players.hashCode;
+    return id.hashCode ^ name.hashCode ^ wins.hashCode ^ losses.hashCode ^ ties.hashCode ^ points.hashCode ^ goalsFor.hashCode ^ goalsAgainst.hashCode ^ players.hashCode ^ lastGamesId.hashCode;
   }
 }
