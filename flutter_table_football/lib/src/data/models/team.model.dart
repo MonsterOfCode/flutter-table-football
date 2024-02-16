@@ -22,8 +22,6 @@ import 'package:flutter_table_football/src/data/models/searchable.model.dart';
 ///
 /// [int] GA (Goals Against)
 ///
-/// [int] Games
-///
 /// [int] [computed] GD (Goals Difference)
 ///
 /// [List<Players>] Players
@@ -36,7 +34,6 @@ class Team implements Searchable {
   final int losses;
   final int ties;
   final int points;
-  final int games;
   final int goalsFor;
   final int goalsAgainst;
   final List<Player> players;
@@ -48,7 +45,6 @@ class Team implements Searchable {
     this.losses = 0,
     this.ties = 0,
     this.points = 0,
-    this.games = 0,
     this.goalsFor = 0,
     this.goalsAgainst = 0,
     required this.players,
@@ -73,7 +69,6 @@ class Team implements Searchable {
     int? losses,
     int? ties,
     int? points,
-    int? games,
     int? goalsFor,
     int? goalsAgainst,
     List<Player>? players,
@@ -87,7 +82,6 @@ class Team implements Searchable {
       points: points ?? this.points,
       goalsFor: goalsFor ?? this.goalsFor,
       goalsAgainst: goalsAgainst ?? this.goalsAgainst,
-      games: games ?? this.games,
       players: players ?? this.players,
     );
   }
@@ -100,7 +94,6 @@ class Team implements Searchable {
       'losses': losses,
       'ties': ties,
       'points': points,
-      'games': games,
       'goalsFor': goalsFor,
       'goalsAgainst': goalsAgainst,
       'players': players.map((x) => x.toMap()).toList(),
@@ -121,7 +114,6 @@ class Team implements Searchable {
       losses: map.containsKey('losses') ? map['losses'] as int : 0,
       ties: map.containsKey('ties') ? map['ties'] as int : 0,
       points: map.containsKey('points') ? map['points'] as int : 0,
-      games: map.containsKey('games') ? map['games'] as int : 0,
       goalsFor: map.containsKey('goalsFor') ? map['goalsFor'] as int : 0,
       goalsAgainst: map.containsKey('goalsAgainst') ? map['goalsAgainst'] as int : 0,
       players: players,
@@ -130,17 +122,17 @@ class Team implements Searchable {
 
   @override
   String toString() {
-    return 'Team(id: $id, name: $name, wins: $wins, losses: $losses, ties: $ties, points: $points, games: $games, goalsFor: $goalsFor, goalsAgainst: $goalsAgainst, players: $players)';
+    return 'Team(id: $id, name: $name, wins: $wins, losses: $losses, ties: $ties, points: $points, goalsFor: $goalsFor, goalsAgainst: $goalsAgainst, players: $players)';
   }
 
   @override
   bool operator ==(covariant Team other) {
     if (identical(this, other)) return true;
-    return other.id == id && other.name == name && other.wins == wins && other.losses == losses && other.ties == ties && other.points == points && other.games == games && other.goalsFor == goalsFor && other.goalsAgainst == goalsAgainst && listEquals(other.players, players);
+    return other.id == id && other.name == name && other.wins == wins && other.losses == losses && other.ties == ties && other.points == points && other.goalsFor == goalsFor && other.goalsAgainst == goalsAgainst && listEquals(other.players, players);
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ name.hashCode ^ wins.hashCode ^ losses.hashCode ^ ties.hashCode ^ points.hashCode ^ games.hashCode ^ goalsFor.hashCode ^ goalsAgainst.hashCode ^ players.hashCode;
+    return id.hashCode ^ name.hashCode ^ wins.hashCode ^ losses.hashCode ^ ties.hashCode ^ points.hashCode ^ goalsFor.hashCode ^ goalsAgainst.hashCode ^ players.hashCode;
   }
 }
