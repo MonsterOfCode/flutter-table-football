@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_table_football/src/data/models/player.model.dart';
 
 List<Player> staticPlayers = [
@@ -25,5 +27,23 @@ class PlayersProvider {
     return await Future.delayed(const Duration(seconds: 2)).then((value) => staticPlayers).catchError((onError) {
       return List<Player>.empty(growable: true);
     });
+  }
+
+  /// Request to the API by the top 10 players
+  ///
+  /// If fail returns an empty List
+  static Future<List<Player>> fetchTop10() async {
+    return await Future.delayed(const Duration(seconds: 2)).then((value) => staticPlayers).catchError((onError) {
+      return List<Player>.empty(growable: true);
+    });
+  }
+
+  /// Request to the API a player by name
+  ///
+  /// If fail returns null
+  static Future<Player> getByName(String name) async {
+    return await Future.delayed(const Duration(seconds: 2)).then(
+      (value) => staticPlayers[Random().nextInt(staticPlayers.length - 1)],
+    );
   }
 }

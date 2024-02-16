@@ -2,21 +2,14 @@ import 'package:flutter/material.dart';
 
 /// Game Model
 ///
-/// [int] (id) (unique)
-///
-/// [int] (idTeam1)
-///
-/// [int] (idTeam2)
-///
-/// [int] ScoreTeam1
-///
-/// [int] ScoreTeam2
-///
-/// [int] [computed] winTeam
-///
-/// [DateTime] DateTime
-///
-/// [bool] done
+/// *[int] (id) (unique)
+/// *[int] (idTeam1)
+/// *[int] (idTeam2)
+/// *[int] ScoreTeam1
+/// *[int] ScoreTeam2
+/// *[int] [computed] winTeam
+/// *[DateTime] DateTime
+/// *[bool] done
 @immutable
 class Game {
   final int id;

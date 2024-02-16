@@ -1,8 +1,8 @@
 import 'package:flutter_table_football/src/data/models/player.model.dart';
 import 'package:flutter_table_football/src/data/providers/players.provider.dart';
 
-class PlayersRepository {
-  /// Request to be created a new Player by a Map
+class AuthRepository {
+  /// Request to be created a new Auth by a Map using PlayerRepository
   ///
   /// If something wrong returns null
   static Future<Player?> create(Map<String, String> data) async {
@@ -10,12 +10,8 @@ class PlayersRepository {
   }
 
   /// Fetch all the players registered at the platform
-  static Future<List<Player>> getAll() async {
-    return PlayersProvider.fetch();
-  }
-
-  /// Fetch the top 10 players
-  static Future<List<Player>> getTop10() async {
-    return PlayersProvider.fetchTop10();
+  static Future<Player> get() async {
+    // check on local storage if there is any player saved
+    return PlayersProvider.getByName("name");
   }
 }

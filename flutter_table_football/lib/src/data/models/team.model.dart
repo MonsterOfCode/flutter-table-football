@@ -1,65 +1,40 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_table_football/src/core/data/models/stats.model.dart';
 import 'package:flutter_table_football/src/data/models/player.model.dart';
 import 'package:flutter_table_football/src/core/data/models/searchable.model.dart';
 
 /// Team Model
 ///
-/// [int] id (unique)
-///
-/// [String] Name
-///
-/// [int] wins
-///
-/// [int] losses
-///
-/// [int] ties
-///
-/// [int] points (to help calculate rankings)
-///
-/// [double] [computed] Ratio (Games Played/Win)
-///
-/// [int] GF (Goals For)
-///
-/// [int] GA (Goals Against)
-///
-/// [int] [computed] GD (Goals Difference)
-///
-/// [List<Players>] Players
+/// *[int] id (unique)
+/// *[String] Name
+/// *[int] wins
+/// *[int] losses
+/// *[int] ties
+/// *[int] points (to help calculate rankings)
+/// *[double] [computed] Ratio (Games Played/Win)
+/// *[int] GF (Goals For)
+/// *[int] GA (Goals Against)
+/// *[int] [computed] GD (Goals Difference)
+/// *[List<Players>] Players
 
 @immutable
-class Team implements Searchable {
+class Team extends Stats implements Searchable {
   final int id; // Unique identifier
-  final String name;
-  final int wins;
-  final int losses;
-  final int ties;
-  final int points;
-  final int goalsFor;
-  final int goalsAgainst;
   final List<Player> players;
   final List<int> lastGamesId;
 
   const Team({
     required this.id,
-    required this.name,
-    this.wins = 0,
-    this.losses = 0,
-    this.ties = 0,
-    this.points = 0,
-    this.goalsFor = 0,
-    this.goalsAgainst = 0,
+    required super.name,
+    super.wins = 0,
+    super.losses = 0,
+    super.ties = 0,
+    super.points = 0,
+    super.goalsFor = 0,
+    super.goalsAgainst = 0,
     this.lastGamesId = const [],
     required this.players,
   });
-
-  /// Computed property for the team's games
-  int get matches => wins + losses + ties;
-
-  /// Computed property for the team's win percentage.
-  double get ration => wins != 0 ? matches / wins : 0.0;
-
-  /// Get the number of goals between the Goals for and against the team.
-  int get goalsDiference => (goalsFor - goalsAgainst).abs();
 
   @override
   String get searchable => "${name.toLowerCase()} ${players.map((p) => p.searchable).join(' ')}";

@@ -24,9 +24,8 @@ class FutureListWidget<T> extends StatelessWidget {
               return renderItem(snapshot.data![index]);
             },
           );
-        } else {
-          return Center(child: "No results to show".toText);
         }
+        return Center(child: "No results to show".toText);
       },
     );
   }

@@ -113,7 +113,7 @@ class _TeamInfoSection extends StatelessWidget {
                 children: [
                   _TeamInfoItem(
                     title: "Win",
-                    value: "${team.ration} %",
+                    value: "${team.ratio} %",
                   ),
                 ],
               ),

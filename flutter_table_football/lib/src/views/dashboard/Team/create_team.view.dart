@@ -9,7 +9,7 @@ import 'package:flutter_table_football/src/core/mixins/form_validations.mixin.da
 import 'package:flutter_table_football/src/data/models/player.model.dart';
 import 'package:flutter_table_football/src/data/repositories/players.repository.dart';
 import 'package:flutter_table_football/src/data/repositories/teams.repository.dart';
-import 'package:flutter_table_football/src/views/dashboard/Team/team.view.dart';
+import 'package:flutter_table_football/src/views/dashboard/team/team.view.dart';
 import 'package:flutter_table_football/src/widgets/bottom_draggable_container.dart';
 import 'package:flutter_table_football/src/widgets/list_items/player_searchable_list_item.dart';
 import 'package:go_router/go_router.dart';

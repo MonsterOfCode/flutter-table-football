@@ -1,49 +1,71 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_table_football/src/core/constants/constants.dart';
+import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
+import 'package:flutter_table_football/src/core/extensions/widgets/text.extension.dart';
 import 'package:flutter_table_football/src/data/models/player.model.dart';
-import 'package:flutter_table_football/src/views/dashboard/Team/create_team.view.dart';
-import 'package:flutter_table_football/src/widgets/bottom_draggable_container.dart';
-import 'package:flutter_table_football/src/widgets/list_items/player_searchable_list_item.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_table_football/src/data/repositories/auth.repository.dart';
+import 'package:flutter_table_football/src/data/repositories/players.repository.dart';
+import 'package:flutter_table_football/src/data/repositories/teams.repository.dart';
+import 'package:flutter_table_football/src/widgets/dashboard/dashboard_scaffold.dart';
+import 'package:flutter_table_football/src/widgets/dashboard/stats_table.dart';
 
-List<Player> players = [
-  const Player(name: "Player 1", points: 150),
-  const Player(name: "Player 2", points: 15),
-  const Player(name: "Player 3", points: 10),
-  const Player(name: "Player 4", points: 9),
-  const Player(name: "Player 5", points: 6),
-  const Player(name: "Player 6", points: 5),
-];
-
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
   @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  late Player player;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    loadPlayer();
+    super.initState();
+  }
+
+  void loadPlayer() async {
+    await AuthRepository.get().then((value) {
+      setState(() {
+        player = value;
+        isLoading = false;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        'Home view'.title,
-        TextButton(
-          onPressed: () {
-            showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                backgroundColor: Colors.transparent,
-                builder: (BuildContext context) {
-                  return BottomDraggableScrollableContainer<Player>(
-                    title: "Title",
-                    elements: players,
-                    renderItem: (element) {
-                      final player = element;
-                      return PlayerSearchableListItem(player: player);
-                    },
-                  );
-                });
-          },
-          child: "SearchableList".h1(context),
-        ),
-      ],
+    return DashboardScaffold(
+      title: "Dashboard",
+      child: isLoading
+          ? const Center(child: CircularProgressIndicator.adaptive())
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                StatsTable(
+                  title: "My Stats".h1(context).color(context.colorScheme.primary),
+                  future: Future.value([player]),
+                ),
+                const SizedBox(height: kSpacingExtraLarge),
+                StatsTable(
+                  title: "My best Teams".h3(context).color(context.colorScheme.primary),
+                  future: TeamsRepository.getTopPlayerTeams(player.name),
+                ),
+                const SizedBox(height: kSpacingLarge),
+                StatsTable(
+                  title: "Top 10 Players".h3(context).color(context.colorScheme.primary),
+                  future: PlayersRepository.getTop10(),
+                ),
+                const SizedBox(height: kSpacingLarge),
+                StatsTable(
+                  title: "Top 10 Teams".h3(context).color(context.colorScheme.primary),
+                  future: TeamsRepository.getTop10(),
+                ),
+              ],
+            ),
     );
   }
 }

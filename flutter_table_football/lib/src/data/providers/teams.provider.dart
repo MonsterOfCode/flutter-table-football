@@ -62,4 +62,22 @@ class TeamsProvider {
       return List<Team>.empty(growable: true);
     });
   }
+
+  /// Request to the API by the top 10 teams
+  ///
+  /// If fail returns an empty List
+  static Future<List<Team>> fetchTop10() async {
+    return await Future.delayed(const Duration(seconds: 2)).then((value) => staticTeams).catchError((onError) {
+      return List<Team>.empty(growable: true);
+    });
+  }
+
+  /// Request to the API by the top [nOfTeams] teams of a player
+  ///
+  /// If fail returns an empty List
+  static Future<List<Team>> fetchTopPlayerTeams(String playerName, int nOfTeams) async {
+    return await Future.delayed(const Duration(seconds: 2)).then((value) => staticTeams).catchError((onError) {
+      return List<Team>.empty(growable: true);
+    });
+  }
 }

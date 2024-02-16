@@ -18,4 +18,14 @@ class TeamsRepository {
   static Future<List<Team>> getAll() async {
     return TeamsProvider.fetch();
   }
+
+  /// Fetch the top 10 Teams
+  static Future<List<Team>> getTop10() async {
+    return TeamsProvider.fetchTop10();
+  }
+
+  /// Fetch the top teams of a player
+  static Future<List<Team>> getTopPlayerTeams(String playerName, {int nOfTeams = 3}) async {
+    return TeamsProvider.fetchTopPlayerTeams(playerName, nOfTeams);
+  }
 }

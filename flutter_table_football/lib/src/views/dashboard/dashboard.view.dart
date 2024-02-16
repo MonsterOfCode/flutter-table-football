@@ -4,7 +4,7 @@ import 'package:flutter_table_football/src/core/extensions/types/context.extensi
 import 'package:flutter_table_football/src/views/dashboard/games.view.dart';
 import 'package:flutter_table_football/src/views/dashboard/home.view.dart';
 import 'package:flutter_table_football/src/views/dashboard/player.view.dart';
-import 'package:flutter_table_football/src/views/dashboard/Team/teams.view.dart';
+import 'package:flutter_table_football/src/views/dashboard/team/teams.view.dart';
 
 class DashboardView extends StatefulWidget {
   static const routeName = "dashboard";

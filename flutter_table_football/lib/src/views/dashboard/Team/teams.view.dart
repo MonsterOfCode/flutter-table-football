@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
-import 'package:flutter_table_football/src/views/dashboard/Team/create_team.view.dart';
+import 'package:flutter_table_football/src/views/dashboard/team/create_team.view.dart';
 import 'package:go_router/go_router.dart';
 
 class TeamsView extends StatelessWidget {
