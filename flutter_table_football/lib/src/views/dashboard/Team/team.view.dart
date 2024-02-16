@@ -9,8 +9,8 @@ import 'package:flutter_table_football/src/data/models/game.model.dart';
 import 'package:flutter_table_football/src/data/models/team.model.dart';
 import 'package:flutter_table_football/src/data/repositories/games.repository.dart';
 import 'package:flutter_table_football/src/data/repositories/teams.repository.dart';
-import 'package:flutter_table_football/src/widgets/future_list.dart';
 import 'package:flutter_table_football/src/widgets/list_items/game_item.dart';
+import 'package:flutter_table_football/src/widgets/lists/future_list.dart';
 
 class TeamView extends StatelessWidget {
   final Team team;

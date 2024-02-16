@@ -2,8 +2,8 @@ import 'package:flutter_table_football/src/data/models/game.model.dart';
 
 List<Game> staticGames = [
   Game(id: 1, idTeam1: 1, idTeam2: 2, scoreTeam1: 2, scoreTeam2: 1, dateTime: DateTime.now(), done: true),
-  Game(id: 2, idTeam1: 3, idTeam2: 2, scoreTeam1: 4, scoreTeam2: 5, dateTime: DateTime.now(), done: true),
-  Game(id: 3, idTeam1: 1, idTeam2: 3, scoreTeam1: 3, scoreTeam2: 6, dateTime: DateTime.now(), done: true),
+  Game(id: 2, idTeam1: 2, idTeam2: 1, scoreTeam1: 4, scoreTeam2: 5, dateTime: DateTime.now(), done: true),
+  Game(id: 3, idTeam1: 1, idTeam2: 2, scoreTeam1: 3, scoreTeam2: 6, dateTime: DateTime.now(), done: true),
 ];
 
 class GamesProvider {
@@ -12,7 +12,7 @@ class GamesProvider {
   /// If fail returns null
   static Future<Game?> create(Map<String, dynamic> data) async {
     await Future.delayed(const Duration(seconds: 2));
-    return Game(id: 200, idTeam1: 1, idTeam2: 3, scoreTeam1: 3, scoreTeam2: 6, dateTime: DateTime.now(), done: true);
+    return Game(id: 1, idTeam1: 1, idTeam2: 2, scoreTeam1: 3, scoreTeam2: 6, dateTime: DateTime.now(), done: true);
   }
 
   /// Request to the API Games By Id

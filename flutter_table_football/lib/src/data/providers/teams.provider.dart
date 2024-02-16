@@ -19,6 +19,14 @@ List<Team> staticTeams = [
       const Player(name: "Team2 p2"),
     ]),
   ),
+  Team(
+    id: 3,
+    name: "Team3",
+    players: List.from([
+      const Player(name: "Team3 p1"),
+      const Player(name: "Team3 p2"),
+    ]),
+  ),
 ];
 
 class TeamsProvider {
