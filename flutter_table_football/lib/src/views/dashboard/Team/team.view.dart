@@ -103,11 +103,11 @@ class _TeamInfoSection extends StatelessWidget {
 
 ///Private Widget to render the Team Members Section of the View
 class _TeamMembersSection extends StatelessWidget {
+  final Team team;
+
   const _TeamMembersSection({
     required this.team,
   });
-
-  final Team team;
 
   @override
   Widget build(BuildContext context) {

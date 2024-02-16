@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_table_football/src/core/data/models/stats.model.dart';
 import 'package:flutter_table_football/src/data/models/game.model.dart';
+import 'package:flutter_table_football/src/data/models/lite/player_lite.model.dart';
 import 'package:flutter_table_football/src/data/models/player.model.dart';
 import 'package:flutter_table_football/src/core/data/models/searchable.model.dart';
 
@@ -22,7 +23,7 @@ import 'package:flutter_table_football/src/core/data/models/searchable.model.dar
 @immutable
 class Team extends Stats implements Searchable {
   final int id; // Unique identifier
-  final List<Player> players;
+  final List<PlayerLite> players;
   final List<Game> lastGames;
 
   const Team({
@@ -50,7 +51,7 @@ class Team extends Stats implements Searchable {
     int? points,
     int? goalsFor,
     int? goalsAgainst,
-    List<Player>? players,
+    List<PlayerLite>? players,
     List<Game>? lastGames,
   }) {
     return Team(
@@ -84,9 +85,9 @@ class Team extends Stats implements Searchable {
 
   factory Team.fromMap(Map<String, dynamic> map) {
     // get the players
-    List<Player> players = List.empty(growable: true);
+    List<PlayerLite> players = List.empty(growable: true);
     for (var player in map['players']) {
-      players.add(Player.fromMap(player));
+      players.add(PlayerLite.fromMap(player));
     }
 
     // get the players

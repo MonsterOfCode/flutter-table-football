@@ -49,8 +49,8 @@ List<TeamLite> staticTeamsLite = [
 ];
 
 List<Team> staticTeams = [
-  Team(id: staticTeamsLite[0].id, name: staticTeamsLite[0].name, players: [staticPlayers[0], staticPlayers[1]], lastGames: [staticGames[0]]),
-  Team(id: staticTeamsLite[1].id, name: staticTeamsLite[1].name, players: [staticPlayers[2], staticPlayers[3]], lastGames: [staticGames[1]]),
-  Team(id: staticTeamsLite[2].id, name: staticTeamsLite[2].name, players: [staticPlayers[4], staticPlayers[5]], lastGames: [staticGames[2]]),
-  Team(id: staticTeamsLite[3].id, name: staticTeamsLite[3].name, players: [staticPlayers[6], staticPlayers[7]], lastGames: [staticGames[3], staticGames[4]]),
+  Team(id: staticTeamsLite[0].id, name: staticTeamsLite[0].name, players: [staticPlayersLite[0], staticPlayersLite[1]], lastGames: [staticGames[0]]),
+  Team(id: staticTeamsLite[1].id, name: staticTeamsLite[1].name, players: [staticPlayersLite[2], staticPlayersLite[3]], lastGames: [staticGames[1]]),
+  Team(id: staticTeamsLite[2].id, name: staticTeamsLite[2].name, players: [staticPlayersLite[4], staticPlayersLite[5]], lastGames: [staticGames[2]]),
+  Team(id: staticTeamsLite[3].id, name: staticTeamsLite[3].name, players: [staticPlayersLite[6], staticPlayersLite[7]], lastGames: [staticGames[3], staticGames[4]]),
 ];

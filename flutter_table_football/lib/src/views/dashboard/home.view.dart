@@ -29,6 +29,7 @@ class _HomeViewState extends State<HomeView> {
 
   void loadPlayer() async {
     await AuthRepository.get().then((value) {
+      if (!mounted) return;
       setState(() {
         player = value;
         isLoading = false;
