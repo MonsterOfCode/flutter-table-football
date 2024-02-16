@@ -1,22 +1,30 @@
 # Planning Roadmap
 
+This roadmap outlines the development overview plans for this project. Can and will  change as needed, but should provide a good starting point to understand where we are going with this project.
+
 ## Issues
-- [ ] Create and configure flutter project
+- [x] Create and configure flutter project
 
-- [ ] Create screen route system
+- [x] Create screen route system
 
-- [ ] Create navigation bar for app
+- [x] Create navigation bar for app
     - we can use the widget bottomNavigationBar
-    - [ ] Create a Empty Dashboard/Home Screen
-    - [ ] Create a Empty Teams Screen
-    - [ ] Create a Empty Games Screen
-    - [ ] Create a Empty Profile Screen
+    - [x] Create a Empty Dashboard/Home Screen
+    - [x] Create a Empty Teams Screen
+    - [x] Create a Empty Games Screen
+    - [x] Create a Empty Profile Screen
 
-- [ ] Create models:
-    - [ ] Create Player Model
+- [x] Create models:
+    - [x] Create Player Model
         - [string] Name (unique)
-        - [int] points (to help calculate rankings)
-    - [ ] Create Team Model
+        - [int] wins
+        - [int] losses
+        - [int] points
+        - [double] [Calculated] Ratio (Games Played/Win)
+        - [int] GF (Goals For)
+        - [int] GA (Goals Against)
+        - [int] [Calculated] matches
+    - [x] Create Team Model
         - [increment] id (unique)
         - [string] Name
         - [int] wins
@@ -25,9 +33,9 @@
         - [double] [Calculated] Ratio (Games Played/Win)
         - [int] GF (Goals For)
         - [int] GA (Goals Against)
-        - [int] [Calculated] GD (Goals Difference)
+        - [int] [Calculated] matches
         - [List<Player>] Players
-    - [ ] Create Game Model
+    - [x] Create Game Model
         - [increment] (id) (unique)
         - [int] (idTeam1)
         - [int] (idTeam2)
@@ -37,48 +45,47 @@
         - [DateTime] DateTime
         - [bool] done
 
-- [ ] Create searchable data for Team, player and game models
+- [x] Create searchable data for Team, player and game models
 
-- [ ] Create searchable list widget
+- [x] Create searchable list widget
 
-- [ ] Create User story 1 widgets
-    - [ ] Create Team button
-    - [ ] Create form to create Team
-        - [ ] Prompt by team name
-        - [ ] Option to check if is for 1 or 2 players
-        - [ ] Selectable list to select player 1
-        - [ ] Selectable list to select player 2 (Optional)
-        - [ ] Option to create team
-        - [ ] Navigate to Team View
-    - [ ] Create Team View widgets
-        - [ ] Title
-        - [ ] members of team
-        - [ ] Show stats about the team
-            - [ ] Games Played
-            - [ ] Goals For
-            - [ ] Goals Against
-            - [ ] Winning percentage
-        - [ ] Last games played
-            - [ ] Show the last X games played
-            - [ ] Result of the games
-            - [ ] Other team of the game
+- [x] Create User story 1 widgets
+    - [x] Create Team button
+    - [x] Create form to create Team
+        - [x] Prompt by team name
+        - [x] Option to check if is for 1 or 2 players
+        - [x] Selectable list to select player 1
+        - [x] Selectable list to select player 2 (Optional)
+        - [x] Option to create team
+        - [x] Navigate to Team View
+    - [x] Create Team View widgets
+        - [x] Title
+        - [x] members of team
+        - [x] Show stats about the team
+            - [x] Games Played
+            - [x] Goals For
+            - [x] Goals Against
+            - [x] Winning percentage
+        - [x] Last games played
+            - [x] Show the last X games played
+            - [x] Result of the games
+            - [x] Other team of the game
 
-- [ ] Create User story 2 widgets
-    - [ ] Title
-    - [ ] My ranking compared to other players
-    - [ ] Number of games played
-    - [ ] GF
-    - [ ] GA
-    - [ ] % of wins
-    - [ ] % of losses
-    - [ ] My best team
-        - [ ] Number of games played
-        - [ ] GF
-        - [ ] GA
-        - [ ] Position on ranking 
-        - [ ] % of wins
-        - [ ] % of losses
-    - [ ] Top Teams List
+- [x] Create User story 2 widgets
+    - [x] Title
+    - [x] My ranking compared to other players
+    - [x] Number of games played
+    - [x] GF
+    - [x] GA
+    - [x] % of wins
+    - [x] % of losses
+    - [x] My best team
+        - [x] Number of games played
+        - [x] GF
+        - [x] GA
+        - [x] points 
+        - [x] % of wins
+    - [x] Top Teams List
 
 - [ ] Create User story 3 widgets
     - [ ] Create Game button
