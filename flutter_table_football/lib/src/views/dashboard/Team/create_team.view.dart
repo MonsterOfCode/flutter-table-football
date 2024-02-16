@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/constants/constants.dart';
-import 'package:flutter_table_football/src/core/enums/message_types.enum.dart';
+import 'package:flutter_table_football/src/core/data/enums/message_types.enum.dart';
 import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
 import 'package:flutter_table_football/src/core/mixins/form_validations.mixin.dart';
@@ -10,7 +10,7 @@ import 'package:flutter_table_football/src/data/models/player.model.dart';
 import 'package:flutter_table_football/src/data/repositories/players.repository.dart';
 import 'package:flutter_table_football/src/data/repositories/teams.repository.dart';
 import 'package:flutter_table_football/src/views/dashboard/Team/team.view.dart';
-import 'package:flutter_table_football/src/widgets/bottom_draggable_container.widget.dart';
+import 'package:flutter_table_football/src/widgets/bottom_draggable_container.dart';
 import 'package:flutter_table_football/src/widgets/list_items/player_searchable_list_item.dart';
 import 'package:go_router/go_router.dart';
 

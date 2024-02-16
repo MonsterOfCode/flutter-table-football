@@ -9,7 +9,12 @@ class TeamsRepository {
     return TeamsProvider.create(data);
   }
 
-  /// Fetch all the players registered at the platform
+  /// Fetch a team
+  static Future<Team?> getById(int id) async {
+    return TeamsProvider.getById(id);
+  }
+
+  /// Fetch all the teams registered at the platform
   static Future<List<Team>> getAll() async {
     return TeamsProvider.fetch();
   }

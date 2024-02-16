@@ -7,12 +7,10 @@ import 'package:flutter_table_football/src/core/extensions/types/string.extensio
 import 'package:flutter_table_football/src/core/extensions/widgets/text.extension.dart';
 import 'package:flutter_table_football/src/data/models/game.model.dart';
 import 'package:flutter_table_football/src/data/models/team.model.dart';
-
-List<Game> staticGames = [
-  Game(idTeam1: 1, idTeam2: 2, scoreTeam1: 2, scoreTeam2: 1, dateTime: DateTime.now(), done: true),
-  Game(idTeam1: 1, idTeam2: 2, scoreTeam1: 2, scoreTeam2: 1, dateTime: DateTime.now(), done: true),
-  Game(idTeam1: 1, idTeam2: 2, scoreTeam1: 2, scoreTeam2: 1, dateTime: DateTime.now(), done: true),
-];
+import 'package:flutter_table_football/src/data/repositories/games.repository.dart';
+import 'package:flutter_table_football/src/data/repositories/teams.repository.dart';
+import 'package:flutter_table_football/src/widgets/future_list.dart';
+import 'package:flutter_table_football/src/widgets/list_items/game_item.dart';
 
 class TeamView extends StatelessWidget {
   final Team team;
@@ -55,7 +53,7 @@ class TeamView extends StatelessWidget {
               padding: const EdgeInsets.all(kSpacing),
               child: Column(
                 children: [
-                  if (team.lastGamesId.isNotEmpty) _TeamInfo(team: team),
+                  if (team.lastGamesId.isNotEmpty) _TeamInfoSection(team: team),
                   if (team.lastGamesId.isEmpty)
                     Card(
                       child: Padding(
@@ -68,8 +66,8 @@ class TeamView extends StatelessWidget {
                         ),
                       ),
                     ),
-                  _TeamMembers(team: team),
-                  if (team.lastGamesId.isNotEmpty) _LastGames(team: team),
+                  _TeamMembersSection(team: team),
+                  if (team.lastGamesId.isNotEmpty) _LastGamesSection(team: team),
                 ],
               ),
             ),
@@ -80,84 +78,9 @@ class TeamView extends StatelessWidget {
   }
 }
 
-class _LastGames extends StatelessWidget {
-  const _LastGames({
-    required this.team,
-  });
-
-  final Team team;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(kSpacing),
-        child: SizedBox(
-          width: double.infinity,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              "Last Games".h3(context),
-              Column(
-                children: team.players.map((item) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      item.name.toText,
-                      "${item.points} pts".toText,
-                    ],
-                  );
-                }).toList(),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _TeamMembers extends StatelessWidget {
-  const _TeamMembers({
-    required this.team,
-  });
-
-  final Team team;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(kSpacing),
-        child: SizedBox(
-          width: double.infinity,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              "Team members".h3(context),
-              Column(
-                children: team.players.map((item) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      item.name.toText,
-                      "${item.points} pts".toText,
-                    ],
-                  );
-                }).toList(),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _TeamInfo extends StatelessWidget {
-  const _TeamInfo({
+///Private Widget to render the Team info Section of the View
+class _TeamInfoSection extends StatelessWidget {
+  const _TeamInfoSection({
     required this.team,
   });
 
@@ -215,6 +138,101 @@ class _TeamInfo extends StatelessWidget {
   }
 }
 
+///Private Widget to render the Team Members Section of the View
+class _TeamMembersSection extends StatelessWidget {
+  const _TeamMembersSection({
+    required this.team,
+  });
+
+  final Team team;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(kSpacing),
+        child: SizedBox(
+          width: double.infinity,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              "Team members".h3(context),
+              Column(
+                children: team.players.map((item) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      item.name.toText,
+                      "${item.points} pts".toText,
+                    ],
+                  );
+                }).toList(),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+///Private Widget to render the Last Games Section of the View
+class _LastGamesSection extends StatelessWidget {
+  final Team team;
+
+  const _LastGamesSection({
+    required this.team,
+  });
+
+  /// This function is used to request the data about the other team
+  Future<Team?> getOtherTeam(Game game, Team t) async {
+    if (game.idTeam1 != t.id) {
+      return TeamsRepository.getById(game.idTeam1);
+    }
+    return TeamsRepository.getById(game.idTeam2);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(kSpacing),
+        child: SizedBox(
+          width: double.infinity,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              "Last Games".h3(context),
+              FutureListWidget<Game>(
+                future: GamesRepository.getGamesById(team.lastGamesId),
+                renderItem: (game) {
+                  // get the Other team data
+                  return FutureBuilder<Team?>(
+                    future: getOtherTeam(game, team),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator.adaptive(); // Show loading indicator
+                      } else if (snapshot.hasData) {
+                        final team2 = snapshot.data!;
+                        return GameListItem(game: game, team1: team, team2: team2);
+                      } else {
+                        return Text('No team data available');
+                      }
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+///Private Widget to render the Team info item of Team info section
 class _TeamInfoItem extends StatelessWidget {
   final String title;
   final String value;

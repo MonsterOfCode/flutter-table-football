@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/constants/constants.dart';
 import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
-import 'package:flutter_table_football/src/data/models/searchable.model.dart';
-import 'package:flutter_table_football/src/widgets/searchable_list.widget.dart';
+import 'package:flutter_table_football/src/core/data/models/searchable.model.dart';
+import 'package:flutter_table_football/src/widgets/searchable_list.dart';
 
 class BottomDraggableScrollableContainer<T extends Searchable> extends StatelessWidget {
   final String title;

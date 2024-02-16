@@ -1,3 +1,4 @@
+import 'package:flutter_table_football/src/core/extensions/types/iterable.extension.dart';
 import 'package:flutter_table_football/src/data/models/player.model.dart';
 import 'package:flutter_table_football/src/data/models/team.model.dart';
 
@@ -27,13 +28,22 @@ class TeamsProvider {
   static Future<Team?> create(Map<String, dynamic> data) async {
     await Future.delayed(const Duration(seconds: 2));
     return Team(
-      id: 200,
+      id: 1,
       name: "NewTeam",
       players: List.from([
         const Player(name: "NewTeam p1"),
         const Player(name: "NewTeam p2"),
       ]),
+      lastGamesId: const <int>[1, 2, 3],
     );
+  }
+
+  /// Request from the API a Team
+  ///
+  /// If fail returns null
+  static Future<Team?> getById(int id) async {
+    await Future.delayed(const Duration(seconds: 2));
+    return staticTeams.firstWhereOrNull((element) => element.id == id);
   }
 
   /// Request to the API by the list of all Players

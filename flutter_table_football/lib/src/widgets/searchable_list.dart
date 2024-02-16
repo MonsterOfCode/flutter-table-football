@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/constants/constants.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
-import 'package:flutter_table_football/src/data/models/searchable.model.dart';
+import 'package:flutter_table_football/src/core/data/models/searchable.model.dart';
 
 class SearchableList<T extends Searchable> extends StatefulWidget {
   final ScrollController? scrollController;
