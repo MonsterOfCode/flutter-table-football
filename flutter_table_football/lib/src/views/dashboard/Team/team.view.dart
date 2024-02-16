@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/constants/constants.dart';
 import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
@@ -11,6 +9,7 @@ import 'package:flutter_table_football/src/data/repositories/games.repository.da
 import 'package:flutter_table_football/src/data/repositories/teams.repository.dart';
 import 'package:flutter_table_football/src/widgets/list_items/game_item.dart';
 import 'package:flutter_table_football/src/widgets/lists/future_list.dart';
+import 'package:flutter_table_football/src/widgets/scaffolds/glass_scaffold.dart';
 
 class TeamView extends StatelessWidget {
   final Team team;
@@ -20,58 +19,26 @@ class TeamView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        title: team.name.toText.color(context.colorScheme.background),
-        iconTheme: const IconThemeData(color: Colors.white),
-      ),
-      body: Stack(
-        children: <Widget>[
-          // Background Image
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/team/background.jpeg'),
-                fit: BoxFit.cover,
+    return GlassScaffold(
+      title: team.name.toText.color(context.colorScheme.background),
+      backgroundPath: 'assets/team/background.jpeg',
+      child: Column(
+        children: [
+          if (team.lastGamesId.isNotEmpty) _TeamInfoSection(team: team),
+          if (team.lastGamesId.isEmpty)
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(kSpacing),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Center(
+                    child: "No games yet".h3(context),
+                  ),
+                ),
               ),
             ),
-          ),
-          // Glass effect overlay
-          Positioned.fill(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-              child: Container(
-                color: Colors.white.withOpacity(0.1),
-              ),
-            ),
-          ),
-          // Content on top of the glass effect
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(kSpacing),
-              child: Column(
-                children: [
-                  if (team.lastGamesId.isNotEmpty) _TeamInfoSection(team: team),
-                  if (team.lastGamesId.isEmpty)
-                    Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(kSpacing),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: Center(
-                            child: "No games yet".h3(context),
-                          ),
-                        ),
-                      ),
-                    ),
-                  _TeamMembersSection(team: team),
-                  if (team.lastGamesId.isNotEmpty) _LastGamesSection(team: team),
-                ],
-              ),
-            ),
-          ),
+          _TeamMembersSection(team: team),
+          if (team.lastGamesId.isNotEmpty) _LastGamesSection(team: team),
         ],
       ),
     );

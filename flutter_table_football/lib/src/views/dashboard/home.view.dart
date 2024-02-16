@@ -7,7 +7,7 @@ import 'package:flutter_table_football/src/data/models/player.model.dart';
 import 'package:flutter_table_football/src/data/repositories/auth.repository.dart';
 import 'package:flutter_table_football/src/data/repositories/players.repository.dart';
 import 'package:flutter_table_football/src/data/repositories/teams.repository.dart';
-import 'package:flutter_table_football/src/widgets/dashboard/dashboard_scaffold.dart';
+import 'package:flutter_table_football/src/widgets/scaffolds/dashboard_scaffold.dart';
 import 'package:flutter_table_football/src/widgets/dashboard/stats_table.dart';
 
 class HomeView extends StatefulWidget {

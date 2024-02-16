@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/constants/constants.dart';
 import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
-import 'package:flutter_table_football/src/views/dashboard/games.view.dart';
+import 'package:flutter_table_football/src/views/dashboard/game/games.view.dart';
 import 'package:flutter_table_football/src/views/dashboard/home.view.dart';
 import 'package:flutter_table_football/src/views/dashboard/player.view.dart';
 import 'package:flutter_table_football/src/views/dashboard/team/teams.view.dart';
