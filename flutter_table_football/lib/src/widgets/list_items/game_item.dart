@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/extensions/types/date_time.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
 import 'package:flutter_table_football/src/data/models/game.model.dart';
-import 'package:flutter_table_football/src/data/models/team.model.dart';
 
 class GameListItem extends StatelessWidget {
   final Game game;
-  final Team team1;
-  final Team team2;
-  const GameListItem({super.key, required this.game, required this.team1, required this.team2});
+  const GameListItem({super.key, required this.game});
 
   @override
   Widget build(BuildContext context) {
@@ -20,17 +17,17 @@ class GameListItem extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  team1.name.toText,
+                  game.team1.name.toText,
                   const SizedBox(width: 10),
-                  "${game.scoreOfTeam(team1)}".toText,
+                  "${game.scoreOfTeam(game.team1)}".toText,
                 ],
               ),
               const Icon(Icons.remove),
               Row(
                 children: [
-                  "${game.scoreOfTeam(team2)}".toText,
+                  "${game.scoreOfTeam(game.team2)}".toText,
                   const SizedBox(width: 10),
-                  team2.name.toText,
+                  game.team2.name.toText,
                 ],
               ),
             ],

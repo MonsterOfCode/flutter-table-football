@@ -3,12 +3,8 @@ import 'package:flutter_table_football/src/core/constants/constants.dart';
 import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/widgets/text.extension.dart';
-import 'package:flutter_table_football/src/data/models/game.model.dart';
 import 'package:flutter_table_football/src/data/models/team.model.dart';
-import 'package:flutter_table_football/src/data/repositories/games.repository.dart';
-import 'package:flutter_table_football/src/data/repositories/teams.repository.dart';
 import 'package:flutter_table_football/src/widgets/list_items/game_item.dart';
-import 'package:flutter_table_football/src/widgets/lists/future_list.dart';
 import 'package:flutter_table_football/src/widgets/scaffolds/glass_scaffold.dart';
 
 class TeamView extends StatelessWidget {
@@ -24,8 +20,8 @@ class TeamView extends StatelessWidget {
       backgroundPath: 'assets/team/background.jpeg',
       child: Column(
         children: [
-          if (team.lastGamesId.isNotEmpty) _TeamInfoSection(team: team),
-          if (team.lastGamesId.isEmpty)
+          if (team.lastGames.isNotEmpty) _TeamInfoSection(team: team),
+          if (team.lastGames.isEmpty)
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(kSpacing),
@@ -38,7 +34,7 @@ class TeamView extends StatelessWidget {
               ),
             ),
           _TeamMembersSection(team: team),
-          if (team.lastGamesId.isNotEmpty) _LastGamesSection(team: team),
+          if (team.lastGames.isNotEmpty) _LastGamesSection(team: team),
         ],
       ),
     );
@@ -152,14 +148,6 @@ class _LastGamesSection extends StatelessWidget {
     required this.team,
   });
 
-  /// This function is used to request the data about the other team
-  Future<Team?> getOtherTeam(Game game, Team t) async {
-    if (game.idTeam1 != t.id) {
-      return TeamsRepository.getById(game.idTeam1);
-    }
-    return TeamsRepository.getById(game.idTeam2);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -172,25 +160,13 @@ class _LastGamesSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               "Last Games".h3(context),
-              FutureListWidget<Game>(
-                future: GamesRepository.getGamesById(team.lastGamesId),
-                renderItem: (game) {
-                  // get the Other team data
-                  return FutureBuilder<Team?>(
-                    future: getOtherTeam(game, team),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator.adaptive(); // Show loading indicator
-                      } else if (snapshot.hasData) {
-                        final team2 = snapshot.data!;
-                        return GameListItem(game: game, team1: team, team2: team2);
-                      } else {
-                        return Text('No team data available');
-                      }
-                    },
-                  );
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: team.lastGames.length,
+                itemBuilder: (context, index) {
+                  return GameListItem(game: team.lastGames[index]);
                 },
-              ),
+              )
             ],
           ),
         ),

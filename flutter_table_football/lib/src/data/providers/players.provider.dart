@@ -1,15 +1,8 @@
 import 'dart:math';
 
+import 'package:flutter_table_football/src/core/constants/constants.dart';
+import 'package:flutter_table_football/src/data/models/lite/player_lite.model.dart';
 import 'package:flutter_table_football/src/data/models/player.model.dart';
-
-List<Player> staticPlayers = [
-  const Player(name: "Player 1", points: 150),
-  const Player(name: "Player 2", points: 15),
-  const Player(name: "Player 3", points: 10),
-  const Player(name: "Player 4", points: 9),
-  const Player(name: "Player 5", points: 6),
-  const Player(name: "Player 6", points: 5),
-];
 
 class PlayersProvider {
   /// Request to the API to create a new Player and return it as a model if success
@@ -20,16 +13,16 @@ class PlayersProvider {
     return const Player(name: "New Player", points: 0);
   }
 
-  /// Request to the API by the list of all Players
+  /// Request to the API by the list of all PlayersLite because it to show on list
   ///
   /// If fail returns an empty List
-  static Future<List<Player>> fetch() async {
-    return await Future.delayed(const Duration(seconds: 2)).then((value) => staticPlayers).catchError((onError) {
-      return List<Player>.empty(growable: true);
+  static Future<List<PlayerLite>> fetch() async {
+    return await Future.delayed(const Duration(seconds: 2)).then((value) => staticPlayersLite).catchError((onError) {
+      return List<PlayerLite>.empty(growable: true);
     });
   }
 
-  /// Request to the API by the top 10 players
+  /// Request to the API by the top 10 playersLite
   ///
   /// If fail returns an empty List
   static Future<List<Player>> fetchTop10() async {

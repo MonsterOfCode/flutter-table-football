@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_table_football/src/core/data/models/stats.model.dart';
+import 'package:flutter_table_football/src/data/models/game.model.dart';
 import 'package:flutter_table_football/src/data/models/player.model.dart';
 import 'package:flutter_table_football/src/core/data/models/searchable.model.dart';
 
@@ -16,12 +17,13 @@ import 'package:flutter_table_football/src/core/data/models/searchable.model.dar
 /// *[int] GA (Goals Against)
 /// *[int] [computed] GD (Goals Difference)
 /// *[List<Players>] Players
+/// *[List<Game>] lastGames
 
 @immutable
 class Team extends Stats implements Searchable {
   final int id; // Unique identifier
   final List<Player> players;
-  final List<int> lastGamesId;
+  final List<Game> lastGames;
 
   const Team({
     required this.id,
@@ -32,7 +34,7 @@ class Team extends Stats implements Searchable {
     super.points = 0,
     super.goalsFor = 0,
     super.goalsAgainst = 0,
-    this.lastGamesId = const [],
+    this.lastGames = const [],
     required this.players,
   });
 
@@ -49,7 +51,7 @@ class Team extends Stats implements Searchable {
     int? goalsFor,
     int? goalsAgainst,
     List<Player>? players,
-    List<int>? lastGamesId,
+    List<Game>? lastGames,
   }) {
     return Team(
       id: id ?? this.id,
@@ -61,7 +63,7 @@ class Team extends Stats implements Searchable {
       goalsFor: goalsFor ?? this.goalsFor,
       goalsAgainst: goalsAgainst ?? this.goalsAgainst,
       players: players ?? this.players,
-      lastGamesId: lastGamesId ?? this.lastGamesId,
+      lastGames: lastGames ?? this.lastGames,
     );
   }
 
@@ -76,7 +78,7 @@ class Team extends Stats implements Searchable {
       'goalsFor': goalsFor,
       'goalsAgainst': goalsAgainst,
       'players': players.map((x) => x.toMap()).toList(),
-      'lastGamesId': lastGamesId,
+      'lastGames': lastGames,
     };
   }
 
@@ -87,11 +89,10 @@ class Team extends Stats implements Searchable {
       players.add(Player.fromMap(player));
     }
 
-    List<int> lastGamesId = List.empty(growable: true);
-
-    for (var gameId in map["lastGames"]) {
-      var id = gameId is int ? gameId : gameId["id"];
-      lastGamesId.add(id);
+    // get the players
+    List<Game> lastGames = List.empty(growable: true);
+    for (var game in map['lastGames']) {
+      lastGames.add(Game.fromMap(game));
     }
 
     return Team(
@@ -104,23 +105,23 @@ class Team extends Stats implements Searchable {
       goalsFor: map.containsKey('goalsFor') ? map['goalsFor'] as int : 0,
       goalsAgainst: map.containsKey('goalsAgainst') ? map['goalsAgainst'] as int : 0,
       players: players,
-      lastGamesId: lastGamesId,
+      lastGames: lastGames,
     );
   }
 
   @override
   String toString() {
-    return 'Team(id: $id, name: $name, wins: $wins, losses: $losses, ties: $ties, points: $points, goalsFor: $goalsFor, goalsAgainst: $goalsAgainst, players: $players, lastGamesId: $lastGamesId)';
+    return 'Team(id: $id, name: $name, wins: $wins, losses: $losses, ties: $ties, points: $points, goalsFor: $goalsFor, goalsAgainst: $goalsAgainst, players: $players, lastGamesId: $lastGames)';
   }
 
   @override
   bool operator ==(covariant Team other) {
     if (identical(this, other)) return true;
-    return other.id == id && other.name == name && other.wins == wins && other.losses == losses && other.ties == ties && other.points == points && other.goalsFor == goalsFor && other.goalsAgainst == goalsAgainst && listEquals(other.players, players) && listEquals(other.lastGamesId, lastGamesId);
+    return other.id == id && other.name == name && other.wins == wins && other.losses == losses && other.ties == ties && other.points == points && other.goalsFor == goalsFor && other.goalsAgainst == goalsAgainst && listEquals(other.players, players) && listEquals(other.lastGames, lastGames);
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ name.hashCode ^ wins.hashCode ^ losses.hashCode ^ ties.hashCode ^ points.hashCode ^ goalsFor.hashCode ^ goalsAgainst.hashCode ^ players.hashCode ^ lastGamesId.hashCode;
+    return id.hashCode ^ name.hashCode ^ wins.hashCode ^ losses.hashCode ^ ties.hashCode ^ points.hashCode ^ goalsFor.hashCode ^ goalsAgainst.hashCode ^ players.hashCode ^ lastGames.hashCode;
   }
 }

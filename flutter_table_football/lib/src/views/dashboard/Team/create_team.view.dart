@@ -6,7 +6,7 @@ import 'package:flutter_table_football/src/core/data/enums/message_types.enum.da
 import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
 import 'package:flutter_table_football/src/core/mixins/form_validations.mixin.dart';
-import 'package:flutter_table_football/src/data/models/player.model.dart';
+import 'package:flutter_table_football/src/data/models/lite/player_lite.model.dart';
 import 'package:flutter_table_football/src/data/repositories/players.repository.dart';
 import 'package:flutter_table_football/src/data/repositories/teams.repository.dart';
 import 'package:flutter_table_football/src/views/dashboard/team/team.view.dart';
@@ -26,8 +26,8 @@ class CreateTeamView extends StatefulWidget {
 class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
   int _currentStep = 0;
   final int steps = 4;
-  final List<Player> selectedPlayers = List.empty(growable: true);
-  final List<Player> players = List.empty(growable: true);
+  final List<PlayerLite> selectedPlayers = List.empty(growable: true);
+  final List<PlayerLite> players = List.empty(growable: true);
 
   @override
   void initState() {
@@ -252,7 +252,7 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
-        return BottomDraggableScrollableContainer<Player>(
+        return BottomDraggableScrollableContainer<PlayerLite>(
           title: "Title",
           elements: players,
           renderItem: (element) {

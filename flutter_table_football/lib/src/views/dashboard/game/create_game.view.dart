@@ -6,6 +6,7 @@ import 'package:flutter_table_football/src/core/data/enums/message_types.enum.da
 import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
 import 'package:flutter_table_football/src/core/mixins/form_validations.mixin.dart';
+import 'package:flutter_table_football/src/data/models/lite/team_lite.model.dart';
 import 'package:flutter_table_football/src/data/models/team.model.dart';
 import 'package:flutter_table_football/src/data/repositories/games.repository.dart';
 import 'package:flutter_table_football/src/data/repositories/teams.repository.dart';
@@ -26,8 +27,8 @@ class CreateGameView extends StatefulWidget {
 class _CreateGameViewState extends State<CreateGameView> with FormHelper {
   int _currentStep = 0;
   final int steps = 3;
-  final List<Team> selectedTeams = List.empty(growable: true);
-  final List<Team> teams = List.empty(growable: true);
+  final List<TeamLite> selectedTeams = List.empty(growable: true);
+  final List<TeamLite> teams = List.empty(growable: true);
 
   @override
   void initState() {
@@ -220,12 +221,12 @@ class _CreateGameViewState extends State<CreateGameView> with FormHelper {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
-        return BottomDraggableScrollableContainer<Team>(
+        return BottomDraggableScrollableContainer<TeamLite>(
           title: "Title",
           elements: teams,
           renderItem: (element) {
-            final player = element;
-            return TeamSearchableListItem(team: player);
+            final team = element;
+            return TeamSearchableListItem(team: team);
           },
         );
       },

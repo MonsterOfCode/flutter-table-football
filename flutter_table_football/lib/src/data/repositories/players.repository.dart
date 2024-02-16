@@ -1,3 +1,4 @@
+import 'package:flutter_table_football/src/data/models/lite/player_lite.model.dart';
 import 'package:flutter_table_football/src/data/models/player.model.dart';
 import 'package:flutter_table_football/src/data/providers/players.provider.dart';
 
@@ -10,7 +11,7 @@ class PlayersRepository {
   }
 
   /// Fetch all the players registered at the platform
-  static Future<List<Player>> getAll() async {
+  static Future<List<PlayerLite>> getAll() async {
     return PlayersProvider.fetch();
   }
 

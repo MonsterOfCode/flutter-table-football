@@ -1,3 +1,4 @@
+import 'package:flutter_table_football/src/data/models/lite/team_lite.model.dart';
 import 'package:flutter_table_football/src/data/models/team.model.dart';
 import 'package:flutter_table_football/src/data/providers/teams.provider.dart';
 
@@ -15,7 +16,7 @@ class TeamsRepository {
   }
 
   /// Fetch all the teams registered at the platform
-  static Future<List<Team>> getAll() async {
+  static Future<List<TeamLite>> getAll() async {
     return TeamsProvider.fetch();
   }
 
