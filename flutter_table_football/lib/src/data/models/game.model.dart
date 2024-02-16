@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 /// Game Model
 ///
-/// [int] (idTeam1) (Composed Key, Unique Constraint),
+/// [int] (id) (unique)
 ///
-/// [int] (idTeam2) (Composed Key, Unique Constraint)
+/// [int] (idTeam1)
+///
+/// [int] (idTeam2)
 ///
 /// [int] ScoreTeam1
 ///
@@ -17,14 +19,16 @@ import 'package:flutter/material.dart';
 /// [bool] done
 @immutable
 class Game {
-  final int idTeam1; // Composed Key, Unique Constraint
-  final int idTeam2; // Composed Key, Unique Constraint
+  final int id;
+  final int idTeam1;
+  final int idTeam2;
   final int scoreTeam1;
   final int scoreTeam2;
   final DateTime dateTime;
   final bool done;
 
   const Game({
+    required this.id,
     required this.idTeam1,
     required this.idTeam2,
     required this.scoreTeam1,
@@ -44,7 +48,15 @@ class Game {
     return scoreTeam1 > scoreTeam2 ? idTeam1 : idTeam2;
   }
 
+  /// Returns the score of the [team]
+  int scoreOfTeam(team) {
+    if (team.id == idTeam1) return scoreTeam1;
+    if (team.id == idTeam2) return scoreTeam2;
+    throw 'The team do not belongs to this game';
+  }
+
   Game copyWith({
+    int? id,
     int? idTeam1,
     int? idTeam2,
     int? scoreTeam1,
@@ -53,6 +65,7 @@ class Game {
     bool? done,
   }) {
     return Game(
+      id: id ?? this.id,
       idTeam1: idTeam1 ?? this.idTeam1,
       idTeam2: idTeam2 ?? this.idTeam2,
       scoreTeam1: scoreTeam1 ?? this.scoreTeam1,
@@ -64,6 +77,7 @@ class Game {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'id': id,
       'idTeam1': idTeam1,
       'idTeam2': idTeam2,
       'scoreTeam1': scoreTeam1,
@@ -75,6 +89,7 @@ class Game {
 
   factory Game.fromMap(Map<String, dynamic> map) {
     return Game(
+      id: map['id'] as int,
       idTeam1: map['idTeam1'] as int,
       idTeam2: map['idTeam2'] as int,
       scoreTeam1: map['scoreTeam1'] as int,
@@ -86,18 +101,18 @@ class Game {
 
   @override
   String toString() {
-    return 'Game(idTeam1: $idTeam1, idTeam2: $idTeam2, scoreTeam1: $scoreTeam1, scoreTeam2: $scoreTeam2, dateTime: $dateTime, done: $done)';
+    return 'Game(id: $id, idTeam1: $idTeam1, idTeam2: $idTeam2, scoreTeam1: $scoreTeam1, scoreTeam2: $scoreTeam2, dateTime: $dateTime, done: $done)';
   }
 
   @override
   bool operator ==(covariant Game other) {
     if (identical(this, other)) return true;
 
-    return other.idTeam1 == idTeam1 && other.idTeam2 == idTeam2 && other.scoreTeam1 == scoreTeam1 && other.scoreTeam2 == scoreTeam2 && other.dateTime == dateTime && other.done == done;
+    return other.id == id && other.idTeam1 == idTeam1 && other.idTeam2 == idTeam2 && other.scoreTeam1 == scoreTeam1 && other.scoreTeam2 == scoreTeam2 && other.dateTime == dateTime && other.done == done;
   }
 
   @override
   int get hashCode {
-    return idTeam1.hashCode ^ idTeam2.hashCode ^ scoreTeam1.hashCode ^ scoreTeam2.hashCode ^ dateTime.hashCode ^ done.hashCode;
+    return id.hashCode ^ idTeam1.hashCode ^ idTeam2.hashCode ^ scoreTeam1.hashCode ^ scoreTeam2.hashCode ^ dateTime.hashCode ^ done.hashCode;
   }
 }

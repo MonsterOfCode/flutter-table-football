@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/data/models/player.model.dart';
 
+///  Widget to show player item in the searchable list
+///
+/// This widget is stateful to better render optimizations
 class PlayerSearchableListItem extends StatefulWidget {
   final Player player;
 

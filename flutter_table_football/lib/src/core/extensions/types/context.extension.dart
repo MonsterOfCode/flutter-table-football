@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_table_football/src/core/enums/message_types.enum.dart';
+import 'package:flutter_table_football/src/core/data/enums/message_types.enum.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
 
 extension BuildContextExtension on BuildContext {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_table_football/src/core/enums/form_states.enum.dart';
+import 'package:flutter_table_football/src/core/data/enums/form_states.enum.dart';
 import 'package:flutter_table_football/src/core/utils/form_validations.util.dart';
 
 mixin FormHelper<T extends StatefulWidget> on State<T> {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_table_football/src/data/models/searchable.model.dart';
+import 'package:flutter_table_football/src/core/data/models/searchable.model.dart';
 
 /// Player Model
 ///
