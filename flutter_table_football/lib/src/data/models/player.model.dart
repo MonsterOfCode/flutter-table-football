@@ -13,7 +13,7 @@ class Player implements Searchable {
 
   const Player({
     required this.name,
-    required this.points,
+    this.points = 0,
   });
 
   Player copyWith({
