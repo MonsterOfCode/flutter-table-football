@@ -2,22 +2,17 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/constants/constants.dart';
+import 'package:flutter_table_football/src/core/enums/message_types.enum.dart';
+import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
+import 'package:flutter_table_football/src/core/mixins/form_validations.mixin.dart';
 import 'package:flutter_table_football/src/data/models/player.model.dart';
-import 'package:flutter_table_football/src/data/models/team.model.dart';
+import 'package:flutter_table_football/src/data/repositories/players.repository.dart';
+import 'package:flutter_table_football/src/data/repositories/teams.repository.dart';
 import 'package:flutter_table_football/src/views/dashboard/Team/team.view.dart';
 import 'package:flutter_table_football/src/widgets/bottom_draggable_container.widget.dart';
 import 'package:flutter_table_football/src/widgets/list_items/player_searchable_list_item.dart';
 import 'package:go_router/go_router.dart';
-
-List<Player> staticPlayers = [
-  const Player(name: "Player 1", points: 150),
-  const Player(name: "Player 2", points: 15),
-  const Player(name: "Player 3", points: 10),
-  const Player(name: "Player 4", points: 9),
-  const Player(name: "Player 5", points: 6),
-  const Player(name: "Player 6", points: 5),
-];
 
 class CreateTeamView extends StatefulWidget {
   static const routeName = "team/create";
@@ -28,50 +23,21 @@ class CreateTeamView extends StatefulWidget {
   State<CreateTeamView> createState() => _CreateTeamViewState();
 }
 
-class _CreateTeamViewState extends State<CreateTeamView> {
+class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
   int _currentStep = 0;
-  final TextEditingController _nameController = TextEditingController();
-  final FocusNode _nameFocusNode = FocusNode();
-  final List<Player> players = List.empty(growable: true);
   final int steps = 4;
+  final List<Player> selectedPlayers = List.empty(growable: true);
+  final List<Player> players = List.empty(growable: true);
 
   @override
-  void dispose() {
-    _nameController.dispose();
-    super.dispose();
-  }
-
-  /// This function will open the bottom sheet to select the player
-  ///
-  /// [index] is the player to be selected
-  ///
-  /// with the [index] we can also know if is to edit or to add a new player
-  void openBottomSheetToSelectPlayers(int index) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (BuildContext context) {
-        return BottomDraggableScrollableContainer<Player>(
-          title: "Title",
-          elements: staticPlayers,
-          renderItem: (element) {
-            final player = element;
-            return PlayerSearchableListItem(player: player);
-          },
-        );
-      },
-    ).then((value) {
-      setState(() {
-        //TODO: refactor to be dynamic
-        // is editing
-        if (players.length > index) {
-          players[index] = staticPlayers[Random().nextInt(staticPlayers.length)];
-        } else {
-          players.add(staticPlayers[Random().nextInt(staticPlayers.length)]);
-        }
-      });
-    });
+  void initState() {
+    // load from API all the available players
+    // TODO Implement Lazy load to avoid load all the players at once
+    PlayersRepository.getAll().then((value) => setState(() {
+          players.addAll(value);
+          toIdle();
+        }));
+    super.initState();
   }
 
   void onStepContinue() {
@@ -80,14 +46,17 @@ class _CreateTeamViewState extends State<CreateTeamView> {
         switch (_currentStep) {
           case 0:
             // avoid to go next without a name for the team
-            if (_nameController.text.isEmpty) {
-              _nameFocusNode.requestFocus();
+            if (!validateForm()) {
+              activeAutoValidator();
+              requestFocusTo("name");
               return;
             }
           case 1:
+            // if still waiting for the list of players from repository
+            if (isLoading) return;
             // avoid to go next without at least a player
-            if (players.isEmpty) return;
-            if (players.length == 2) _currentStep += 1;
+            if (selectedPlayers.isEmpty) return;
+            if (selectedPlayers.length == 2) _currentStep += 1;
             break;
         }
 
@@ -104,13 +73,29 @@ class _CreateTeamViewState extends State<CreateTeamView> {
     }
   }
 
+  void createAndNavigateToTeamView() {
+    toSubmitting();
+    // create the team and navigate to the game page
+    Map<String, dynamic> data = {
+      "name": getControllerValue("name"),
+      "players": selectedPlayers,
+    };
+    TeamsRepository.create(data).then((newTeam) {
+      // navigates to the Team view after create the team
+      debugPrint("Team Created successfully");
+      context.showErrorSnackBar("Team Created successfully!", type: MessageTypes.success);
+      context.replace(TeamView.routePath, extra: newTeam);
+    }).catchError((error) {
+      toIdle();
+      context.showErrorSnackBar("Ups! Please try later.", type: MessageTypes.error);
+      debugPrint("An error occurred while creating the team : $error");
+    });
+  }
+
   // handle the click of next buttons
   void nextStep(ControlsDetails details) {
     if (details.currentStep == steps - 1) {
-      // create the team and navigate to the game page
-      Team newTeam = Team(id: 1, name: _nameController.text, players: players);
-      // and navigates to the Team view
-      context.replace(TeamView.routePath, extra: newTeam);
+      createAndNavigateToTeamView();
       return;
     }
     details.onStepContinue?.call();
@@ -131,27 +116,22 @@ class _CreateTeamViewState extends State<CreateTeamView> {
           return Padding(
             padding: const EdgeInsets.only(top: kSpacing),
             child: Row(
-              children: <Widget>[
-                ElevatedButton(
-                  onPressed: () => nextStep(details),
-                  child: Text(details.currentStep == steps - 1 ? 'Create' : 'Next'),
-                ),
-                // Only show Back button if not on the first step
-                if (_currentStep > 0)
-                  TextButton(
-                    onPressed: details.onStepCancel,
-                    child: const Text('Back'),
-                  ),
-              ],
+              children: <Widget>[_renderNextStepButton(details), _renderBackStepButton(details)],
             ),
           );
         },
         steps: [
           Step(
             title: const Text('Team Name'),
-            content: TextFormField(
-              controller: _nameController,
-              focusNode: _nameFocusNode,
+            content: Form(
+              autovalidateMode: autovalidateMode,
+              key: formKey,
+              child: TextFormField(
+                validator: (value) => notEmpty(value, msg: "The Team name is required"),
+                controller: getController("name"),
+                focusNode: getNodeFocus("name"),
+                keyboardType: TextInputType.text,
+              ),
             ),
             isActive: _currentStep >= 0,
             state: _currentStep > 0 ? StepState.complete : StepState.indexed,
@@ -185,6 +165,30 @@ class _CreateTeamViewState extends State<CreateTeamView> {
     );
   }
 
+  ElevatedButton _renderNextStepButton(ControlsDetails details) {
+    return isSubmitting
+        ? const ElevatedButton(
+            onPressed: null,
+            child: CircularProgressIndicator.adaptive(),
+          )
+        : ElevatedButton(
+            onPressed: () => nextStep(details),
+            child: Text(details.currentStep == steps - 1 ? 'Create' : 'Next'),
+          );
+  }
+
+  Widget _renderBackStepButton(ControlsDetails details) {
+    // Only show Back button if not on the first step
+    if (_currentStep > 0 && !isSubmitting) {
+      return TextButton(
+        onPressed: details.onStepCancel,
+        child: const Text('Back'),
+      );
+    }
+
+    return const SizedBox.shrink();
+  }
+
   Widget renderResume() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,7 +198,7 @@ class _CreateTeamViewState extends State<CreateTeamView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             "Team name:".h4(context),
-            Text(_nameController.text),
+            Text(getControllerValue("name")),
           ],
         ),
         const Divider(),
@@ -204,7 +208,7 @@ class _CreateTeamViewState extends State<CreateTeamView> {
           children: [
             "Team members:".h4(context),
             Column(
-              children: players.map((item) {
+              children: selectedPlayers.map((item) {
                 return Text(item.name);
               }).toList(),
             )
@@ -215,20 +219,58 @@ class _CreateTeamViewState extends State<CreateTeamView> {
   }
 
   Widget renderStepSelectPlayer(int p) {
+    if (isLoading) {
+      return const Row(
+        children: [Text("Loading players list"), SizedBox(width: kSpacing), CircularProgressIndicator.adaptive()],
+      );
+    }
     return TextButton(
       onPressed: () => openBottomSheetToSelectPlayers(p),
       child: Row(
         children: [
           // if the current player do not exists yet
-          if (players.length <= p) ...[
+          if (selectedPlayers.length <= p) ...[
             const Icon(Icons.person_add),
             const SizedBox(width: kSpacing),
             const Expanded(child: Text("Add a player to the team")),
           ],
           // if the player is already selected
-          if (players.length > p) Expanded(child: players[p].name.toText),
+          if (selectedPlayers.length > p) Expanded(child: selectedPlayers[p].name.toText),
         ],
       ),
     );
+  }
+
+  /// This function will open the bottom sheet to select the player
+  ///
+  /// [index] is the player to be selected
+  ///
+  /// with the [index] we can also know if is to edit or to add a new player
+  void openBottomSheetToSelectPlayers(int index) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return BottomDraggableScrollableContainer<Player>(
+          title: "Title",
+          elements: players,
+          renderItem: (element) {
+            final player = element;
+            return PlayerSearchableListItem(player: player);
+          },
+        );
+      },
+    ).then((value) {
+      setState(() {
+        //TODO: refactor to be dynamic
+        // is editing
+        if (selectedPlayers.length > index) {
+          selectedPlayers[index] = players[Random().nextInt(players.length)];
+        } else {
+          selectedPlayers.add(players[Random().nextInt(players.length)]);
+        }
+      });
+    });
   }
 }
