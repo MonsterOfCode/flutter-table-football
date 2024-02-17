@@ -4,7 +4,8 @@ import 'package:flutter_table_football/src/core/constants/constants.dart';
 import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
 import 'package:flutter_table_football/src/core/data/models/searchable.model.dart';
-import 'package:flutter_table_football/src/widgets/searchable_list.dart';
+import 'package:flutter_table_football/src/core/extensions/widgets/container.extension.dart';
+import 'package:flutter_table_football/src/widgets/lists/searchable_list.dart';
 
 class BottomDraggableScrollableContainer<T extends Searchable> extends StatelessWidget {
   final String title;
@@ -30,16 +31,7 @@ class BottomDraggableScrollableContainer<T extends Searchable> extends Stateless
                 clipBehavior: Clip.none,
                 children: [
                   // Container that makes the layout
-                  Container(
-                    margin: const EdgeInsets.only(top: kSpacingLarge),
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
-                      color: context.colorScheme.background,
-                      borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(kBorderRadiusLarge),
-                        topLeft: Radius.circular(kBorderRadiusLarge),
-                      ),
-                    ),
+                  SizedBox(
                     child: Column(
                       children: [
                         // Top widget (Title and close button)
@@ -54,7 +46,7 @@ class BottomDraggableScrollableContainer<T extends Searchable> extends Stateless
                         ),
                       ],
                     ),
-                  ),
+                  ).toBottomSheet(context, margin: const EdgeInsets.only(top: kSpacingLarge)),
                   // Floating button
                   Positioned(
                     top: 0,
