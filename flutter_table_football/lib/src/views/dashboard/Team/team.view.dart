@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/constants/constants.dart';
-import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
-import 'package:flutter_table_football/src/core/extensions/widgets/text.extension.dart';
 import 'package:flutter_table_football/src/data/models/team.model.dart';
 import 'package:flutter_table_football/src/widgets/list_items/game_item.dart';
+import 'package:flutter_table_football/src/widgets/lists/simple_list.dart';
 import 'package:flutter_table_football/src/widgets/scaffolds/glass_scaffold.dart';
 
 class TeamView extends StatelessWidget {
@@ -16,7 +15,7 @@ class TeamView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GlassScaffold(
-      title: team.name.toText.color(context.colorScheme.background),
+      title: team.name,
       backgroundPath: 'assets/team/background.jpeg',
       child: Column(
         children: [
@@ -33,7 +32,7 @@ class TeamView extends StatelessWidget {
                 ),
               ),
             ),
-          TeamMembersSection(team: team),
+          SimpleList(title: "Team members", players: team.players),
           if (team.lastGames.isNotEmpty) _LastGamesSection(team: team),
         ],
       ),
@@ -92,45 +91,6 @@ class _TeamInfoSection extends StatelessWidget {
                     value: "${team.goalsAgainst}",
                   ),
                 ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class TeamMembersSection extends StatelessWidget {
-  final Team team;
-
-  const TeamMembersSection({
-    super.key,
-    required this.team,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(kSpacing),
-        child: SizedBox(
-          width: double.infinity,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              "Team members".h3(context),
-              Column(
-                children: team.players.map((item) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      item.name.toText,
-                      "${item.points} pts".toText,
-                    ],
-                  );
-                }).toList(),
               )
             ],
           ),

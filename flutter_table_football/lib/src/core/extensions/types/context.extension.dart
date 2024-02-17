@@ -30,4 +30,34 @@ extension BuildContextExtension on BuildContext {
     );
     ScaffoldMessenger.of(this).showSnackBar(snackBar);
   }
+
+  Future<bool> showConfirmationAlertDialog(String msg) async {
+    final bool? result = await showAlertDialog<bool?>(
+      title: 'Confirm Action',
+      content: Text(msg),
+      onCancel: () {
+        Navigator.of(this).pop(false);
+      },
+      onConfirm: () {
+        Navigator.of(this).pop(true);
+      },
+    );
+    return result ?? false;
+  }
+
+  Future<T?> showAlertDialog<T>({String? title, required Widget content, void Function()? onCancel, void Function()? onConfirm}) {
+    return showDialog<T>(
+      context: this,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: title != null ? Text(title) : null,
+          content: content,
+          actions: <Widget>[
+            if (onCancel != null) TextButton(onPressed: onCancel, child: const Text('Cancel')),
+            if (onConfirm != null) TextButton(onPressed: onConfirm, child: const Text('Confirm')),
+          ],
+        );
+      },
+    );
+  }
 }

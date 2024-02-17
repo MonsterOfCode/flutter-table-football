@@ -34,11 +34,11 @@ List<Player> staticPlayers = [
 ];
 
 List<Game> staticGames = [
-  Game(id: 1, teamA: staticTeamsLite[0], teamB: staticTeamsLite[1], scoreTeamA: 2, scoreTeamB: 1, dateTime: DateTime.now(), done: true),
-  Game(id: 2, teamA: staticTeamsLite[1], teamB: staticTeamsLite[2], scoreTeamA: 1, scoreTeamB: 3, dateTime: DateTime.now(), done: true),
-  Game(id: 3, teamA: staticTeamsLite[0], teamB: staticTeamsLite[2], scoreTeamA: 4, scoreTeamB: 0, dateTime: DateTime.now(), done: true),
-  Game(id: 4, teamA: staticTeamsLite[2], teamB: staticTeamsLite[3], scoreTeamA: 3, scoreTeamB: 2, dateTime: DateTime.now(), done: true),
-  Game(id: 5, teamA: staticTeamsLite[1], teamB: staticTeamsLite[3], scoreTeamA: 2, scoreTeamB: 2, dateTime: DateTime.now(), done: true),
+  Game(id: 1, teamA: staticTeamsLite[0], teamB: staticTeamsLite[1], scoreTeamA: 2, scoreTeamB: 1, dateTime: DateTime.now(), done: false),
+  Game(id: 2, teamA: staticTeamsLite[1], teamB: staticTeamsLite[2], scoreTeamA: 1, scoreTeamB: 3, dateTime: DateTime.now(), done: false),
+  Game(id: 3, teamA: staticTeamsLite[0], teamB: staticTeamsLite[2], scoreTeamA: 4, scoreTeamB: 0, dateTime: DateTime.now(), done: false),
+  Game(id: 4, teamA: staticTeamsLite[2], teamB: staticTeamsLite[3], scoreTeamA: 3, scoreTeamB: 2, dateTime: DateTime.now(), done: false),
+  Game(id: 5, teamA: staticTeamsLite[1], teamB: staticTeamsLite[3], scoreTeamA: 2, scoreTeamB: 2, dateTime: DateTime.now(), done: false),
 ];
 
 List<TeamLite> staticTeamsLite = [

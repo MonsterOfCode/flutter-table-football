@@ -35,4 +35,17 @@ class GamesProvider {
     }
     return await Future.delayed(const Duration(seconds: 2)).then((value) => game);
   }
+
+  /// Request to the API to finish the game
+  ///
+  ///Return the game model to update in UI with the new score and other update on new updates
+  ///
+  /// If fail returns null
+  static Future<Game?> endGame(int gameId) async {
+    Game? game = staticGames.firstWhereOrNull((element) => element.id == gameId);
+    if (game != null) {
+      game = game.copyWith(done: true);
+    }
+    return await Future.delayed(const Duration(seconds: 2)).then((value) => game);
+  }
 }

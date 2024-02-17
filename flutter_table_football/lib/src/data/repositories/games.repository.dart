@@ -18,4 +18,9 @@ class GamesRepository {
   static Future<Game?> updateTeamGoal(int gameId, int teamId, int currentScore, {bool toIncrement = true}) async {
     return GamesProvider.updateTeamGoal(gameId, teamId, currentScore, toIncrement: toIncrement);
   }
+
+  /// end a Game
+  static Future<Game?> endGame(int gameId) async {
+    return GamesProvider.endGame(gameId);
+  }
 }

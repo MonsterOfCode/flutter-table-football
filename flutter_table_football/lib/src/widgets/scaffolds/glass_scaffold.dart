@@ -1,13 +1,24 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/constants/constants.dart';
+import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
+import 'package:flutter_table_football/src/core/extensions/widgets/text.extension.dart';
 
 class GlassScaffold extends StatelessWidget {
-  final Widget? title;
+  final String? title;
+  final List<Widget>? actions;
   final Widget? child;
   final String backgroundPath;
-  const GlassScaffold({super.key, required this.backgroundPath, this.title, this.child});
+
+  const GlassScaffold({
+    Key? key,
+    this.title,
+    this.child,
+    required this.backgroundPath,
+    this.actions,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +26,9 @@ class GlassScaffold extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: title,
+        title: title?.title.color(Colors.white),
         iconTheme: const IconThemeData(color: Colors.white),
+        actions: actions,
       ),
       body: Stack(
         children: <Widget>[
