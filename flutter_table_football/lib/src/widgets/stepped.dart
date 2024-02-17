@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/constants/constants.dart';
 
+class StepItem {
+  Widget title;
+  Widget content;
+
+  StepItem({required this.title, required this.content});
+}
+
 /// This widget allow to create a stepped form
 ///
 /// [executeOnStepContinue] is a map where you can add custom function to be
@@ -11,7 +18,7 @@ import 'package:flutter_table_football/src/core/constants/constants.dart';
 /// The form will move to next step if do not exists a
 /// function for the current step or if the FunctionToBeExecuted returns the number of steps to move
 class Stepped extends StatefulWidget {
-  final List<(Widget, Widget)> steps;
+  final List<StepItem> steps;
   final Map<int, int Function()?>? executeOnStepContinue;
   final void Function()? done;
   final Widget? title;
@@ -97,8 +104,8 @@ class _SteppedState extends State<Stepped> {
         steps: List.generate(widget.steps.length, (index) {
           var item = widget.steps[index];
           return Step(
-            title: item.$1,
-            content: item.$2,
+            title: item.title,
+            content: item.content,
             isActive: _currentStep >= index,
             state: _currentStep > index ? StepState.complete : StepState.indexed,
           );

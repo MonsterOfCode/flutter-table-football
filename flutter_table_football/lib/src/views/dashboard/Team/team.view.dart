@@ -33,7 +33,7 @@ class TeamView extends StatelessWidget {
                 ),
               ),
             ),
-          _TeamMembersSection(team: team),
+          TeamMembersSection(team: team),
           if (team.lastGames.isNotEmpty) _LastGamesSection(team: team),
         ],
       ),
@@ -101,11 +101,11 @@ class _TeamInfoSection extends StatelessWidget {
   }
 }
 
-///Private Widget to render the Team Members Section of the View
-class _TeamMembersSection extends StatelessWidget {
+class TeamMembersSection extends StatelessWidget {
   final Team team;
 
-  const _TeamMembersSection({
+  const TeamMembersSection({
+    super.key,
     required this.team,
   });
 

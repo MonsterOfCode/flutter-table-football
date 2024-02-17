@@ -49,7 +49,7 @@ class _CreateGameViewState extends State<CreateGameView> with FormHelper {
       // navigates to the Team view after create the team
       debugPrint("Game Created successfully");
       context.showErrorSnackBar("Game Created successfully!", type: MessageTypes.success);
-      context.replace(GameView.routeName, extra: newGame);
+      context.replace(GameView.routePath, extra: newGame);
     }).catchError((error) {
       toIdle();
       context.showErrorSnackBar("Ups! Please try later.", type: MessageTypes.error);
@@ -78,18 +78,9 @@ class _CreateGameViewState extends State<CreateGameView> with FormHelper {
       done: createAndNavigateToTeamView,
       executeOnStepContinue: {0: executeOnStep0, 1: executeOnStep1},
       steps: [
-        (
-          const Text('1º Team'),
-          renderStepSelectTeam(0),
-        ),
-        (
-          const Text('2º Team'),
-          renderStepSelectTeam(1),
-        ),
-        (
-          const Text('Resume'),
-          renderResume(),
-        )
+        StepItem(title: const Text('1º Team'), content: renderStepSelectTeam(0)),
+        StepItem(title: const Text('2º Team'), content: renderStepSelectTeam(1)),
+        StepItem(title: const Text('Resume'), content: renderResume()),
       ],
     );
   }

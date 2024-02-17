@@ -84,9 +84,9 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
       done: createAndNavigateToTeamView,
       executeOnStepContinue: {0: executeOnStep0, 1: executeOnStep1},
       steps: [
-        (
-          const Text('Team Name'),
-          Form(
+        StepItem(
+          title: const Text('Team Name'),
+          content: Form(
             autovalidateMode: autovalidateMode,
             key: formKey,
             child: TextFormField(
@@ -97,24 +97,17 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
             ),
           ),
         ),
-        (
-          const Text('1º Player'),
-          renderStepSelectPlayer(0),
-        ),
-        (
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('2º Player'),
-              "optional".note(context),
-            ],
-          ),
-          renderStepSelectPlayer(1),
-        ),
-        (
-          const Text('Resume'),
-          renderResume(),
-        )
+        StepItem(title: const Text('1º Player'), content: renderStepSelectPlayer(0)),
+        StepItem(
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('2º Player'),
+                "optional".note(context),
+              ],
+            ),
+            content: renderStepSelectPlayer(1)),
+        StepItem(title: const Text('Resume'), content: renderResume()),
       ],
     );
   }

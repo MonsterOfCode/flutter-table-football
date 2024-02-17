@@ -40,7 +40,10 @@ class GlassScaffold extends StatelessWidget {
           ),
           // Content on top of the glass effect
           SafeArea(
-            child: Padding(padding: const EdgeInsets.all(kSpacing), child: child),
+            child: Padding(
+              padding: const EdgeInsets.all(kSpacing),
+              child: SingleChildScrollView(child: child),
+            ),
           ),
         ],
       ),

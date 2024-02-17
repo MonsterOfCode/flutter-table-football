@@ -13,4 +13,9 @@ class GamesRepository {
   static Future<List<Game>> getAll() async {
     return GamesProvider.fetch();
   }
+
+  /// Add a new Goal to a team
+  static Future<Game?> updateTeamGoal(int gameId, int teamId, int currentScore, {bool toIncrement = true}) async {
+    return GamesProvider.updateTeamGoal(gameId, teamId, currentScore, toIncrement: toIncrement);
+  }
 }

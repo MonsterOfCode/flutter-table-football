@@ -17,17 +17,17 @@ class GameListItem extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  game.team1.name.toText,
+                  game.teamA.name.toText,
                   const SizedBox(width: 10),
-                  "${game.scoreOfTeam(game.team1)}".toText,
+                  "${game.scoreTeamA}".toText,
                 ],
               ),
               const Icon(Icons.remove),
               Row(
                 children: [
-                  "${game.scoreOfTeam(game.team2)}".toText,
+                  "${game.scoreTeamB}".toText,
                   const SizedBox(width: 10),
-                  game.team2.name.toText,
+                  game.teamB.name.toText,
                 ],
               ),
             ],
