@@ -12,6 +12,7 @@ import 'package:flutter_table_football/src/data/repositories/teams.repository.da
 import 'package:flutter_table_football/src/views/dashboard/team/team.view.dart';
 import 'package:flutter_table_football/src/widgets/bottom_draggable_container.dart';
 import 'package:flutter_table_football/src/widgets/list_items/player_searchable_list_item.dart';
+import 'package:flutter_table_football/src/widgets/stepped.dart';
 import 'package:go_router/go_router.dart';
 
 class CreateTeamView extends StatefulWidget {
@@ -24,8 +25,6 @@ class CreateTeamView extends StatefulWidget {
 }
 
 class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
-  int _currentStep = 0;
-  final int steps = 4;
   final List<PlayerLite> selectedPlayers = List.empty(growable: true);
   final List<PlayerLite> players = List.empty(growable: true);
 
@@ -38,39 +37,6 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
           toIdle();
         }));
     super.initState();
-  }
-
-  void onStepContinue() {
-    if (_currentStep < steps) {
-      setState(() {
-        switch (_currentStep) {
-          case 0:
-            // avoid to go next without a name for the team
-            if (!validateForm()) {
-              activeAutoValidator();
-              requestFocusTo("name");
-              return;
-            }
-          case 1:
-            // if still waiting for the list of players from repository
-            if (isLoading) return;
-            // avoid to go next without at least a player
-            if (selectedPlayers.isEmpty) return;
-            if (selectedPlayers.length == 2) _currentStep += 1;
-            break;
-        }
-
-        _currentStep += 1;
-      });
-    }
-  }
-
-  void onStepCancel() {
-    if (_currentStep > 0) {
-      setState(() {
-        _currentStep -= 1;
-      });
-    }
   }
 
   void createAndNavigateToTeamView() {
@@ -92,101 +58,65 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
     });
   }
 
-  // handle the click of next buttons
-  void nextStep(ControlsDetails details) {
-    if (details.currentStep == steps - 1) {
-      createAndNavigateToTeamView();
-      return;
+  int executeOnStep0() {
+    // avoid to go next without a name for the team
+    if (!validateForm()) {
+      activeAutoValidator();
+      requestFocusTo("name");
+      return 0;
     }
-    details.onStepContinue?.call();
+    return 1;
+  }
+
+  int executeOnStep1() {
+    // if still waiting for the list of players from repository
+    if (isLoading) return 0;
+    // avoid to go next without at least a player
+    if (selectedPlayers.isEmpty) return 0;
+    if (selectedPlayers.length == 2) return 2;
+    return 1;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Create Team"),
-      ),
-      body: Stepper(
-        currentStep: _currentStep,
-        onStepContinue: onStepContinue,
-        onStepTapped: (value) => setState(() => value < _currentStep ? _currentStep = value : null),
-        onStepCancel: onStepCancel,
-        controlsBuilder: (BuildContext context, ControlsDetails details) {
-          return Padding(
-            padding: const EdgeInsets.only(top: kSpacing),
-            child: Row(
-              children: <Widget>[_renderNextStepButton(details), _renderBackStepButton(details)],
+    return Stepped(
+      title: "Create Team".title,
+      done: createAndNavigateToTeamView,
+      executeOnStepContinue: {0: executeOnStep0, 1: executeOnStep1},
+      steps: [
+        (
+          const Text('Team Name'),
+          Form(
+            autovalidateMode: autovalidateMode,
+            key: formKey,
+            child: TextFormField(
+              validator: (value) => notEmpty(value, msg: "The Team name is required"),
+              controller: getController("name"),
+              focusNode: getNodeFocus("name"),
+              keyboardType: TextInputType.text,
             ),
-          );
-        },
-        steps: [
-          Step(
-            title: const Text('Team Name'),
-            content: Form(
-              autovalidateMode: autovalidateMode,
-              key: formKey,
-              child: TextFormField(
-                validator: (value) => notEmpty(value, msg: "The Team name is required"),
-                controller: getController("name"),
-                focusNode: getNodeFocus("name"),
-                keyboardType: TextInputType.text,
-              ),
-            ),
-            isActive: _currentStep >= 0,
-            state: _currentStep > 0 ? StepState.complete : StepState.indexed,
           ),
-          Step(
-            title: const Text('1º Player'),
-            content: renderStepSelectPlayer(0),
-            isActive: _currentStep >= 1,
-            state: _currentStep > 1 ? StepState.complete : StepState.indexed,
+        ),
+        (
+          const Text('1º Player'),
+          renderStepSelectPlayer(0),
+        ),
+        (
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('2º Player'),
+              "optional".note(context),
+            ],
           ),
-          Step(
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('2º Player'),
-                "optional".note(context),
-              ],
-            ),
-            content: renderStepSelectPlayer(1),
-            isActive: _currentStep >= 2,
-            state: _currentStep > 2 ? StepState.complete : StepState.indexed,
-          ),
-          Step(
-            title: const Text('Resume'),
-            content: renderResume(),
-            isActive: _currentStep >= 3,
-            state: _currentStep > 3 ? StepState.complete : StepState.indexed,
-          ),
-        ],
-      ),
+          renderStepSelectPlayer(1),
+        ),
+        (
+          const Text('Resume'),
+          renderResume(),
+        )
+      ],
     );
-  }
-
-  ElevatedButton _renderNextStepButton(ControlsDetails details) {
-    return isSubmitting
-        ? const ElevatedButton(
-            onPressed: null,
-            child: CircularProgressIndicator.adaptive(),
-          )
-        : ElevatedButton(
-            onPressed: () => nextStep(details),
-            child: Text(details.currentStep == steps - 1 ? 'Create' : 'Next'),
-          );
-  }
-
-  Widget _renderBackStepButton(ControlsDetails details) {
-    // Only show Back button if not on the first step
-    if (_currentStep > 0 && !isSubmitting) {
-      return TextButton(
-        onPressed: details.onStepCancel,
-        child: const Text('Back'),
-      );
-    }
-
-    return const SizedBox.shrink();
   }
 
   Widget renderResume() {
@@ -256,8 +186,7 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
           title: "Title",
           elements: players,
           renderItem: (element) {
-            final player = element;
-            return PlayerSearchableListItem(player: player);
+            return PlayerSearchableListItem(player: element);
           },
         );
       },

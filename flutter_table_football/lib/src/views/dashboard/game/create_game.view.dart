@@ -12,6 +12,7 @@ import 'package:flutter_table_football/src/data/repositories/teams.repository.da
 import 'package:flutter_table_football/src/views/dashboard/game/game.view.dart';
 import 'package:flutter_table_football/src/widgets/bottom_draggable_container.dart';
 import 'package:flutter_table_football/src/widgets/list_items/team_searchable_list_item.dart';
+import 'package:flutter_table_football/src/widgets/stepped.dart';
 import 'package:go_router/go_router.dart';
 
 class CreateGameView extends StatefulWidget {
@@ -24,15 +25,13 @@ class CreateGameView extends StatefulWidget {
 }
 
 class _CreateGameViewState extends State<CreateGameView> with FormHelper {
-  int _currentStep = 0;
-  final int steps = 3;
   final List<TeamLite> selectedTeams = List.empty(growable: true);
   final List<TeamLite> teams = List.empty(growable: true);
 
   @override
   void initState() {
     // load from API all the available players
-    // TODO Implement Lazy load to avoid load all the teams at once
+    // TODO Implement Lazy load to avoid load all the players at once
     TeamsRepository.getAll().then((value) => setState(() {
           teams.addAll(value);
           toIdle();
@@ -40,43 +39,17 @@ class _CreateGameViewState extends State<CreateGameView> with FormHelper {
     super.initState();
   }
 
-  void onStepContinue() {
-    if (_currentStep < steps) {
-      setState(() {
-        switch (_currentStep) {
-          case 0:
-            // if still waiting for the list of teams from repository
-            if (isLoading) return;
-            // avoid to go next without at least a player
-            if (selectedTeams.isEmpty) return;
-            if (selectedTeams.length == 2) _currentStep += 1;
-            break;
-        }
-
-        _currentStep += 1;
-      });
-    }
-  }
-
-  void onStepCancel() {
-    if (_currentStep > 0) {
-      setState(() {
-        _currentStep -= 1;
-      });
-    }
-  }
-
   void createAndNavigateToTeamView() {
     toSubmitting();
     // create the team and navigate to the game page
     Map<String, dynamic> data = {
-      "teams": selectedTeams,
+      "players": selectedTeams,
     };
-    GamesRepository.create(data).then((newTeam) {
+    GamesRepository.create(data).then((newGame) {
       // navigates to the Team view after create the team
       debugPrint("Game Created successfully");
       context.showErrorSnackBar("Game Created successfully!", type: MessageTypes.success);
-      context.replace(GameView.routePath, extra: newTeam);
+      context.replace(GameView.routeName, extra: newGame);
     }).catchError((error) {
       toIdle();
       context.showErrorSnackBar("Ups! Please try later.", type: MessageTypes.error);
@@ -84,86 +57,41 @@ class _CreateGameViewState extends State<CreateGameView> with FormHelper {
     });
   }
 
-  // handle the click of next buttons
-  void nextStep(ControlsDetails details) {
-    if (details.currentStep == steps - 1) {
-      createAndNavigateToTeamView();
-      return;
-    }
-    details.onStepContinue?.call();
+  int executeOnStep0() {
+    // if still waiting for the list of players from repository
+    if (isLoading) return 0;
+    // avoid to go next without at least a player
+    if (selectedTeams.isEmpty) return 0;
+    if (selectedTeams.length == 2) return 2;
+    return 1;
+  }
+
+  int executeOnStep1() {
+    if (selectedTeams.length != 2) return 0;
+    return 1;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Create Game"),
-      ),
-      body: Stepper(
-        currentStep: _currentStep,
-        onStepContinue: onStepContinue,
-        onStepTapped: (value) => setState(() => value < _currentStep ? _currentStep = value : null),
-        onStepCancel: onStepCancel,
-        controlsBuilder: (BuildContext context, ControlsDetails details) {
-          return Padding(
-            padding: const EdgeInsets.only(top: kSpacing),
-            child: Row(
-              children: <Widget>[_renderNextStepButton(details), _renderBackStepButton(details)],
-            ),
-          );
-        },
-        steps: [
-          Step(
-            title: const Text('1º Team'),
-            content: renderStepSelectTeam(0),
-            isActive: _currentStep >= 1,
-            state: _currentStep > 1 ? StepState.complete : StepState.indexed,
-          ),
-          Step(
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('2º Team'),
-                "optional".note(context),
-              ],
-            ),
-            content: renderStepSelectTeam(1),
-            isActive: _currentStep >= 2,
-            state: _currentStep > 2 ? StepState.complete : StepState.indexed,
-          ),
-          Step(
-            title: const Text('Resume'),
-            content: renderResume(),
-            isActive: _currentStep >= 3,
-            state: _currentStep > 3 ? StepState.complete : StepState.indexed,
-          ),
-        ],
-      ),
+    return Stepped(
+      title: "Create Game".title,
+      done: createAndNavigateToTeamView,
+      executeOnStepContinue: {0: executeOnStep0, 1: executeOnStep1},
+      steps: [
+        (
+          const Text('1º Team'),
+          renderStepSelectTeam(0),
+        ),
+        (
+          const Text('2º Team'),
+          renderStepSelectTeam(1),
+        ),
+        (
+          const Text('Resume'),
+          renderResume(),
+        )
+      ],
     );
-  }
-
-  ElevatedButton _renderNextStepButton(ControlsDetails details) {
-    return isSubmitting
-        ? const ElevatedButton(
-            onPressed: null,
-            child: CircularProgressIndicator.adaptive(),
-          )
-        : ElevatedButton(
-            onPressed: () => nextStep(details),
-            child: Text(details.currentStep == steps - 1 ? 'Create' : 'Next'),
-          );
-  }
-
-  Widget _renderBackStepButton(ControlsDetails details) {
-    // Only show Back button if not on the first step
-    if (_currentStep > 0 && !isSubmitting) {
-      return TextButton(
-        onPressed: details.onStepCancel,
-        child: const Text('Back'),
-      );
-    }
-
-    return const SizedBox.shrink();
   }
 
   Widget renderResume() {
@@ -174,7 +102,7 @@ class _CreateGameViewState extends State<CreateGameView> with FormHelper {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            "Game Teams:".h4(context),
+            "Game teams:".h4(context),
             Column(
               children: selectedTeams.map((item) {
                 return Text(item.name);
@@ -189,18 +117,18 @@ class _CreateGameViewState extends State<CreateGameView> with FormHelper {
   Widget renderStepSelectTeam(int p) {
     if (isLoading) {
       return const Row(
-        children: [Text("Loading Teams list"), SizedBox(width: kSpacing), CircularProgressIndicator.adaptive()],
+        children: [Text("Loading teams list"), SizedBox(width: kSpacing), CircularProgressIndicator.adaptive()],
       );
     }
     return TextButton(
-      onPressed: () => openBottomSheetToSelectPlayers(p),
+      onPressed: () => openBottomSheetToSelectTeams(p),
       child: Row(
         children: [
           // if the current player do not exists yet
           if (selectedTeams.length <= p) ...[
             const Icon(Icons.person_add),
             const SizedBox(width: kSpacing),
-            Expanded(child: Text("Add the $pº Team to the game")),
+            Expanded(child: Text("Add the ${p + 1}º team to the game")),
           ],
           // if the player is already selected
           if (selectedTeams.length > p) Expanded(child: selectedTeams[p].name.toText),
@@ -214,7 +142,7 @@ class _CreateGameViewState extends State<CreateGameView> with FormHelper {
   /// [index] is the player to be selected
   ///
   /// with the [index] we can also know if is to edit or to add a new player
-  void openBottomSheetToSelectPlayers(int index) {
+  void openBottomSheetToSelectTeams(int index) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -224,8 +152,7 @@ class _CreateGameViewState extends State<CreateGameView> with FormHelper {
           title: "Title",
           elements: teams,
           renderItem: (element) {
-            final team = element;
-            return TeamSearchableListItem(team: team);
+            return TeamSearchableListItem(team: element);
           },
         );
       },
