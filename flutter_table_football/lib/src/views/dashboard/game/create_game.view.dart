@@ -7,7 +7,6 @@ import 'package:flutter_table_football/src/core/extensions/types/context.extensi
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
 import 'package:flutter_table_football/src/core/mixins/form_validations.mixin.dart';
 import 'package:flutter_table_football/src/data/models/lite/team_lite.model.dart';
-import 'package:flutter_table_football/src/data/models/team.model.dart';
 import 'package:flutter_table_football/src/data/repositories/games.repository.dart';
 import 'package:flutter_table_football/src/data/repositories/teams.repository.dart';
 import 'package:flutter_table_football/src/views/dashboard/game/game.view.dart';
