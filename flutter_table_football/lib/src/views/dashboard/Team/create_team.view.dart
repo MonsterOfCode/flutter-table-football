@@ -26,18 +26,6 @@ class CreateTeamView extends StatefulWidget {
 
 class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
   final List<PlayerLite> selectedPlayers = List.empty(growable: true);
-  final List<PlayerLite> players = List.empty(growable: true);
-
-  @override
-  void initState() {
-    // load from API all the available players
-    // TODO Implement Lazy load to avoid load all the players at once
-    PlayersRepository.getAll().then((value) => setState(() {
-          players.addAll(value);
-          toIdle();
-        }));
-    super.initState();
-  }
 
   void createAndNavigateToTeamView() {
     toSubmitting();
@@ -69,8 +57,6 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
   }
 
   int executeOnStep1() {
-    // if still waiting for the list of players from repository
-    if (isLoading) return 0;
     // avoid to go next without at least a player
     if (selectedPlayers.isEmpty) return 0;
     if (selectedPlayers.length == 2) return 2;
@@ -142,11 +128,6 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
   }
 
   Widget renderStepSelectPlayer(int p) {
-    if (isLoading) {
-      return const Row(
-        children: [Text("Loading players list"), SizedBox(width: kSpacing), CircularProgressIndicator.adaptive()],
-      );
-    }
     return TextButton(
       onPressed: () => openBottomSheetToSelectPlayers(p),
       child: Row(
@@ -176,22 +157,25 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
         return BottomDraggableScrollableContainer<PlayerLite>(
-          title: "Title",
-          elements: players,
+          title: "Players",
+          fetchItems: PlayersRepository.getByQuery,
           renderItem: (element) {
             return PlayerSearchableListItem(player: element);
           },
         );
       },
     ).then((value) {
-      setState(() {
-        //TODO: refactor to be dynamic
-        // is editing
-        if (selectedPlayers.length > index) {
-          selectedPlayers[index] = players[Random().nextInt(players.length)];
-        } else {
-          selectedPlayers.add(players[Random().nextInt(players.length)]);
-        }
+      PlayersRepository.getByQuery().then((players) {
+        setState(() {
+          //TODO: refactor to be dynamic
+
+          // is editing
+          if (selectedPlayers.length > index) {
+            selectedPlayers[index] = players[Random().nextInt(players.length)];
+          } else {
+            selectedPlayers.add(players[Random().nextInt(players.length)]);
+          }
+        });
       });
     });
   }

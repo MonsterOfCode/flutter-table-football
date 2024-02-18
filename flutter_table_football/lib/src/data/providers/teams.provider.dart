@@ -21,13 +21,12 @@ class TeamsProvider {
     return staticTeams.firstWhereOrNull((element) => element.id == id);
   }
 
-  /// Request to the API by the list of all TeamsLite
+  /// Request from the API for a list of Teams using a query
   ///
-  /// If fail returns an empty List
-  static Future<List<TeamLite>> fetch() async {
-    return await Future.delayed(const Duration(seconds: 2)).then((value) => staticTeamsLite).catchError((onError) {
-      return List<TeamLite>.empty(growable: true);
-    });
+  /// If fail returns null
+  static Future<List<TeamLite>> getByQuery({String query = ''}) async {
+    await Future.delayed(const Duration(seconds: 2));
+    return staticTeamsLite.where((element) => element.searchable.contains(query)).toList();
   }
 
   /// Request to the API by the top 10 teams

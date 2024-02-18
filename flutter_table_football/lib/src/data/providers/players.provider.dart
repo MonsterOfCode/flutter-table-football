@@ -13,13 +13,12 @@ class PlayersProvider {
     return const Player(name: "New Player", points: 0);
   }
 
-  /// Request to the API by the list of all PlayersLite because it to show on list
+  /// Request from the API for a list of Players using a query
   ///
-  /// If fail returns an empty List
-  static Future<List<PlayerLite>> fetch() async {
-    return await Future.delayed(const Duration(seconds: 2)).then((value) => staticPlayersLite).catchError((onError) {
-      return List<PlayerLite>.empty(growable: true);
-    });
+  /// If fail returns null
+  static Future<List<PlayerLite>> getByQuery({String query = ''}) async {
+    await Future.delayed(const Duration(seconds: 2));
+    return staticPlayersLite.where((element) => element.searchable.contains(query)).toList();
   }
 
   /// Request to the API by the top 10 playersLite

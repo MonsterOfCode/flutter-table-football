@@ -16,8 +16,8 @@ class TeamsRepository {
   }
 
   /// Fetch all the teams registered at the platform
-  static Future<List<TeamLite>> getAll() async {
-    return TeamsProvider.fetch();
+  static Future<List<TeamLite>> getByQuery({String query = ''}) async {
+    return TeamsProvider.getByQuery(query: query);
   }
 
   /// Fetch the top 10 Teams

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_table_football/src/core/data/models/searchable.model.dart';
 import 'package:flutter_table_football/src/data/models/lite/team_lite.model.dart';
 
 /// Game Model
@@ -12,7 +13,7 @@ import 'package:flutter_table_football/src/data/models/lite/team_lite.model.dart
 /// *[DateTime] DateTime
 /// *[bool] done
 @immutable
-class Game {
+class Game implements Searchable {
   final int id;
   final TeamLite teamA;
   final TeamLite teamB;
@@ -100,6 +101,9 @@ class Game {
       done: map['done'] as bool,
     );
   }
+
+  @override
+  String get searchable => "${teamA.searchable} ${teamB.searchable}";
 
   @override
   String toString() {

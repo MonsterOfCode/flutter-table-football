@@ -28,22 +28,10 @@ class CreateGameView extends StatefulWidget {
 
 class _CreateGameViewState extends State<CreateGameView> with FormHelper {
   final List<TeamLite> selectedTeams = List.empty(growable: true);
-  final List<TeamLite> teams = List.empty(growable: true);
   bool alreadyFinishedGame = false;
   int scoreTeamA = 0;
   int scoreTeamB = 0;
   int _currentStep = 0;
-
-  @override
-  void initState() {
-    // load from API all the available players
-    // TODO Implement Lazy load to avoid load all the players at once
-    TeamsRepository.getAll().then((value) => setState(() {
-          teams.addAll(value);
-          toIdle();
-        }));
-    super.initState();
-  }
 
   // Function that is called at the end of all steps to finally create the Game
   void createAndNavigateToTeamView() {
@@ -171,23 +159,27 @@ class _CreateGameViewState extends State<CreateGameView> with FormHelper {
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
         return BottomDraggableScrollableContainer<TeamLite>(
-          title: "Title",
-          elements: teams,
+          title: "Teams",
+          fetchItems: TeamsRepository.getByQuery,
           renderItem: (element) {
             return TeamSearchableListItem(team: element);
           },
         );
       },
     ).then((value) {
-      setState(() {
-        //TODO: refactor to be dynamic
-        // is editing
-        if (selectedTeams.length > index) {
-          selectedTeams[index] = teams[Random().nextInt(teams.length)];
-        } else {
-          selectedTeams.add(teams[Random().nextInt(teams.length)]);
-        }
-      });
+      TeamsRepository.getByQuery().then(
+        (teams) {
+          setState(() {
+            //TODO: refactor to be dynamic
+            // is editing
+            if (selectedTeams.length > index) {
+              selectedTeams[index] = teams[Random().nextInt(teams.length)];
+            } else {
+              selectedTeams.add(teams[Random().nextInt(teams.length)]);
+            }
+          });
+        },
+      );
     });
   }
 }

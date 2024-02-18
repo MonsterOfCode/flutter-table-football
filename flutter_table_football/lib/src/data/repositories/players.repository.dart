@@ -10,9 +10,9 @@ class PlayersRepository {
     return PlayersProvider.create(data);
   }
 
-  /// Fetch all the players registered at the platform
-  static Future<List<PlayerLite>> getAll() async {
-    return PlayersProvider.fetch();
+  /// Fetch the teams registered on the platform
+  static Future<List<PlayerLite>> getByQuery({String query = ''}) async {
+    return PlayersProvider.getByQuery(query: query);
   }
 
   /// Fetch the top 10 players

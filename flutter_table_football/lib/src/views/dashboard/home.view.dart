@@ -3,6 +3,7 @@ import 'package:flutter_table_football/src/core/constants/constants.dart';
 import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/widgets/text.extension.dart';
+import 'package:flutter_table_football/src/core/extensions/widgets/widget.extension.dart';
 import 'package:flutter_table_football/src/data/models/player.model.dart';
 import 'package:flutter_table_football/src/data/repositories/auth.repository.dart';
 import 'package:flutter_table_football/src/data/repositories/players.repository.dart';
@@ -66,7 +67,7 @@ class _HomeViewState extends State<HomeView> {
                   future: TeamsRepository.getTop10(),
                 ),
               ],
-            ),
+            ).scrollable(),
     );
   }
 }

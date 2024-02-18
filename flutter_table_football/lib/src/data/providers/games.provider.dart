@@ -11,13 +11,12 @@ class GamesProvider {
     return staticGames.last;
   }
 
-  /// Request to the API by the list of all Players
+  /// Request from the API for a list of Games using a query
   ///
-  /// If fail returns an empty List
-  static Future<List<Game>> fetch() async {
-    return await Future.delayed(const Duration(seconds: 2)).then((value) => staticGames).catchError((onError) {
-      return List<Game>.empty(growable: true);
-    });
+  /// If fail returns null
+  static Future<List<Game>> getByQuery({String query = ''}) async {
+    await Future.delayed(const Duration(seconds: 2));
+    return staticGames.where((element) => element.searchable.contains(query)).toList();
   }
 
   /// Request to the API to add a new goal to a team

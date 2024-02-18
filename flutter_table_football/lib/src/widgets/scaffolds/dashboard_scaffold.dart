@@ -13,11 +13,9 @@ class DashboardScaffold extends StatelessWidget {
       appBar: AppBar(
         title: title.title,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(kSpacing),
-          child: child,
-        ),
+      body: Padding(
+        padding: const EdgeInsets.all(kSpacing),
+        child: child,
       ),
     );
   }

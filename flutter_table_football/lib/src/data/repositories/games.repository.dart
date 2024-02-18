@@ -9,9 +9,9 @@ class GamesRepository {
     return GamesProvider.create(data);
   }
 
-  /// Fetch all the players registered at the platform
-  static Future<List<Game>> getAll() async {
-    return GamesProvider.fetch();
+  /// Fetch the teams registered on the platform
+  static Future<List<Game>> getByQuery({String query = ''}) async {
+    return GamesProvider.getByQuery(query: query);
   }
 
   /// Add a new Goal to a team
