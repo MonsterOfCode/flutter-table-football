@@ -1,7 +1,6 @@
 import 'package:flutter_table_football/src/core/constants/constants.dart';
 import 'package:flutter_table_football/src/core/extensions/types/iterable.extension.dart';
 import 'package:flutter_table_football/src/data/models/lite/team_lite.model.dart';
-import 'package:flutter_table_football/src/data/models/player.model.dart';
 import 'package:flutter_table_football/src/data/models/team.model.dart';
 
 class TeamsProvider {
@@ -11,6 +10,14 @@ class TeamsProvider {
   static Future<Team?> create(Map<String, dynamic> data) async {
     await Future.delayed(const Duration(seconds: 2));
     return staticTeams.last;
+  }
+
+  /// Request to the API by the full data of a Team
+  ///
+  /// If fail returns null
+  static Future<Team?> requestProfile(int id) async {
+    await Future.delayed(const Duration(seconds: 2));
+    return staticTeams.firstWhereOrNull((element) => element.id == id);
   }
 
   /// Request from the API a Team

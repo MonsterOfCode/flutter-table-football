@@ -1,42 +1,79 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/constants/constants.dart';
+import 'package:flutter_table_football/src/core/data/enums/message_types.enum.dart';
+import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/widgets/widget.extension.dart';
+import 'package:flutter_table_football/src/data/models/lite/team_lite.model.dart';
 import 'package:flutter_table_football/src/data/models/team.model.dart';
+import 'package:flutter_table_football/src/data/repositories/teams.repository.dart';
 import 'package:flutter_table_football/src/widgets/list_items/game_item.dart';
 import 'package:flutter_table_football/src/widgets/lists/simple_list.dart';
 import 'package:flutter_table_football/src/widgets/scaffolds/glass_scaffold.dart';
 
-class TeamView extends StatelessWidget {
-  final Team team;
+class TeamView extends StatefulWidget {
+  final Object? team;
   static const routeName = "team";
   static const routePath = "/dashboard/team";
   const TeamView({super.key, required this.team});
 
   @override
+  State<TeamView> createState() => _TeamViewState();
+}
+
+class _TeamViewState extends State<TeamView> {
+  late Team _team;
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    assert(widget.team is Team || widget.team is TeamLite, "You must pass a valid model of the class Team or TeamLite");
+    if (widget.team is Team) _team = widget.team as Team;
+
+    _isLoading = true;
+    requestTeamProfile();
+    super.initState();
+  }
+
+  void requestTeamProfile() {
+    TeamsRepository.loadProfile((widget.team as TeamLite).id).then((value) {
+      if (value == null) {
+        context.showErrorSnackBar("Ups! Please try later", type: MessageTypes.error);
+        return;
+      }
+      setState(() {
+        _team = value;
+        _isLoading = false;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GlassScaffold(
-      title: team.name,
+      title: _isLoading ? "Loading..." : _team.name,
       backgroundPath: 'assets/team/background.jpeg',
-      child: Column(
-        children: [
-          if (team.lastGames.isNotEmpty) _TeamInfoSection(team: team),
-          if (team.lastGames.isEmpty)
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(kSpacing),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Center(
-                    child: "No games yet".h3(context),
+      child: _isLoading
+          ? const Center(child: CircularProgressIndicator.adaptive())
+          : Column(
+              children: [
+                if (_team.lastGames.isNotEmpty) _TeamInfoSection(team: _team),
+                if (_team.lastGames.isEmpty)
+                  Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(kSpacing),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: Center(
+                          child: "No games yet".h3(context),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
-          SimpleList(title: "Team members", players: team.players),
-          if (team.lastGames.isNotEmpty) _LastGamesSection(team: team),
-        ],
-      ).scrollable(),
+                SimpleList(title: "Team members", players: _team.players),
+                if (_team.lastGames.isNotEmpty) _LastGamesSection(team: _team),
+              ],
+            ).scrollable(),
     );
   }
 }

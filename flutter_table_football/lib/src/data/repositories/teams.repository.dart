@@ -10,6 +10,13 @@ class TeamsRepository {
     return TeamsProvider.create(data);
   }
 
+  /// Request the full data of a Team
+  ///
+  /// If something wrong returns null
+  static Future<Team?> loadProfile(int id) async {
+    return TeamsProvider.requestProfile(id);
+  }
+
   /// Fetch a team
   static Future<Team?> getById(int id) async {
     return TeamsProvider.getById(id);

@@ -35,7 +35,7 @@ final GoRouter router = GoRouter(
         GoRoute(name: DashboardView.routeName, path: DashboardView.routeName, builder: (context, state) => const DashboardView()),
 
         // Single Team View
-        GoRoute(name: TeamView.routeName, path: TeamView.routeName, builder: (context, state) => TeamView(team: state.extra as Team)),
+        GoRoute(name: TeamView.routeName, path: TeamView.routeName, builder: (context, state) => TeamView(team: state.extra)),
         // Create Team View
         GoRoute(name: CreateTeamView.routeName, path: CreateTeamView.routeName, builder: (context, state) => const CreateTeamView()),
 
