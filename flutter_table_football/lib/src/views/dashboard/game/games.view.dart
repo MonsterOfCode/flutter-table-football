@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
-import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
 import 'package:flutter_table_football/src/data/models/game.model.dart';
 import 'package:flutter_table_football/src/data/repositories/games.repository.dart';
 import 'package:flutter_table_football/src/views/dashboard/game/create_game.view.dart';
 import 'package:flutter_table_football/src/widgets/list_items/game_searchable_list_item.dart';
-import 'package:flutter_table_football/src/widgets/list_items/team_searchable_list_item.dart';
 import 'package:flutter_table_football/src/widgets/lists/searchable_list.dart';
 import 'package:flutter_table_football/src/widgets/scaffolds/list_view_scaffold.dart';
 import 'package:go_router/go_router.dart';

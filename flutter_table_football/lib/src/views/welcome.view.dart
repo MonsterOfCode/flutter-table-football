@@ -18,17 +18,18 @@ class WelcomeView extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          "⚽️ Table Football ⚽️".bigTitle(context),
-          const SizedBox(height: 30),
-          TextButton(
-            onPressed: () => context.goNamed(DashboardView.routeName),
-            child: "Continue".h1(context).bold(context).color(Colors.white),
-          ),
-        ],
+      child: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(child: Center(child: "⚽️ Table Football ⚽️".bigTitle(context))),
+            TextButton(
+              onPressed: () => context.goNamed(DashboardView.routeName),
+              child: "Continue".h1(context).bold(context).color(Colors.white),
+            ),
+          ],
+        ),
       ),
     );
   }
