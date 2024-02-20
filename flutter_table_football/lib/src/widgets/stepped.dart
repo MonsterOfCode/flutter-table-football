@@ -86,8 +86,8 @@ class _SteppedState extends State<Stepped> {
         // the function defined for the current step will define the number of steps to move forward
         // like that you can manipulate the progression based on some conditions or user inputs
         _currentStep += widget.executeOnStepContinue?[_currentStep]?.call() ?? 1;
-        widget.onStepChanges?.call(_currentStep);
       });
+      widget.onStepChanges?.call(_currentStep);
     }
   }
 
@@ -96,8 +96,8 @@ class _SteppedState extends State<Stepped> {
     if (_currentStep > 0) {
       setState(() {
         _currentStep -= 1;
-        widget.onStepChanges?.call(_currentStep);
       });
+      widget.onStepChanges?.call(_currentStep);
     }
   }
 
@@ -120,6 +120,7 @@ class _SteppedState extends State<Stepped> {
     // if the user tries to go forward directly, do nothing
     if (step > _currentStep) return;
     setState(() => _currentStep = step);
+    widget.onStepChanges?.call(_currentStep);
   }
 
   @override

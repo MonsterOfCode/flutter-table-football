@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_table_football/src/core/data/models/searchableListItem.model.dart';
 import 'package:flutter_table_football/src/data/models/lite/player_lite.model.dart';
-import 'package:flutter_table_football/src/core/data/models/searchable.model.dart';
 
 /// Team Model
 ///
@@ -10,7 +10,7 @@ import 'package:flutter_table_football/src/core/data/models/searchable.model.dar
 /// *[List<PlayersLite>] Players
 
 @immutable
-class TeamLite implements Searchable {
+class TeamLite extends SearchableListItem {
   final int id; // Unique identifier
   final String name;
   final int points;
@@ -22,9 +22,6 @@ class TeamLite implements Searchable {
     this.points = 0,
     required this.players,
   });
-
-  @override
-  String get searchable => "${name.toLowerCase()} ${players.map((p) => p.searchable).join(' ')}";
 
   TeamLite copyWith({
     int? id,
@@ -63,6 +60,15 @@ class TeamLite implements Searchable {
       players: players,
     );
   }
+
+  @override
+  String get searchable => "${name.toLowerCase()} ${players.map((p) => p.searchable).join(' ')}";
+
+  @override
+  String get title => name;
+
+  @override
+  String get trailing => "$points pts";
 
   @override
   String toString() {

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/constants/constants.dart';
 import 'package:flutter_table_football/src/core/data/enums/message_types.enum.dart';
@@ -13,7 +11,7 @@ import 'package:flutter_table_football/src/views/dashboard/game/game.view.dart';
 import 'package:flutter_table_football/src/widgets/game/resume_section_create_game.dart';
 import 'package:flutter_table_football/src/widgets/bottom_draggable_container.dart';
 import 'package:flutter_table_football/src/widgets/game/score_section_create_game.dart';
-import 'package:flutter_table_football/src/widgets/list_items/team_searchable_list_item.dart';
+import 'package:flutter_table_football/src/widgets/list_items/default_searchable_list_item.dart';
 import 'package:flutter_table_football/src/widgets/stepped.dart';
 import 'package:go_router/go_router.dart';
 
@@ -88,6 +86,48 @@ class _CreateGameViewState extends State<CreateGameView> with FormHelper {
     });
   }
 
+  /// Function that will handle the selected teams
+  ///
+  /// Returns true if the path runs as expected
+  ///
+  /// Returns false if the widget must not assume any further action
+  bool addTeam(TeamLite team) {
+    if (selectedTeams.contains(team)) {
+      setState(() {
+        selectedTeams.remove(team);
+        // if the user removes all selected players must go the 2º step
+        if (_currentStep == 1 && selectedTeams.isEmpty) {
+          _currentStep = 0;
+        }
+      });
+
+      return true;
+    }
+
+    // limit select only 2 elements
+    if (selectedTeams.length == 2) return false;
+
+    setState(() {
+      selectedTeams.add(team);
+
+      // if the user selects the 1 team we move automatically to the next step
+      if (selectedTeams.length == 1) {
+        if (_currentStep != 1) {
+          _currentStep = 1;
+        }
+      } else {
+        // if the user is selecting the last team we move to last step and close the
+        // selectable list
+        if (_currentStep != 3) {
+          _currentStep = 3;
+          Navigator.of(context).pop();
+        }
+      }
+    });
+
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stepped(
@@ -126,18 +166,13 @@ class _CreateGameViewState extends State<CreateGameView> with FormHelper {
   }
 
   Widget renderSelectTeamSection(int p) {
-    if (isLoading) {
-      return const Row(
-        children: [Text("Loading teams list"), SizedBox(width: kSpacing), CircularProgressIndicator.adaptive()],
-      );
-    }
     return TextButton(
       onPressed: () => openBottomSheetToSelectTeams(p),
       child: Row(
         children: [
           // if the current player do not exists yet
           if (selectedTeams.length <= p) ...[
-            const Icon(Icons.person_add),
+            const Icon(Icons.gamepad),
             const SizedBox(width: kSpacing),
             Expanded(child: Text("Add the ${p + 1}º team to the game")),
           ],
@@ -163,24 +198,14 @@ class _CreateGameViewState extends State<CreateGameView> with FormHelper {
           title: "Teams",
           fetchItems: TeamsRepository.getByQuery,
           renderItem: (element) {
-            return TeamSearchableListItem(team: element);
+            return DefaultSearchableListItem<TeamLite>(
+              model: element,
+              onSelect: addTeam,
+              isSelected: selectedTeams.contains(element),
+            );
           },
         );
       },
-    ).then((value) {
-      TeamsRepository.getByQuery().then(
-        (teams) {
-          setState(() {
-            //TODO: refactor to be dynamic
-            // is editing
-            if (selectedTeams.length > index) {
-              selectedTeams[index] = teams[Random().nextInt(teams.length)];
-            } else {
-              selectedTeams.add(teams[Random().nextInt(teams.length)]);
-            }
-          });
-        },
-      );
-    });
+    );
   }
 }

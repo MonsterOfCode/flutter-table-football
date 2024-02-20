@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/constants/constants.dart';
 import 'package:flutter_table_football/src/core/data/enums/message_types.enum.dart';
@@ -11,7 +9,7 @@ import 'package:flutter_table_football/src/data/repositories/players.repository.
 import 'package:flutter_table_football/src/data/repositories/teams.repository.dart';
 import 'package:flutter_table_football/src/views/dashboard/team/team.view.dart';
 import 'package:flutter_table_football/src/widgets/bottom_draggable_container.dart';
-import 'package:flutter_table_football/src/widgets/list_items/player_searchable_list_item.dart';
+import 'package:flutter_table_football/src/widgets/list_items/default_searchable_list_item.dart';
 import 'package:flutter_table_football/src/widgets/stepped.dart';
 import 'package:go_router/go_router.dart';
 
@@ -83,17 +81,24 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
       return true;
     }
 
+    // limit select only 2 elements
     if (selectedPlayers.length == 2) return false;
 
     setState(() {
-      // limit select only 2 elements
-      if (selectedPlayers.isNotEmpty) {
+      selectedPlayers.add(player);
+      if (selectedPlayers.length == 1) {
         // if the user selects the 2º player at same time of the 1º player
-        if (_currentStep == 1) {
+        if (_currentStep != 2) {
           _currentStep = 2;
         }
+      } else {
+        // if the user is selecting the last player we move to last step and close the
+        // selectable list
+        if (_currentStep != 3) {
+          _currentStep = 3;
+          Navigator.of(context).pop();
+        }
       }
-      selectedPlayers.add(player);
     });
 
     return true;
@@ -198,8 +203,8 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
           title: "Players",
           fetchItems: PlayersRepository.getByQuery,
           renderItem: (element) {
-            return PlayerSearchableListItem(
-              player: element,
+            return DefaultSearchableListItem<PlayerLite>(
+              model: element,
               onSelect: addPlayer,
               isSelected: selectedPlayers.contains(element),
             );

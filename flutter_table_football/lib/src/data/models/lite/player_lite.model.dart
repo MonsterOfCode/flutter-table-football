@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_table_football/src/core/data/models/searchable.model.dart';
+import 'package:flutter_table_football/src/core/data/models/searchableListItem.model.dart';
 
 /// IMPORTANT Lite Version
 ///
@@ -8,7 +8,7 @@ import 'package:flutter_table_football/src/core/data/models/searchable.model.dar
 /// * [String] name (unique)
 /// * [int] points
 @immutable
-class PlayerLite implements Searchable {
+class PlayerLite extends SearchableListItem {
   final String name;
   final int points;
 
@@ -43,6 +43,12 @@ class PlayerLite implements Searchable {
 
   @override
   String get searchable => name.toLowerCase();
+
+  @override
+  String get title => name;
+
+  @override
+  String get trailing => "$points pts";
 
   @override
   String toString() {
