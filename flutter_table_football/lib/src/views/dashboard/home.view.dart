@@ -42,6 +42,19 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return DashboardScaffold(
       title: "Dashboard",
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.account_circle), // Use user or avatar icon
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AuthenticateDialog();
+              },
+            );
+          },
+        ),
+      ],
       child: isLoading
           ? const Center(child: CircularProgressIndicator.adaptive())
           : Column(
@@ -69,5 +82,60 @@ class _HomeViewState extends State<HomeView> {
               ],
             ).scrollable(),
     );
+  }
+}
+
+class AuthenticateDialog extends StatefulWidget {
+  const AuthenticateDialog({super.key});
+
+  @override
+  State<AuthenticateDialog> createState() => _AuthenticateDialogState();
+}
+
+class _AuthenticateDialogState extends State<AuthenticateDialog> {
+  final TextEditingController _textController = TextEditingController();
+  bool _isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Enter you Nickname'),
+      content: TextField(
+        controller: _textController,
+      ),
+      actions: <Widget>[
+        _isLoading
+            ? const CircularProgressIndicator.adaptive()
+            : ElevatedButton(
+                onPressed: () async {
+                  setState(() {
+                    _isLoading = true;
+                  });
+                  // Simulate an asynchronous operation
+                  await Future.delayed(Duration(seconds: 2));
+                  // Get the text input value
+                  String text = _textController.text;
+                  // Perform actions with the text
+                  print('Entered text: $text');
+                  // Close the dialog
+                  Navigator.of(context).pop();
+                },
+                child: Text('Submit'),
+              ),
+        ElevatedButton(
+          onPressed: () {
+            // Close the dialog
+            Navigator.of(context).pop();
+          },
+          child: Text('Cancel'),
+        ),
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
   }
 }

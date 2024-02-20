@@ -1,8 +1,11 @@
 import 'package:flutter_table_football/src/core/routes/middlewares/middleware.dart';
 import 'package:flutter_table_football/src/data/models/game.model.dart';
+import 'package:flutter_table_football/src/data/models/player.model.dart';
 import 'package:flutter_table_football/src/data/models/team.model.dart';
 import 'package:flutter_table_football/src/views/dashboard/game/create_game.view.dart';
 import 'package:flutter_table_football/src/views/dashboard/game/game.view.dart';
+import 'package:flutter_table_football/src/views/dashboard/player/create_player.view.dart';
+import 'package:flutter_table_football/src/views/dashboard/player/player.view.dart';
 import 'package:flutter_table_football/src/views/dashboard/team/create_team.view.dart';
 import 'package:flutter_table_football/src/views/dashboard/team/team.view.dart';
 import 'package:flutter_table_football/src/views/dashboard/dashboard.view.dart';
@@ -40,6 +43,11 @@ final GoRouter router = GoRouter(
         GoRoute(name: GameView.routeName, path: GameView.routeName, builder: (context, state) => GameView(game: state.extra as Game)),
         // Create Game View
         GoRoute(name: CreateGameView.routeName, path: CreateGameView.routeName, builder: (context, state) => const CreateGameView()),
+
+        // Single Player View
+        GoRoute(name: PlayerView.routeName, path: PlayerView.routeName, builder: (context, state) => PlayerView(player: state.extra as Player)),
+        // Create Game View
+        GoRoute(name: CreatePlayerView.routeName, path: CreatePlayerView.routeName, builder: (context, state) => const CreatePlayerView()),
       ],
       redirect: AuthenticatedRoutes,
     ),

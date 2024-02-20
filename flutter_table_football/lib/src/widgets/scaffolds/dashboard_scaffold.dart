@@ -5,13 +5,15 @@ import 'package:flutter_table_football/src/core/extensions/types/string.extensio
 class DashboardScaffold extends StatelessWidget {
   final String title;
   final Widget child;
-  const DashboardScaffold({super.key, required this.title, required this.child});
+  final List<Widget>? actions;
+  const DashboardScaffold({super.key, required this.title, required this.child, this.actions});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: title.title,
+        actions: actions,
       ),
       body: Padding(
         padding: const EdgeInsets.all(kSpacing),

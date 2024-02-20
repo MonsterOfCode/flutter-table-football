@@ -13,7 +13,7 @@ class TeamsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListViewScaffold(
-      title: 'Teams List',
+      title: 'Teams ',
       floatingButtonTooltip: "Add new team",
       onPressedFloatingButton: () => context.pushNamed(CreateTeamView.routeName),
       child: SearchableList<TeamLite>(

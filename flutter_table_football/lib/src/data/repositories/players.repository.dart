@@ -6,13 +6,18 @@ class PlayersRepository {
   /// Request to be created a new Player by a Map
   ///
   /// If something wrong returns null
-  static Future<Player?> create(Map<String, String> data) async {
+  static Future<Player?> create(Map<String, dynamic> data) async {
     return PlayersProvider.create(data);
   }
 
   /// Fetch the teams registered on the platform
   static Future<List<PlayerLite>> getByQuery({String query = ''}) async {
     return PlayersProvider.getByQuery(query: query);
+  }
+
+  /// Check if a nickname is available
+  static Future<dynamic> validateNickname(String nickname) async {
+    return PlayersProvider.validateNickname(nickname);
   }
 
   /// Fetch the top 10 players

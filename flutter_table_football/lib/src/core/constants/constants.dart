@@ -11,6 +11,13 @@ part 'app.constants.dart';
 part 'metrics.constants.dart';
 part 'formats.constants.dart';
 
+Map<String, dynamic> staticApiErrorResponse = {
+  "message": "Nickname unavailable, please try another one.",
+  "errors": {
+    "name": ["Nickname unavailable, please try another one."]
+  },
+};
+
 List<PlayerLite> staticPlayersLite = [
   const PlayerLite(name: "Player 1", points: 150),
   const PlayerLite(name: "Player 2", points: 120),

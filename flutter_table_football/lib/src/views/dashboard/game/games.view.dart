@@ -13,7 +13,7 @@ class GamesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListViewScaffold(
-      title: 'Games List',
+      title: 'Games',
       floatingButtonTooltip: "Add new team",
       onPressedFloatingButton: () => context.pushNamed(CreateGameView.routeName),
       child: SearchableList<Game>(
