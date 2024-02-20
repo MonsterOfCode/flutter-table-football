@@ -87,44 +87,45 @@ This roadmap outlines the development overview plans for this project. Can and w
         - [x] % of wins
     - [x] Top Teams List
 
-- [ ] Create User story 3 widgets
-    - [ ] Create Game button
-    - [ ] Create form to create Game
-        - [ ] Selectable list to select Team 1
-        - [ ] Selectable list to select Team 2
-        - [ ] Option to Create and Start Game
-    - [ ] Create Game View Widget
-        - [ ] Title
-        - [ ] Team members
-        - [ ] Show stats about the team
-            - [ ] Goals For
-            - [ ] Goals Against
+- [x] Create User story 3 widgets
+    - [x] Create Game button
+    - [x] Create form to create Game
+        - [x] Selectable list to select Team 1
+        - [x] Selectable list to select Team 2
+        - [x] Option to Create and Start Game
+    - [x] Create Game View Widget
+        - [x] Title
+        - [x] Team members
+        - [x] Show stats about the team
+            - [x] Goals For
+            - [x] Goals Against
         - Game still running
-            - [ ] Option increment goals of each team
-            - [ ] Option to end the game manually
-            - [ ] Implement auto end game
+            - [x] Option increment goals of each team
+            - [x] Option to end the game manually
+            - [x] Implement auto end game
                 - If the sum of the goals is 9 the game ends automatically.
 
 - [ ] Create User story 4 widgets
+    - [ ] Create List of Players
+    - [ ] Create Player button
+    - [ ] Create form to create Player
+        - [ ] insert name
+        - [ ] Option to check the availability of unique name
+        - [ ] Option to Create
+
+- [x] Create User story 5 widgets
+    - [x] At form to create Game
+        - [x] Add option to mark the game as finished already
+        - [x] After that request to insert game result.
+        - [x] Create Game
+
+- [ ] Create User story 6 widgets
     - [ ] Create a simple form that allow the user to identify himself
         - [ ] input to insert the nickname
         - [ ] Continue (create or authentication)
     - The user is already authenticated
         - [ ] button to delete account
         - [ ] input that allow edit the player nickname
-
-- [ ] Create User story 5 widgets
-    - [ ] At form to create Game
-        - [ ] Add option to mark the game as finished already
-        - [ ] After that request to insert game result.
-        - [ ] Create Game
-
-- [ ] Implement a statement system
-    - [ ] User Story 1
-    - [ ] User Story 2
-    - [ ] User Story 3
-    - [ ] User Story 4
-    - [ ] User Story 5
 
 - [ ] Implement a local storage system 
     - [ ] User Story 1
