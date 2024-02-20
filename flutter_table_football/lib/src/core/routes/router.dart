@@ -45,7 +45,7 @@ final GoRouter router = GoRouter(
         GoRoute(name: CreateGameView.routeName, path: CreateGameView.routeName, builder: (context, state) => const CreateGameView()),
 
         // Single Player View
-        GoRoute(name: PlayerView.routeName, path: PlayerView.routeName, builder: (context, state) => PlayerView(player: state.extra as Player)),
+        GoRoute(name: PlayerView.routeName, path: PlayerView.routeName, builder: (context, state) => PlayerView(player: state.extra)),
         // Create Game View
         GoRoute(name: CreatePlayerView.routeName, path: CreatePlayerView.routeName, builder: (context, state) => const CreatePlayerView()),
       ],

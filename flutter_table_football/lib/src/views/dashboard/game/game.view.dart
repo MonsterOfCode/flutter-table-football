@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/constants/constants.dart';
 import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
+import 'package:flutter_table_football/src/core/extensions/widgets/widget.extension.dart';
 import 'package:flutter_table_football/src/data/models/game.model.dart';
 import 'package:flutter_table_football/src/data/models/lite/team_lite.model.dart';
 import 'package:flutter_table_football/src/data/repositories/games.repository.dart';
@@ -72,7 +73,7 @@ class _GameViewState extends State<GameView> {
           SimpleList(title: "${game.teamA.name} members", players: game.teamA.players),
           SimpleList(title: "${game.teamB.name} members", players: game.teamB.players),
         ],
-      ),
+      ).scrollable(),
     );
   }
 

@@ -10,6 +10,13 @@ class PlayersRepository {
     return PlayersProvider.create(data);
   }
 
+  /// Request the full data of a player
+  ///
+  /// If something wrong returns null
+  static Future<Player?> loadProfile(String nickname) async {
+    return PlayersProvider.requestProfile(nickname);
+  }
+
   /// Fetch the teams registered on the platform
   static Future<List<PlayerLite>> getByQuery({String query = ''}) async {
     return PlayersProvider.getByQuery(query: query);

@@ -54,7 +54,7 @@ class GlassScaffold extends StatelessWidget {
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(kSpacing),
-              child: SingleChildScrollView(child: child),
+              child: child,
             ),
           ),
         ],

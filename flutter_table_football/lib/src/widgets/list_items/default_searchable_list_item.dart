@@ -4,6 +4,10 @@ import 'package:flutter_table_football/src/core/data/models/searchableListItem.m
 ///  Widget to show the Lite models items in the searchable list
 ///
 /// This widget is stateful to better render optimizations
+///
+/// [onSelect] must return true if the widget must updates the [isSelected] state
+///
+/// [isSelected] initial value for the selection status of this item
 class DefaultSearchableListItem<T extends SearchableListItem> extends StatefulWidget {
   final bool Function(T element)? onSelect;
   final bool isSelected;

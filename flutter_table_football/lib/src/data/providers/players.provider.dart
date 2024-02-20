@@ -14,6 +14,14 @@ class PlayersProvider {
     return const Player(name: "New Player", points: 0);
   }
 
+  /// Request to the API by the full data of a player
+  ///
+  /// If fail returns null
+  static Future<Player?> requestProfile(String nickname) async {
+    await Future.delayed(const Duration(seconds: 2));
+    return staticPlayers.firstWhereOrNull((element) => element.name == nickname);
+  }
+
   /// Request from the API for a list of Players using a query
   ///
   /// If fail returns null

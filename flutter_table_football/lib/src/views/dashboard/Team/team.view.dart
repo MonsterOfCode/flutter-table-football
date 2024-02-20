@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/constants/constants.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
+import 'package:flutter_table_football/src/core/extensions/widgets/widget.extension.dart';
 import 'package:flutter_table_football/src/data/models/team.model.dart';
 import 'package:flutter_table_football/src/widgets/list_items/game_item.dart';
 import 'package:flutter_table_football/src/widgets/lists/simple_list.dart';
@@ -35,7 +36,7 @@ class TeamView extends StatelessWidget {
           SimpleList(title: "Team members", players: team.players),
           if (team.lastGames.isNotEmpty) _LastGamesSection(team: team),
         ],
-      ),
+      ).scrollable(),
     );
   }
 }
