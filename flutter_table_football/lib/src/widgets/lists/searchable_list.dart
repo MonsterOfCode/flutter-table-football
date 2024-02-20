@@ -8,12 +8,10 @@ class SearchableList<T extends Searchable> extends StatefulWidget {
   final ScrollController? scrollController;
   final Widget Function(T element) renderItem;
   final Future<List<T>> Function({String query})? fetchItems;
-  final void Function(T element)? onSelect;
 
   const SearchableList({
     super.key,
     this.scrollController,
-    this.onSelect,
     required this.renderItem,
     this.fetchItems,
   });

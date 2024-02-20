@@ -26,6 +26,8 @@ class CreateTeamView extends StatefulWidget {
 
 class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
   final List<PlayerLite> selectedPlayers = List.empty(growable: true);
+  // used to automatic move to next step if the user selects both players at once
+  int _currentStep = 0;
 
   void createAndNavigateToTeamView() {
     toSubmitting();
@@ -63,10 +65,46 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
     return 1;
   }
 
+  /// Function that will handle the selected players
+  ///
+  /// Returns true if the path runs as expected
+  ///
+  /// Returns false if the widget must not assume any further action
+  bool addPlayer(PlayerLite player) {
+    if (selectedPlayers.contains(player)) {
+      setState(() {
+        selectedPlayers.remove(player);
+        // if the user removes all selected players must go the 2º step
+        if (_currentStep == 2 && selectedPlayers.isEmpty) {
+          _currentStep = 1;
+        }
+      });
+
+      return true;
+    }
+
+    if (selectedPlayers.length == 2) return false;
+
+    setState(() {
+      // limit select only 2 elements
+      if (selectedPlayers.isNotEmpty) {
+        // if the user selects the 2º player at same time of the 1º player
+        if (_currentStep == 1) {
+          _currentStep = 2;
+        }
+      }
+      selectedPlayers.add(player);
+    });
+
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stepped(
       title: "Create Team".title,
+      currentStepFromParent: _currentStep,
+      onStepChanges: (step) => setState(() => _currentStep = step),
       done: createAndNavigateToTeamView,
       executeOnStepContinue: {0: executeOnStep0, 1: executeOnStep1},
       steps: [
@@ -160,23 +198,14 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
           title: "Players",
           fetchItems: PlayersRepository.getByQuery,
           renderItem: (element) {
-            return PlayerSearchableListItem(player: element);
+            return PlayerSearchableListItem(
+              player: element,
+              onSelect: addPlayer,
+              isSelected: selectedPlayers.contains(element),
+            );
           },
         );
       },
-    ).then((value) {
-      PlayersRepository.getByQuery().then((players) {
-        setState(() {
-          //TODO: refactor to be dynamic
-
-          // is editing
-          if (selectedPlayers.length > index) {
-            selectedPlayers[index] = players[Random().nextInt(players.length)];
-          } else {
-            selectedPlayers.add(players[Random().nextInt(players.length)]);
-          }
-        });
-      });
-    });
+    );
   }
 }

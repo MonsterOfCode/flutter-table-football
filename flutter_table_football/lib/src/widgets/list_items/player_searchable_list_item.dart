@@ -5,11 +5,15 @@ import 'package:flutter_table_football/src/data/models/lite/player_lite.model.da
 ///
 /// This widget is stateful to better render optimizations
 class PlayerSearchableListItem extends StatefulWidget {
+  final bool Function(PlayerLite element)? onSelect;
+  final bool isSelected;
   final PlayerLite player;
 
   const PlayerSearchableListItem({
     super.key,
     required this.player,
+    this.onSelect,
+    required this.isSelected,
   });
 
   @override
@@ -17,11 +21,26 @@ class PlayerSearchableListItem extends StatefulWidget {
 }
 
 class _PlayerSearchableListItemState extends State<PlayerSearchableListItem> {
-  bool isSelected = false;
+  late bool isSelected;
+
+  @override
+  void initState() {
+    super.initState();
+    isSelected = widget.isSelected;
+  }
+
+  void onTap() {
+    if (widget.onSelect?.call(widget.player) ?? false) {
+      setState(() {
+        isSelected = !isSelected;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: onTap,
       leading: isSelected ? const Icon(Icons.local_play) : const SizedBox.shrink(),
       title: Text(widget.player.name),
       trailing: Text("${widget.player.points} pts"),

@@ -31,6 +31,7 @@ class _CreateGameViewState extends State<CreateGameView> with FormHelper {
   bool alreadyFinishedGame = false;
   int scoreTeamA = 0;
   int scoreTeamB = 0;
+  // used to navigate to the 3 step automatically if the user selects that is a already finished game
   int _currentStep = 0;
 
   // Function that is called at the end of all steps to finally create the Game
