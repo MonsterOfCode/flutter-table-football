@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
-import 'package:flutter_table_football/src/core/extensions/widgets/text.extension.dart';
 
 final $styles = AppStyle();
 

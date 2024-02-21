@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_table_football/src/core/constants/constants.dart';
 import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
 
