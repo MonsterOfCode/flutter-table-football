@@ -83,7 +83,6 @@ class _CreatePlayerViewState extends State<CreatePlayerView> with FormHelper {
           title: const Text('Player Nickname'),
           content: Column(
             children: [
-              // errorsMessages.toString().toText,
               Form(
                 autovalidateMode: autovalidateMode,
                 key: formKey,

@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/constants/constants.dart';
+import 'package:flutter_table_football/src/core/data/enums/message_types.enum.dart';
 import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/widgets/text.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/widgets/widget.extension.dart';
+import 'package:flutter_table_football/src/core/utils/form_validations.util.dart';
 import 'package:flutter_table_football/src/data/models/player.model.dart';
 import 'package:flutter_table_football/src/data/repositories/auth.repository.dart';
 import 'package:flutter_table_football/src/data/repositories/players.repository.dart';
 import 'package:flutter_table_football/src/data/repositories/teams.repository.dart';
+import 'package:flutter_table_football/src/views/dashboard/auth.view.dart';
 import 'package:flutter_table_football/src/widgets/scaffolds/dashboard_scaffold.dart';
 import 'package:flutter_table_football/src/widgets/dashboard/stats_table.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -19,7 +23,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  late Player player;
+  Player? player;
   bool isLoading = true;
 
   @override
@@ -29,6 +33,9 @@ class _HomeViewState extends State<HomeView> {
   }
 
   void loadPlayer() async {
+    setState(() {
+      isLoading = true;
+    });
     await AuthRepository.get().then((value) {
       if (!mounted) return;
       setState(() {
@@ -36,6 +43,14 @@ class _HomeViewState extends State<HomeView> {
         isLoading = false;
       });
     });
+  }
+
+  void callbackDialog(Player? player) {
+    if (player != null) {
+      setState(() {
+        player = player;
+      });
+    }
   }
 
   @override
@@ -46,11 +61,13 @@ class _HomeViewState extends State<HomeView> {
         IconButton(
           icon: const Icon(Icons.account_circle), // Use user or avatar icon
           onPressed: () {
+            if (player != null) {
+              context.pushNamed(AuthView.routeName, extra: player);
+              return;
+            }
             showDialog(
               context: context,
-              builder: (BuildContext context) {
-                return AuthenticateDialog();
-              },
+              builder: (BuildContext context) => AuthenticateDialog(callback: callbackDialog),
             );
           },
         ),
@@ -60,16 +77,18 @@ class _HomeViewState extends State<HomeView> {
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                StatsTable(
-                  title: "My Stats".h1(context).color(context.colorScheme.primary),
-                  future: Future.value([player]),
-                ),
-                const SizedBox(height: kSpacingExtraLarge),
-                StatsTable(
-                  title: "My best Teams".h3(context).color(context.colorScheme.primary),
-                  future: TeamsRepository.getTopPlayerTeams(player.name),
-                ),
-                const SizedBox(height: kSpacingLarge),
+                if (player != null) ...[
+                  StatsTable<Player>(
+                    title: "My Stats".h1(context).color(context.colorScheme.primary),
+                    future: Future.value([player!]),
+                  ),
+                  const SizedBox(height: kSpacingExtraLarge),
+                  StatsTable(
+                    title: "My best Teams".h3(context).color(context.colorScheme.primary),
+                    future: TeamsRepository.getTopPlayerTeams(player!.name),
+                  ),
+                  const SizedBox(height: kSpacingLarge)
+                ],
                 StatsTable(
                   title: "Top 10 Players".h3(context).color(context.colorScheme.primary),
                   future: PlayersRepository.getTop10(),
@@ -86,7 +105,8 @@ class _HomeViewState extends State<HomeView> {
 }
 
 class AuthenticateDialog extends StatefulWidget {
-  const AuthenticateDialog({super.key});
+  final void Function(Player? p) callback;
+  const AuthenticateDialog({super.key, required this.callback});
 
   @override
   State<AuthenticateDialog> createState() => _AuthenticateDialogState();
@@ -94,41 +114,60 @@ class AuthenticateDialog extends StatefulWidget {
 
 class _AuthenticateDialogState extends State<AuthenticateDialog> {
   final TextEditingController _textController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
+  bool _isToCreate = false;
+
+  void authenticate() {
+    AuthRepository.authenticate(_textController.text.trim().toLowerCase(), _isToCreate).then((player) async {
+      if (player != null) {
+        String msg = "Player ${_isToCreate ? "created" : "Authenticated"} successfully!";
+        context.showErrorSnackBar(msg, type: MessageTypes.success);
+        Navigator.of(context).pop();
+        return;
+      }
+
+      context.showConfirmationAlertDialog("No Player founded with this nickname \n Do you want to create a new one?").then((value) {
+        if (value) {
+          setState(() {
+            _isToCreate = true;
+          });
+          authenticate();
+          return;
+        }
+        onCancel();
+      });
+    });
+  }
+
+  void onConfirm() async {
+    if (_formKey.currentState?.validate() ?? false) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      authenticate();
+    }
+  }
+
+  void onCancel() => Navigator.of(context).pop();
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text('Enter you Nickname'),
-      content: TextField(
-        controller: _textController,
+      content: Form(
+        key: _formKey,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        child: TextFormField(
+          validator: (value) => FormValidations.notEmpty(value, msg: "The nickname is required"),
+          controller: _textController,
+          keyboardType: TextInputType.text,
+        ),
       ),
       actions: <Widget>[
-        _isLoading
-            ? const CircularProgressIndicator.adaptive()
-            : ElevatedButton(
-                onPressed: () async {
-                  setState(() {
-                    _isLoading = true;
-                  });
-                  // Simulate an asynchronous operation
-                  await Future.delayed(Duration(seconds: 2));
-                  // Get the text input value
-                  String text = _textController.text;
-                  // Perform actions with the text
-                  print('Entered text: $text');
-                  // Close the dialog
-                  Navigator.of(context).pop();
-                },
-                child: Text('Submit'),
-              ),
-        ElevatedButton(
-          onPressed: () {
-            // Close the dialog
-            Navigator.of(context).pop();
-          },
-          child: Text('Cancel'),
-        ),
+        TextButton(onPressed: onCancel, child: const Text('Cancel')),
+        _isLoading ? const CircularProgressIndicator.adaptive() : TextButton(onPressed: onConfirm, child: const Text('Confirm')),
       ],
     );
   }

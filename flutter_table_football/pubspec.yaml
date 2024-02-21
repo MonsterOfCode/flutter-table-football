@@ -40,6 +40,8 @@ dependencies:
   go_router: ^13.2.0
   # DateTime formats
   intl: ^0.19.0
+  # local storage
+  shared_preferences: ^2.2.2
 
 
 dev_dependencies:

@@ -1,5 +1,6 @@
 import 'package:flutter_table_football/src/data/models/player.model.dart';
 import 'package:flutter_table_football/src/data/providers/players.provider.dart';
+import 'package:flutter_table_football/src/data/storage/auth.storage.dart';
 
 class AuthRepository {
   /// Request to be created a new Auth by a Map using PlayerRepository
@@ -9,9 +10,25 @@ class AuthRepository {
     return PlayersProvider.create(data);
   }
 
-  /// Fetch all the players registered at the platform
-  static Future<Player> get() async {
-    // check on local storage if there is any player saved
-    return PlayersProvider.getByName("name");
+  /// Request to identify and authenticate player
+  ///
+  /// If something wrong returns null
+  static Future<Player?> authenticate(String nickname, bool toCreateIfDoNotExists) async {
+    return PlayersProvider.authenticate(nickname, toCreateIfDoNotExists).then((player) async {
+      if (player != null) {
+        await AuthStorage().write(player);
+      }
+      return player;
+    });
+  }
+
+  /// Fetch the player authenticated to local Storage
+  static Future<Player?> get() async {
+    return AuthStorage().read().then((player) => player);
+  }
+
+  /// Fetch the player authenticated to local Storage
+  static Future<void> clean() async {
+    return AuthStorage().clean();
   }
 }

@@ -1,7 +1,6 @@
-import 'package:flutter_table_football/src/core/routes/middlewares/middleware.dart';
 import 'package:flutter_table_football/src/data/models/game.model.dart';
 import 'package:flutter_table_football/src/data/models/player.model.dart';
-import 'package:flutter_table_football/src/data/models/team.model.dart';
+import 'package:flutter_table_football/src/views/dashboard/auth.view.dart';
 import 'package:flutter_table_football/src/views/dashboard/game/create_game.view.dart';
 import 'package:flutter_table_football/src/views/dashboard/game/game.view.dart';
 import 'package:flutter_table_football/src/views/dashboard/player/create_player.view.dart';
@@ -24,7 +23,8 @@ final GoRouter router = GoRouter(
         // Welcome
         GoRoute(name: WelcomeView.routeName, path: WelcomeView.routeName, builder: (context, state) => const WelcomeView()),
       ],
-      redirect: AuthenticatedRoutes,
+      // here is were we can use middlewares
+      redirect: (context, state) => null,
     ),
 
     // Authenticated Views
@@ -48,22 +48,12 @@ final GoRouter router = GoRouter(
         GoRoute(name: PlayerView.routeName, path: PlayerView.routeName, builder: (context, state) => PlayerView(player: state.extra)),
         // Create Game View
         GoRoute(name: CreatePlayerView.routeName, path: CreatePlayerView.routeName, builder: (context, state) => const CreatePlayerView()),
+
+        // Auth Player View
+        GoRoute(name: AuthView.routeName, path: AuthView.routeName, builder: (context, state) => AuthView(player: state.extra as Player)),
       ],
-      redirect: AuthenticatedRoutes,
+      // here is were we can use middlewares
+      redirect: (context, state) => null,
     ),
   ],
 );
-
-// ignore: non_constant_identifier_names
-String? UnAuthenticatedRoutes(context, state) {
-  return
-      // redirect if user is authenticated
-      middlewares['unAuthenticated']!.handle(state, context);
-}
-
-// ignore: non_constant_identifier_names
-String? AuthenticatedRoutes(context, state) {
-  return
-      // Protect the screen the AuthGuard
-      middlewares['authenticated']!.handle(state, context);
-}
