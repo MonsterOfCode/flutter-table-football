@@ -15,7 +15,7 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
-  int currentPageIndex = 0;
+  int _currentPageIndex = 0;
 
   List<NavigationDestination> navigationDestinations = dashboardMenuItems.map((entry) {
     return NavigationDestination(
@@ -31,11 +31,11 @@ class _DashboardViewState extends State<DashboardView> {
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {
-            currentPageIndex = index;
+            _currentPageIndex = index;
           });
         },
         indicatorColor: context.colorScheme.secondary,
-        selectedIndex: currentPageIndex,
+        selectedIndex: _currentPageIndex,
         destinations: navigationDestinations,
       ),
       body: <Widget>[
@@ -44,7 +44,7 @@ class _DashboardViewState extends State<DashboardView> {
         const TeamsView(),
         const GamesView(),
         const PlayersView(),
-      ][currentPageIndex],
+      ][_currentPageIndex],
     );
   }
 }

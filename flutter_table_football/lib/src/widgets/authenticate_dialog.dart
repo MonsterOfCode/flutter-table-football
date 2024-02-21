@@ -17,7 +17,7 @@ class _AuthenticateDialogState extends State<AuthenticateDialog> {
   bool _isLoading = false;
   bool _isToCreate = false;
 
-  void authenticate() {
+  void _authenticate() {
     AuthRepository.authenticate(_textController.text.trim().toLowerCase(), _isToCreate).then((player) async {
       if (player != null) {
         String msg = "Player ${_isToCreate ? "created" : "Authenticated"} successfully!";
@@ -31,25 +31,25 @@ class _AuthenticateDialogState extends State<AuthenticateDialog> {
           setState(() {
             _isToCreate = true;
           });
-          authenticate();
+          _authenticate();
           return;
         }
-        onCancel();
+        _onCancel();
       });
     });
   }
 
-  void onConfirm() async {
+  void _onConfirm() async {
     if (_formKey.currentState?.validate() ?? false) {
       setState(() {
         _isLoading = true;
       });
 
-      authenticate();
+      _authenticate();
     }
   }
 
-  void onCancel() => Navigator.of(context).pop();
+  void _onCancel() => Navigator.of(context).pop();
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +65,8 @@ class _AuthenticateDialogState extends State<AuthenticateDialog> {
         ),
       ),
       actions: <Widget>[
-        TextButton(onPressed: onCancel, child: const Text('Cancel')),
-        _isLoading ? const CircularProgressIndicator.adaptive() : TextButton(onPressed: onConfirm, child: const Text('Confirm')),
+        TextButton(onPressed: _onCancel, child: const Text('Cancel')),
+        _isLoading ? const CircularProgressIndicator.adaptive() : TextButton(onPressed: _onConfirm, child: const Text('Confirm')),
       ],
     );
   }

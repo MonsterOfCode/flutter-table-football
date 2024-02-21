@@ -12,6 +12,11 @@ class DataTablePrimaryTheme extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DataTable(headingRowColor: MaterialStateColor.resolveWith((states) => context.colorScheme.primary), headingTextStyle: context.textTheme.labelLarge!.copyWith(color: Colors.white), columns: columns, rows: rows);
+    return DataTable(
+      headingRowColor: MaterialStateColor.resolveWith((states) => context.colorScheme.primary),
+      headingTextStyle: context.textTheme.labelLarge!.copyWith(color: Colors.white),
+      columns: columns,
+      rows: rows,
+    );
   }
 }

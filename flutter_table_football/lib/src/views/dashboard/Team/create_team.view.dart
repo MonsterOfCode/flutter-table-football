@@ -23,16 +23,16 @@ class CreateTeamView extends StatefulWidget {
 }
 
 class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
-  final List<PlayerLite> selectedPlayers = List.empty(growable: true);
+  final List<PlayerLite> _selectedPlayers = List.empty(growable: true);
   // used to automatic move to next step if the user selects both players at once
   int _currentStep = 0;
 
-  void createAndNavigateToTeamView() {
+  void _createAndNavigateToTeamView() {
     toSubmitting();
     // create the team and navigate to the game page
     Map<String, dynamic> data = {
       "name": getControllerValue("name"),
-      "players": selectedPlayers,
+      "players": _selectedPlayers,
     };
     TeamsRepository.create(data).then((newTeam) {
       // navigates to the Team view after create the team
@@ -46,7 +46,7 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
     });
   }
 
-  int executeOnStep0() {
+  int _executeOnStep0() {
     // avoid to go next without a name for the team
     if (!validateForm()) {
       activeAutoValidator();
@@ -56,10 +56,10 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
     return 1;
   }
 
-  int executeOnStep1() {
+  int _executeOnStep1() {
     // avoid to go next without at least a player
-    if (selectedPlayers.isEmpty) return 0;
-    if (selectedPlayers.length == 2) return 2;
+    if (_selectedPlayers.isEmpty) return 0;
+    if (_selectedPlayers.length == 2) return 2;
     return 1;
   }
 
@@ -68,12 +68,12 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
   /// Returns true if the path runs as expected
   ///
   /// Returns false if the widget must not assume any further action
-  bool addPlayer(PlayerLite player) {
-    if (selectedPlayers.contains(player)) {
+  bool _addPlayer(PlayerLite player) {
+    if (_selectedPlayers.contains(player)) {
       setState(() {
-        selectedPlayers.remove(player);
+        _selectedPlayers.remove(player);
         // if the user removes all selected players must go the 2º step
-        if (_currentStep == 2 && selectedPlayers.isEmpty) {
+        if (_currentStep == 2 && _selectedPlayers.isEmpty) {
           _currentStep = 1;
         }
       });
@@ -82,11 +82,11 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
     }
 
     // limit select only 2 elements
-    if (selectedPlayers.length == 2) return false;
+    if (_selectedPlayers.length == 2) return false;
 
     setState(() {
-      selectedPlayers.add(player);
-      if (selectedPlayers.length == 1) {
+      _selectedPlayers.add(player);
+      if (_selectedPlayers.length == 1) {
         // if the user selects the 2º player at same time of the 1º player
         if (_currentStep != 2) {
           _currentStep = 2;
@@ -110,8 +110,8 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
       title: "Create Team".title,
       currentStepFromParent: _currentStep,
       onStepChanges: (step) => setState(() => _currentStep = step),
-      done: createAndNavigateToTeamView,
-      executeOnStepContinue: {0: executeOnStep0, 1: executeOnStep1},
+      done: _createAndNavigateToTeamView,
+      executeOnStepContinue: {0: _executeOnStep0, 1: _executeOnStep1},
       steps: [
         StepItem(
           title: const Text('Team Name'),
@@ -160,7 +160,7 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
           children: [
             "Team members:".h4(context),
             Column(
-              children: selectedPlayers.map((item) {
+              children: _selectedPlayers.map((item) {
                 return Text(item.name);
               }).toList(),
             )
@@ -176,13 +176,13 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
       child: Row(
         children: [
           // if the current player do not exists yet
-          if (selectedPlayers.length <= p) ...[
+          if (_selectedPlayers.length <= p) ...[
             const Icon(Icons.person_add),
             const SizedBox(width: kSpacing),
             const Expanded(child: Text("Add a player to the team")),
           ],
           // if the player is already selected
-          if (selectedPlayers.length > p) Expanded(child: selectedPlayers[p].name.toText),
+          if (_selectedPlayers.length > p) Expanded(child: _selectedPlayers[p].name.toText),
         ],
       ),
     );
@@ -205,8 +205,8 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
           renderItem: (element) {
             return DefaultSearchableListItem<PlayerLite>(
               model: element,
-              onSelect: addPlayer,
-              isSelected: selectedPlayers.contains(element),
+              onSelect: _addPlayer,
+              isSelected: _selectedPlayers.contains(element),
             );
           },
         );

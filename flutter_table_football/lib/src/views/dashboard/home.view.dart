@@ -22,8 +22,8 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  Player? player;
-  bool isLoading = true;
+  Player? _player;
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -33,13 +33,13 @@ class _HomeViewState extends State<HomeView> {
 
   void loadPlayer() async {
     setState(() {
-      isLoading = true;
+      _isLoading = true;
     });
     await AuthRepository.get().then((value) {
       if (!mounted) return;
       setState(() {
-        player = value;
-        isLoading = false;
+        _player = value;
+        _isLoading = false;
       });
     });
   }
@@ -52,13 +52,13 @@ class _HomeViewState extends State<HomeView> {
         IconButton(
           icon: const Icon(Icons.account_circle), // Use user or avatar icon
           onPressed: () {
-            if (player != null) {
-              context.pushNamed(AuthView.routeName, extra: player).then((value) {
+            if (_player != null) {
+              context.pushNamed(AuthView.routeName, extra: _player).then((value) {
                 // if the view returns the value == true
                 // it means that the user request the logout
                 if (value == true) {
                   setState(() {
-                    player = null;
+                    _player = null;
                   });
                 }
               });
@@ -72,27 +72,27 @@ class _HomeViewState extends State<HomeView> {
               // it means that the user makes login successfully
               if (value is Player) {
                 setState(() {
-                  player = value;
+                  _player = value;
                 });
               }
             });
           },
         ),
       ],
-      child: isLoading
+      child: _isLoading
           ? const Center(child: CircularProgressIndicator.adaptive())
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (player != null) ...[
+                if (_player != null) ...[
                   StatsTable<Player>(
                     title: "My Stats".h1(context).color(context.colorScheme.primary),
-                    future: Future.value([player!]),
+                    future: Future.value([_player!]),
                   ),
                   const SizedBox(height: kSpacingExtraLarge),
                   StatsTable(
                     title: "My best Teams".h3(context).color(context.colorScheme.primary),
-                    future: TeamsRepository.getTopPlayerTeams(player!.name),
+                    future: TeamsRepository.getTopPlayerTeams(_player!.name),
                   ),
                   const SizedBox(height: kSpacingLarge)
                 ],

@@ -56,12 +56,12 @@ class Stepped extends StatefulWidget {
 
 class _SteppedState extends State<Stepped> {
   int _currentStep = 0;
-  late int nSteps;
-  bool isSubmitting = false;
+  late int _nSteps;
+  bool _isSubmitting = false;
 
   @override
   void initState() {
-    nSteps = widget.steps.length;
+    _nSteps = widget.steps.length;
     super.initState();
   }
 
@@ -81,7 +81,7 @@ class _SteppedState extends State<Stepped> {
 
   ///handle the click on the next buttons
   void onStepContinue() {
-    if (_currentStep < nSteps) {
+    if (_currentStep < _nSteps) {
       setState(() {
         // the function defined for the current step will define the number of steps to move forward
         // like that you can manipulate the progression based on some conditions or user inputs
@@ -103,10 +103,10 @@ class _SteppedState extends State<Stepped> {
 
   /// handle the click of next buttons
   void nextStep(ControlsDetails details) {
-    if (details.currentStep == nSteps - 1) {
+    if (details.currentStep == _nSteps - 1) {
       widget.done?.call();
       setState(() {
-        isSubmitting = true;
+        _isSubmitting = true;
       });
       return;
     }
@@ -156,20 +156,20 @@ class _SteppedState extends State<Stepped> {
   }
 
   ElevatedButton _renderNextStepButton(ControlsDetails details) {
-    return isSubmitting
+    return _isSubmitting
         ? const ElevatedButton(
             onPressed: null,
             child: CircularProgressIndicator.adaptive(),
           )
         : ElevatedButton(
             onPressed: () => nextStep(details),
-            child: Text(details.currentStep == nSteps - 1 ? widget.textNextButtonLastStep : widget.textNextButton),
+            child: Text(details.currentStep == _nSteps - 1 ? widget.textNextButtonLastStep : widget.textNextButton),
           );
   }
 
   Widget _renderBackStepButton(ControlsDetails details) {
     // Only show Back button if not on the first step
-    if (_currentStep > 0 && !isSubmitting) {
+    if (_currentStep > 0 && !_isSubmitting) {
       return TextButton(
         onPressed: details.onStepCancel,
         child: Text(widget.textBackButton),

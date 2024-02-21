@@ -10,7 +10,7 @@ class PlayersProvider {
   ///
   /// If fail returns null
   static Future<Player?> create(Map<String, dynamic> data) async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(milliseconds: 500));
     return const Player(name: "New Player", points: 0);
   }
 
@@ -18,7 +18,7 @@ class PlayersProvider {
   ///
   /// If fail returns null
   static Future<Player?> authenticate(String nickname, bool toCreateIfDoNotExists) async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(milliseconds: 500));
     Player? p = staticPlayers.firstWhereOrNull((element) => element.name.toLowerCase() == nickname);
     if (p == null && toCreateIfDoNotExists) {
       p = staticPlayers.firstWhereOrNull((element) => element.name == "Player 3");
@@ -30,7 +30,7 @@ class PlayersProvider {
   ///
   /// If fail returns null
   static Future<Player?> requestProfile(String nickname) async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(milliseconds: 500));
     return staticPlayers.firstWhereOrNull((element) => element.name == nickname);
   }
 
@@ -38,7 +38,7 @@ class PlayersProvider {
   ///
   /// If fail returns null
   static Future<List<PlayerLite>> getByQuery({String query = ''}) async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(milliseconds: 500));
     return staticPlayersLite.where((element) => element.searchable.contains(query)).toList();
   }
 
@@ -47,7 +47,7 @@ class PlayersProvider {
   /// [true] the nickname is available
   /// if not available it will return the error Map
   static Future<dynamic> validateNickname(String nickname) async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(milliseconds: 500));
     return staticPlayersLite.firstWhereOrNull((element) => element.name == nickname) != null ? staticApiErrorResponse : true;
   }
 
@@ -55,7 +55,7 @@ class PlayersProvider {
   ///
   /// If fail returns an empty List
   static Future<List<Player>> fetchTop10() async {
-    return await Future.delayed(const Duration(seconds: 2)).then((value) => staticPlayers).catchError((onError) {
+    return await Future.delayed(const Duration(milliseconds: 500)).then((value) => staticPlayers).catchError((onError) {
       return List<Player>.empty(growable: true);
     });
   }
@@ -64,7 +64,7 @@ class PlayersProvider {
   ///
   /// If fail returns null
   static Future<Player> getByName(String name) async {
-    return await Future.delayed(const Duration(seconds: 2)).then(
+    return await Future.delayed(const Duration(milliseconds: 500)).then(
       (value) => staticPlayers[Random().nextInt(staticPlayers.length - 1)],
     );
   }

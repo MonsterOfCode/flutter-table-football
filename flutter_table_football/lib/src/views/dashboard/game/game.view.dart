@@ -21,33 +21,33 @@ class GameView extends StatefulWidget {
 }
 
 class _GameViewState extends State<GameView> {
-  late Game game;
-  bool isLoading = false;
-  int? idTeamUpdating;
+  late Game _game;
+  bool _isLoading = false;
+  int? _idTeamUpdating;
 
   @override
   void initState() {
-    game = widget.game;
+    _game = widget.game;
     super.initState();
   }
 
-  void updateTeamGoals(int teamId, int currentGoals, {bool toIncrement = true}) {
+  void _updateTeamGoals(int teamId, int currentGoals, {bool toIncrement = true}) {
     setState(() {
-      isLoading = true;
-      idTeamUpdating = teamId;
+      _isLoading = true;
+      _idTeamUpdating = teamId;
     });
-    GamesRepository.updateTeamGoal(game.id, teamId, currentGoals, toIncrement: toIncrement).then((updatedGame) {
+    GamesRepository.updateTeamGoal(_game.id, teamId, currentGoals, toIncrement: toIncrement).then((updatedGame) {
       setState(() {
-        game = updatedGame!;
-        isLoading = false;
+        _game = updatedGame!;
+        _isLoading = false;
       });
     });
   }
 
-  void endGame() {
+  void _endGame() {
     context.showConfirmationAlertDialog("Are you sure want to finish the match?").then((response) {
       if (response) {
-        GamesRepository.endGame(game.id);
+        GamesRepository.endGame(_game.id);
       }
     });
   }
@@ -55,12 +55,12 @@ class _GameViewState extends State<GameView> {
   @override
   Widget build(BuildContext context) {
     return GlassScaffold(
-      title: game.done ? "Finished" : "Running ⏳",
-      actions: !game.done
+      title: _game.done ? "Finished" : "Running ⏳",
+      actions: !_game.done
           ? [
               IconButton(
                 icon: const Icon(Icons.done),
-                onPressed: endGame,
+                onPressed: _endGame,
                 tooltip: 'Show Alert',
               ),
             ]
@@ -70,8 +70,8 @@ class _GameViewState extends State<GameView> {
         children: [
           _renderGameInfo(),
           const SizedBox(height: kSpacingExtraLarge),
-          SimpleList(title: "${game.teamA.name} members", players: game.teamA.players),
-          SimpleList(title: "${game.teamB.name} members", players: game.teamB.players),
+          SimpleList(title: "${_game.teamA.name} members", players: _game.teamA.players),
+          SimpleList(title: "${_game.teamB.name} members", players: _game.teamB.players),
         ],
       ).scrollable(),
     );
@@ -82,17 +82,17 @@ class _GameViewState extends State<GameView> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _GameInfoTeamItem(
-          team: game.teamA,
-          onPressed: game.done ? null : updateTeamGoals,
-          isLoading: isLoading && idTeamUpdating == game.teamA.id,
-          teamScore: game.scoreTeamA,
+          team: _game.teamA,
+          onPressed: _game.done ? null : _updateTeamGoals,
+          isLoading: _isLoading && _idTeamUpdating == _game.teamA.id,
+          teamScore: _game.scoreTeamA,
         ),
-        _GameMinute(game),
+        _GameMinute(_game),
         _GameInfoTeamItem(
-          team: game.teamB,
-          onPressed: game.done ? null : updateTeamGoals,
-          isLoading: isLoading && idTeamUpdating == game.teamB.id,
-          teamScore: game.scoreTeamB,
+          team: _game.teamB,
+          onPressed: _game.done ? null : _updateTeamGoals,
+          isLoading: _isLoading && _idTeamUpdating == _game.teamB.id,
+          teamScore: _game.scoreTeamB,
         ),
       ],
     );

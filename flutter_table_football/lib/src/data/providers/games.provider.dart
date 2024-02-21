@@ -7,7 +7,7 @@ class GamesProvider {
   ///
   /// If fail returns null
   static Future<Game?> create(Map<String, dynamic> data) async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(milliseconds: 500));
     return staticGames.last;
   }
 
@@ -15,7 +15,7 @@ class GamesProvider {
   ///
   /// If fail returns null
   static Future<List<Game>> getByQuery({String query = ''}) async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(milliseconds: 500));
     return staticGames.where((element) => element.searchable.contains(query)).toList();
   }
 
@@ -32,7 +32,7 @@ class GamesProvider {
     if (game != null) {
       game = game.updateScoreOfTeam(teamId, toIncrement: toIncrement);
     }
-    return await Future.delayed(const Duration(seconds: 2)).then((value) => game);
+    return await Future.delayed(const Duration(milliseconds: 500)).then((value) => game);
   }
 
   /// Request to the API to finish the game
@@ -45,6 +45,6 @@ class GamesProvider {
     if (game != null) {
       game = game.copyWith(done: true);
     }
-    return await Future.delayed(const Duration(seconds: 2)).then((value) => game);
+    return await Future.delayed(const Duration(milliseconds: 500)).then((value) => game);
   }
 }

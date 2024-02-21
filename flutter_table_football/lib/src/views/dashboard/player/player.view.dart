@@ -32,11 +32,11 @@ class _PlayerViewState extends State<PlayerView> {
     if (widget.player is Player) _player = widget.player as Player;
 
     _isLoading = true;
-    requestPlayerProfile();
+    _requestPlayerProfile();
     super.initState();
   }
 
-  void requestPlayerProfile() {
+  void _requestPlayerProfile() {
     PlayersRepository.loadProfile((widget.player as PlayerLite).name).then((value) {
       if (value == null) {
         context.showErrorSnackBar("Ups! Please try later", type: MessageTypes.error);

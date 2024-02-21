@@ -31,11 +31,11 @@ class _TeamViewState extends State<TeamView> {
     if (widget.team is Team) _team = widget.team as Team;
 
     _isLoading = true;
-    requestTeamProfile();
+    _requestTeamProfile();
     super.initState();
   }
 
-  void requestTeamProfile() {
+  void _requestTeamProfile() {
     TeamsRepository.loadProfile((widget.team as TeamLite).id).then((value) {
       if (value == null) {
         context.showErrorSnackBar("Ups! Please try later", type: MessageTypes.error);

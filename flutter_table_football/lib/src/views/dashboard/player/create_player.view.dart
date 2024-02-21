@@ -27,7 +27,7 @@ class _CreatePlayerViewState extends State<CreatePlayerView> with FormHelper {
     super.initState();
   }
 
-  void createAndNavigateToTeamView() {
+  void _createAndNavigateToTeamView() {
     toSubmitting();
     // create the team and navigate to the game page
     Map<String, dynamic> data = {
@@ -45,7 +45,7 @@ class _CreatePlayerViewState extends State<CreatePlayerView> with FormHelper {
     });
   }
 
-  int executeOnStep0() {
+  int _executeOnStep0() {
     // before make a new validation clean the current errors
     cleanErrorsFromApi();
 
@@ -76,8 +76,8 @@ class _CreatePlayerViewState extends State<CreatePlayerView> with FormHelper {
       title: "Create Player".title,
       currentStepFromParent: _currentStep,
       onStepChanges: (step) => setState(() => _currentStep = step),
-      done: createAndNavigateToTeamView,
-      executeOnStepContinue: {0: executeOnStep0},
+      done: _createAndNavigateToTeamView,
+      executeOnStepContinue: {0: _executeOnStep0},
       steps: [
         StepItem(
           title: const Text('Player Nickname'),
