@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/constants/constants.dart';
-import 'package:flutter_table_football/src/core/data/enums/message_types.enum.dart';
 import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/widgets/text.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/widgets/widget.extension.dart';
-import 'package:flutter_table_football/src/data/models/lite/player_lite.model.dart';
 import 'package:flutter_table_football/src/data/models/player.model.dart';
-import 'package:flutter_table_football/src/data/repositories/players.repository.dart';
+import 'package:flutter_table_football/src/data/repositories/auth.repository.dart';
 import 'package:flutter_table_football/src/data/repositories/teams.repository.dart';
 import 'package:flutter_table_football/src/widgets/dashboard/stats_table.dart';
 import 'package:flutter_table_football/src/widgets/scaffolds/glass_scaffold.dart';
@@ -27,7 +25,10 @@ class AuthView extends StatelessWidget {
       actions: [
         IconButton(
           icon: const Icon(Icons.logout), // Use user or avatar icon
-          onPressed: () {},
+          onPressed: () {
+            AuthRepository.logout();
+            Navigator.of(context).pop(true);
+          },
         ),
       ],
       child: Column(

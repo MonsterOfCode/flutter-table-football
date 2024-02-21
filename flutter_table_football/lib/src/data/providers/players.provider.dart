@@ -19,7 +19,7 @@ class PlayersProvider {
   /// If fail returns null
   static Future<Player?> authenticate(String nickname, bool toCreateIfDoNotExists) async {
     await Future.delayed(const Duration(seconds: 2));
-    Player? p = staticPlayers.firstWhereOrNull((element) => element.name == nickname);
+    Player? p = staticPlayers.firstWhereOrNull((element) => element.name.toLowerCase() == nickname);
     if (p == null && toCreateIfDoNotExists) {
       p = staticPlayers.firstWhereOrNull((element) => element.name == "Player 3");
     }

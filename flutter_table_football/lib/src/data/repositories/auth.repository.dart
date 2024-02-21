@@ -28,7 +28,7 @@ class AuthRepository {
   }
 
   /// Fetch the player authenticated to local Storage
-  static Future<void> clean() async {
+  static Future<void> logout() async {
     return AuthStorage().clean();
   }
 }
