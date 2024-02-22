@@ -13,7 +13,7 @@ This is the flutter app for a table football game.
 5. As a user, I want to see a dashboard with team and individual player statistics so that I can see who is the ultimate champion.
 
 #
-[View the full project documentation here](./docs/table-football-react-updated.pdf)
+[View the full project documentation here](../docs/table-football-react-updated.pdf)
 #
 
 ## Web Phone Simulation: [ Here ](https://monsterofcode.com/table_football_challenge/alpha/)
