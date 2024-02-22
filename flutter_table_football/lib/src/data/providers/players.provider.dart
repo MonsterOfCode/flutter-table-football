@@ -23,21 +23,6 @@ class PlayersProvider {
     return p;
   }
 
-  /// Request to the API to sign up a new player
-  ///
-  /// If nickname already in use returns null
-  static Future<Player?> signUp(String nickname) async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    Player? p = staticPlayers.firstWhereOrNull((element) => element.name.toLowerCase() == nickname);
-    // not found is because is new
-    if (p != null) {
-      return null;
-    }
-
-    p = staticPlayers.firstWhereOrNull((element) => element.name.toLowerCase() == "player 4");
-    return p;
-  }
-
   /// Request to the API by the full data of a player
   ///
   /// If fail returns null

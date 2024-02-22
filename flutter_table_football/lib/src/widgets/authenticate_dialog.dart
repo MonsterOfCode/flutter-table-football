@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/data/enums/message_types.enum.dart';
 import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
 import 'package:flutter_table_football/src/core/utils/form_validations.util.dart';
+import 'package:flutter_table_football/src/data/models/player.model.dart';
 import 'package:flutter_table_football/src/data/repositories/auth.repository.dart';
+import 'package:flutter_table_football/src/views/dashboard/player/create_player.view.dart';
+import 'package:go_router/go_router.dart';
 
 /// Widget that allow to create or make the user authentication
 ///
 /// [isToCreate] is the flag if the user is creating or making the login
 class PlayerDialog extends StatefulWidget {
-  final bool isToCreate;
-  const PlayerDialog({super.key, this.isToCreate = false});
+  const PlayerDialog({super.key});
 
   @override
   State<PlayerDialog> createState() => _PlayerDialogState();
@@ -19,30 +21,6 @@ class _PlayerDialogState extends State<PlayerDialog> {
   final TextEditingController _textController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
-  bool _isToCreate = false;
-
-  @override
-  void initState() {
-    _isToCreate = widget.isToCreate;
-    super.initState();
-  }
-
-  void _singUp() {
-    AuthRepository.signUp(_textController.text.trim().toLowerCase()).then((player) {
-      if (player != null) {
-        String msg = "Player created successfully!";
-        context.showErrorSnackBar(msg, type: MessageTypes.success);
-        Navigator.of(context).pop(player);
-        return;
-      }
-
-      context.showConfirmationAlertDialog("Ups, looks like this nickname is already in use.\nPlease enter other nickname.");
-      setState(() {
-        _isLoading = false;
-        _isToCreate = false;
-      });
-    });
-  }
 
   void _authenticate() {
     AuthRepository.authenticate(_textController.text.trim().toLowerCase()).then((player) async {
@@ -57,10 +35,10 @@ class _PlayerDialogState extends State<PlayerDialog> {
         setState(() {
           // is the value is true is because the user wants to create a user
           if (value) {
-            _isToCreate = true;
-            _singUp();
-          } else {
-            _isLoading = false;
+            _onCancel();
+            // we call the create view passing the extra true to is not navigates to the
+            // Player view and instead comes back to dashboard
+            context.pushNamed(CreatePlayerView.routeName, extra: true);
           }
         });
       });
@@ -73,11 +51,7 @@ class _PlayerDialogState extends State<PlayerDialog> {
         _isLoading = true;
       });
 
-      if (_isToCreate) {
-        _singUp();
-      } else {
-        _authenticate();
-      }
+      _authenticate();
     }
   }
 
@@ -86,7 +60,7 @@ class _PlayerDialogState extends State<PlayerDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: _isToCreate ? const Text('New Player Nickname') : const Text('Enter you Nickname'),
+      title: const Text('Enter you Nickname'),
       content: Form(
         key: _formKey,
         autovalidateMode: AutovalidateMode.onUserInteraction,

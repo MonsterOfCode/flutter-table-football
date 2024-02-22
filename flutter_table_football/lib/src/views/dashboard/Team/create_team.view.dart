@@ -8,6 +8,7 @@ import 'package:flutter_table_football/src/data/models/lite/player_lite.model.da
 import 'package:flutter_table_football/src/data/models/player.model.dart';
 import 'package:flutter_table_football/src/data/repositories/players.repository.dart';
 import 'package:flutter_table_football/src/data/repositories/teams.repository.dart';
+import 'package:flutter_table_football/src/views/dashboard/player/create_player.view.dart';
 import 'package:flutter_table_football/src/views/dashboard/team/team.view.dart';
 import 'package:flutter_table_football/src/widgets/authenticate_dialog.dart';
 import 'package:flutter_table_football/src/widgets/bottom_draggable_container.dart';
@@ -191,19 +192,18 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
   }
 
   void createPlayerAction() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) => const PlayerDialog(isToCreate: true),
-    ).then((value) {
-      // if the dialog returns the value as Player
-      // it means that the user is created successfully
-      if (value is Player) {
-        setState(() {
-          _selectedPlayers.add((value).toLite);
-        });
-        Navigator.of(context).pop();
-      }
-    });
+    context.pushNamed(CreatePlayerView.routeName, extra: true).then(
+      (value) {
+        // if the dialog returns the value as Player
+        // it means that the user is created successfully
+        if (value is Player) {
+          setState(() {
+            _selectedPlayers.add((value).toLite);
+          });
+          Navigator.of(context).pop();
+        }
+      },
+    );
   }
 
   /// This function will open the bottom sheet to select the player

@@ -22,13 +22,6 @@ class AuthRepository {
     });
   }
 
-  /// Request to create a player if do not exists yet
-  ///
-  /// If something wrong returns null
-  static Future<Player?> signUp(String nickname) async {
-    return PlayersProvider.signUp(nickname);
-  }
-
   /// Fetch the player authenticated to local Storage
   static Future<Player?> get() async {
     return AuthStorage().read();

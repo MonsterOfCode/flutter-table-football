@@ -29,7 +29,10 @@ class _PlayerViewState extends State<PlayerView> {
   @override
   void initState() {
     assert(widget.player is Player || widget.player is PlayerLite, "You must  pass a valid model of the class Player or PlayerLite");
-    if (widget.player is Player) _player = widget.player as Player;
+    if (widget.player is Player) {
+      _player = widget.player as Player;
+      return;
+    }
 
     _isLoading = true;
     _requestPlayerProfile();

@@ -10,8 +10,8 @@ import 'package:go_router/go_router.dart';
 
 class CreatePlayerView extends StatefulWidget {
   static const routeName = "player/create";
-
-  const CreatePlayerView({super.key});
+  final bool? isToReturn;
+  const CreatePlayerView({super.key, this.isToReturn = false});
 
   @override
   State<CreatePlayerView> createState() => _CreatePlayerViewState();
@@ -37,6 +37,11 @@ class _CreatePlayerViewState extends State<CreatePlayerView> with FormHelper {
       // navigates to the Team view after create the team
       debugPrint("Player Created successfully");
       context.showErrorSnackBar("Player Created successfully!", type: MessageTypes.success);
+      if (widget.isToReturn ?? false) {
+        Navigator.of(context).pop(newPlayer);
+        return;
+      }
+      // is is not to return we take the user to view the create player
       context.replace(PlayerView.routePath, extra: newPlayer);
     }).catchError((error) {
       toIdle();
