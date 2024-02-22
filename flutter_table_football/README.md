@@ -16,7 +16,16 @@ This is the flutter app for a table football game.
 [View the full project documentation here](./docs/table-football-react-updated.pdf)
 #
 
-## [App](./docs/app.md)
+## Web Phone Simulation: [ Here ](https://monsterofcode.com/table_football_challenge/alpha/)
+Nickname to authentication:
+- player 1
+
+## Running instructions:
+1. Clone the repository
+2. On flutter app folder: Flutter pub get
+3. Flutter run 
+4. Select the target device from list
+
 
 ## [Roadmap](./docs/roadmap.md)
 
