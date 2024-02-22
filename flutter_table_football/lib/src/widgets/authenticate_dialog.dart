@@ -4,37 +4,65 @@ import 'package:flutter_table_football/src/core/extensions/types/context.extensi
 import 'package:flutter_table_football/src/core/utils/form_validations.util.dart';
 import 'package:flutter_table_football/src/data/repositories/auth.repository.dart';
 
-class AuthenticateDialog extends StatefulWidget {
-  const AuthenticateDialog({super.key});
+/// Widget that allow to create or make the user authentication
+///
+/// [isToCreate] is the flag if the user is creating or making the login
+class PlayerDialog extends StatefulWidget {
+  final bool isToCreate;
+  const PlayerDialog({super.key, this.isToCreate = false});
 
   @override
-  State<AuthenticateDialog> createState() => _AuthenticateDialogState();
+  State<PlayerDialog> createState() => _PlayerDialogState();
 }
 
-class _AuthenticateDialogState extends State<AuthenticateDialog> {
+class _PlayerDialogState extends State<PlayerDialog> {
   final TextEditingController _textController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
   bool _isToCreate = false;
 
-  void _authenticate() {
-    AuthRepository.authenticate(_textController.text.trim().toLowerCase(), _isToCreate).then((player) async {
+  @override
+  void initState() {
+    _isToCreate = widget.isToCreate;
+    super.initState();
+  }
+
+  void _singUp() {
+    AuthRepository.signUp(_textController.text.trim().toLowerCase()).then((player) {
       if (player != null) {
-        String msg = "Player ${_isToCreate ? "created" : "Authenticated"} successfully!";
+        String msg = "Player created successfully!";
         context.showErrorSnackBar(msg, type: MessageTypes.success);
         Navigator.of(context).pop(player);
         return;
       }
 
-      context.showConfirmationAlertDialog("No Player founded with this nickname \n Do you want to create a new one?").then((value) {
-        if (value) {
-          setState(() {
+      context.showConfirmationAlertDialog("Ups, looks like this nickname is already in use.\nPlease enter other nickname.");
+      setState(() {
+        _isLoading = false;
+        _isToCreate = false;
+      });
+    });
+  }
+
+  void _authenticate() {
+    AuthRepository.authenticate(_textController.text.trim().toLowerCase()).then((player) async {
+      if (player != null) {
+        String msg = "Player Authenticated successfully!";
+        context.showErrorSnackBar(msg, type: MessageTypes.success);
+        Navigator.of(context).pop(player);
+        return;
+      }
+
+      context.showConfirmationAlertDialog("No Player founded with this nickname \nDo you want to create a new one?").then((value) {
+        setState(() {
+          // is the value is true is because the user wants to create a user
+          if (value) {
             _isToCreate = true;
-          });
-          _authenticate();
-          return;
-        }
-        _onCancel();
+            _singUp();
+          } else {
+            _isLoading = false;
+          }
+        });
       });
     });
   }
@@ -45,7 +73,11 @@ class _AuthenticateDialogState extends State<AuthenticateDialog> {
         _isLoading = true;
       });
 
-      _authenticate();
+      if (_isToCreate) {
+        _singUp();
+      } else {
+        _authenticate();
+      }
     }
   }
 
@@ -54,7 +86,7 @@ class _AuthenticateDialogState extends State<AuthenticateDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Enter you Nickname'),
+      title: _isToCreate ? const Text('New Player Nickname') : const Text('Enter you Nickname'),
       content: Form(
         key: _formKey,
         autovalidateMode: AutovalidateMode.onUserInteraction,

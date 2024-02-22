@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/data/models/searchable.model.dart';
 import 'package:flutter_table_football/src/core/data/models/stats.model.dart';
+import 'package:flutter_table_football/src/data/models/lite/player_lite.model.dart';
 
 /// Player Model
 ///
@@ -66,6 +67,8 @@ class Player extends Stats implements Searchable {
       goalsAgainst: map.containsKey('goalsAgainst') ? map['goalsAgainst'] as int : 0,
     );
   }
+
+  PlayerLite get toLite => PlayerLite(name: name, points: points);
 
   @override
   String get searchable => name.toLowerCase();

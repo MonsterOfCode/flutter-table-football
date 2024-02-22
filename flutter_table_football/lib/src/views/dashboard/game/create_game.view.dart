@@ -167,7 +167,7 @@ class _CreateGameViewState extends State<CreateGameView> with FormHelper {
 
   Widget renderSelectTeamSection(int p) {
     return TextButton(
-      onPressed: () => openBottomSheetToSelectTeams(p),
+      onPressed: () => openBottomSheetToSelectTeams(),
       child: Row(
         children: [
           // if the current player do not exists yet
@@ -183,12 +183,8 @@ class _CreateGameViewState extends State<CreateGameView> with FormHelper {
     );
   }
 
-  /// This function will open the bottom sheet to select the player
-  ///
-  /// [index] is the player to be selected
-  ///
-  /// with the [index] we can also know if is to edit or to add a new player
-  void openBottomSheetToSelectTeams(int index) {
+  /// This function will open the bottom sheet to select the team
+  void openBottomSheetToSelectTeams() {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,

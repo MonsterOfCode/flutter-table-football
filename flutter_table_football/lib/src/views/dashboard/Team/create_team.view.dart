@@ -5,9 +5,11 @@ import 'package:flutter_table_football/src/core/extensions/types/context.extensi
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
 import 'package:flutter_table_football/src/core/mixins/form_validations.mixin.dart';
 import 'package:flutter_table_football/src/data/models/lite/player_lite.model.dart';
+import 'package:flutter_table_football/src/data/models/player.model.dart';
 import 'package:flutter_table_football/src/data/repositories/players.repository.dart';
 import 'package:flutter_table_football/src/data/repositories/teams.repository.dart';
 import 'package:flutter_table_football/src/views/dashboard/team/team.view.dart';
+import 'package:flutter_table_football/src/widgets/authenticate_dialog.dart';
 import 'package:flutter_table_football/src/widgets/bottom_draggable_container.dart';
 import 'package:flutter_table_football/src/widgets/list_items/default_searchable_list_item.dart';
 import 'package:flutter_table_football/src/widgets/stepped.dart';
@@ -172,7 +174,7 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
 
   Widget renderStepSelectPlayer(int p) {
     return TextButton(
-      onPressed: () => openBottomSheetToSelectPlayers(p),
+      onPressed: () => openBottomSheetToSelectPlayers(),
       child: Row(
         children: [
           // if the current player do not exists yet
@@ -188,12 +190,24 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
     );
   }
 
+  void createPlayerAction() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => const PlayerDialog(isToCreate: true),
+    ).then((value) {
+      // if the dialog returns the value as Player
+      // it means that the user is created successfully
+      if (value is Player) {
+        setState(() {
+          _selectedPlayers.add((value).toLite);
+        });
+        Navigator.of(context).pop();
+      }
+    });
+  }
+
   /// This function will open the bottom sheet to select the player
-  ///
-  /// [index] is the player to be selected
-  ///
-  /// with the [index] we can also know if is to edit or to add a new player
-  void openBottomSheetToSelectPlayers(int index) {
+  void openBottomSheetToSelectPlayers() {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -202,6 +216,7 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
         return BottomDraggableScrollableContainer<PlayerLite>(
           title: "Players",
           fetchItems: PlayersRepository.getByQuery,
+          addAction: createPlayerAction,
           renderItem: (element) {
             return DefaultSearchableListItem<PlayerLite>(
               model: element,

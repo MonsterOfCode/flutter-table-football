@@ -66,7 +66,7 @@ class _HomeViewState extends State<HomeView> {
             }
             showDialog(
               context: context,
-              builder: (BuildContext context) => const AuthenticateDialog(),
+              builder: (BuildContext context) => const PlayerDialog(),
             ).then((value) {
               // if the dialog returns the value as Player
               // it means that the user makes login successfully

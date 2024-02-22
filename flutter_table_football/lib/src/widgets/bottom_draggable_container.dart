@@ -9,10 +9,11 @@ import 'package:flutter_table_football/src/widgets/lists/searchable_list.dart';
 
 class BottomDraggableScrollableContainer<T extends Searchable> extends StatelessWidget {
   final String title;
+  final void Function()? addAction;
   final Future<List<T>> Function({String query})? fetchItems;
   final Widget Function(T element) renderItem;
 
-  const BottomDraggableScrollableContainer({super.key, required this.title, required this.fetchItems, required this.renderItem});
+  const BottomDraggableScrollableContainer({super.key, required this.title, required this.fetchItems, required this.renderItem, this.addAction});
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +53,7 @@ class BottomDraggableScrollableContainer<T extends Searchable> extends Stateless
                     top: 0,
                     left: kSpacingMedium,
                     child: FloatingActionButton(
-                      onPressed: () {},
+                      onPressed: addAction,
                       backgroundColor: context.colorScheme.primary,
                       child: const Icon(
                         Icons.add,

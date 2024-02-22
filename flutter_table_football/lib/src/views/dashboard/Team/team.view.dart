@@ -28,10 +28,13 @@ class _TeamViewState extends State<TeamView> {
   @override
   void initState() {
     assert(widget.team is Team || widget.team is TeamLite, "You must pass a valid model of the class Team or TeamLite");
-    if (widget.team is Team) _team = widget.team as Team;
+    if (widget.team is Team) {
+      _team = widget.team as Team;
+    } else {
+      _isLoading = true;
+      _requestTeamProfile();
+    }
 
-    _isLoading = true;
-    _requestTeamProfile();
     super.initState();
   }
 
