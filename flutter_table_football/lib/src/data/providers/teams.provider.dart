@@ -16,15 +16,6 @@ class TeamsProvider {
   /// Request to the API by the full data of a Team
   ///
   /// If fail returns null
-  static Future<Team?> requestProfile(int id) async {
-    // TODO Connect to the real API
-    await Future.delayed(const Duration(milliseconds: 500));
-    return staticTeams.firstWhereOrNull((element) => element.id == id);
-  }
-
-  /// Request from the API a Team
-  ///
-  /// If fail returns null
   static Future<Team?> getById(int id) async {
     // TODO Connect to the real API
     await Future.delayed(const Duration(milliseconds: 500));

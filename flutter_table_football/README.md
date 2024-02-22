@@ -15,9 +15,12 @@ This is the flutter app for a table football game.
 #
 [View the full project documentation here](./docs/table-football-react-updated.pdf)
 #
+
+## [App](./docs/app.md)
+
 ## [Roadmap](./docs/roadmap.md)
 
-## Decisions
+
 
 ### GoRouter
 GoRouter is a package that allows us to navigate between screens in our app using URLs and route names, which simplifies navigation. I have also used it in other projects, and it meets all the requirements for this project.

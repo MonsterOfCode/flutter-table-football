@@ -14,7 +14,7 @@ class PlayersRepository {
   ///
   /// If something wrong returns null
   static Future<Player?> loadProfile(String nickname) async {
-    return PlayersProvider.requestProfile(nickname);
+    return PlayersProvider.getByName(nickname);
   }
 
   /// Fetch the teams registered on the platform

@@ -135,6 +135,27 @@ This roadmap outlines the development overview plans for this project. Can and w
     - [x] Create Game form
     - [x] User identification form
 
+- [ ] Create web view port
+
+- [ ] Create API
+    - [ ] authenticate user
+    - [ ] Games
+        - [ ] Create
+        - [ ] search
+        - [ ] update
+    - [ ] Player
+        - [ ] Create
+        - [ ] load full model
+        - [ ] search
+        - [ ] check nickname available
+        - [ ] load top 10
+    - [ ] Teams
+        - [ ] Create
+        - [ ] load full model
+        - [ ] search
+        - [ ] load top 10
+        - [ ] load top 10 of a player
+
 - [ ] Connect app to API
     - [ ] Refactor Player provider
     - [ ] Refactor Auth provider

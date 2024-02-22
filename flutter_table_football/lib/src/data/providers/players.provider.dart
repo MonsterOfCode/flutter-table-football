@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter_table_football/src/core/constants/constants.dart';
 import 'package:flutter_table_football/src/core/extensions/types/iterable.extension.dart';
 import 'package:flutter_table_football/src/data/models/lite/player_lite.model.dart';
@@ -13,15 +11,6 @@ class PlayersProvider {
     // TODO Connect to the real API
     await Future.delayed(const Duration(milliseconds: 500));
     return const Player(name: "New Player", points: 0);
-  }
-
-  /// Request to the API by the full data of a player
-  ///
-  /// If fail returns null
-  static Future<Player?> requestProfile(String nickname) async {
-    // TODO Connect to the real API
-    await Future.delayed(const Duration(milliseconds: 500));
-    return staticPlayers.firstWhereOrNull((element) => element.name == nickname);
   }
 
   /// Request from the API for a list of Players using a query
@@ -53,13 +42,12 @@ class PlayersProvider {
     });
   }
 
-  /// Request to the API a player by name
+  /// Request to the API by the full data of a player
   ///
   /// If fail returns null
-  static Future<Player> getByName(String name) async {
+  static Future<Player?> getByName(String nickname) async {
     // TODO Connect to the real API
-    return await Future.delayed(const Duration(milliseconds: 500)).then(
-      (value) => staticPlayers[Random().nextInt(staticPlayers.length - 1)],
-    );
+    await Future.delayed(const Duration(milliseconds: 500));
+    return staticPlayers.firstWhereOrNull((element) => element.name == nickname);
   }
 }

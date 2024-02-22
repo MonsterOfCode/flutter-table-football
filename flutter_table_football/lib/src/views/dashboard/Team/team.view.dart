@@ -39,7 +39,7 @@ class _TeamViewState extends State<TeamView> {
   }
 
   void _requestTeamProfile() {
-    TeamsRepository.loadProfile((widget.team as TeamLite).id).then((value) {
+    TeamsRepository.getById((widget.team as TeamLite).id).then((value) {
       if (value == null) {
         context.showErrorSnackBar("Ups! Please try later", type: MessageTypes.error);
         return;
