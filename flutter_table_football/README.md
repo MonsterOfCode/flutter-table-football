@@ -37,4 +37,10 @@ GoRouter is a package that allows us to navigate between screens in our app usin
 ### Immutable Models
 The decision to use immutable models was made because it simplifies state management and makes it easier, among other reasons, such as widget rebuild optimization, for instance.
 
+### Authentication
+As it is a simple app that does not contain any sensitive data, for quick implementation, I chose to create a basic system for identifying authenticated users. This identification is based on a nickname that is unique for each player.
+
+### Static Data
+Until the app is connected to an API, it uses static data created to allow the development of features without waiting for server-side implementation. With this static data, it is possible to test all features.
+
 
