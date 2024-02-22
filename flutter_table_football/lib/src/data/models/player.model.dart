@@ -68,6 +68,7 @@ class Player extends Stats implements Searchable {
     );
   }
 
+  // convert a Player model to a PlayerLite
   PlayerLite get toLite => PlayerLite(name: name, points: points);
 
   @override

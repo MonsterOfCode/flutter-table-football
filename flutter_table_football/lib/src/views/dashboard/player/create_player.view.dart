@@ -41,7 +41,7 @@ class _CreatePlayerViewState extends State<CreatePlayerView> with FormHelper {
         Navigator.of(context).pop(newPlayer);
         return;
       }
-      // is is not to return we take the user to view the create player
+      // is is not to return we take the user to view the created player
       context.replace(PlayerView.routePath, extra: newPlayer);
     }).catchError((error) {
       toIdle();

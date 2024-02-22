@@ -10,7 +10,6 @@ import 'package:flutter_table_football/src/data/repositories/players.repository.
 import 'package:flutter_table_football/src/data/repositories/teams.repository.dart';
 import 'package:flutter_table_football/src/views/dashboard/player/create_player.view.dart';
 import 'package:flutter_table_football/src/views/dashboard/team/team.view.dart';
-import 'package:flutter_table_football/src/widgets/authenticate_dialog.dart';
 import 'package:flutter_table_football/src/widgets/bottom_draggable_container.dart';
 import 'package:flutter_table_football/src/widgets/list_items/default_searchable_list_item.dart';
 import 'package:flutter_table_football/src/widgets/stepped.dart';
@@ -18,8 +17,8 @@ import 'package:go_router/go_router.dart';
 
 class CreateTeamView extends StatefulWidget {
   static const routeName = "team/create";
-
-  const CreateTeamView({super.key});
+  final bool? isToReturn;
+  const CreateTeamView({super.key, this.isToReturn = false});
 
   @override
   State<CreateTeamView> createState() => _CreateTeamViewState();
@@ -41,6 +40,11 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
       // navigates to the Team view after create the team
       debugPrint("Team Created successfully");
       context.showErrorSnackBar("Team Created successfully!", type: MessageTypes.success);
+      if (widget.isToReturn ?? false) {
+        Navigator.of(context).pop(newTeam);
+        return;
+      }
+      // is is not to return we take the user to view the created team
       context.replace(TeamView.routePath, extra: newTeam);
     }).catchError((error) {
       toIdle();
@@ -194,11 +198,11 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
   void createPlayerAction() {
     context.pushNamed(CreatePlayerView.routeName, extra: true).then(
       (value) {
-        // if the dialog returns the value as Player
+        // if the route returns the value as Player
         // it means that the user is created successfully
         if (value is Player) {
           setState(() {
-            _selectedPlayers.add((value).toLite);
+            _selectedPlayers.add(value.toLite);
           });
           Navigator.of(context).pop();
         }

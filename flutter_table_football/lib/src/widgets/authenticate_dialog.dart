@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/data/enums/message_types.enum.dart';
 import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
 import 'package:flutter_table_football/src/core/utils/form_validations.util.dart';
-import 'package:flutter_table_football/src/data/models/player.model.dart';
 import 'package:flutter_table_football/src/data/repositories/auth.repository.dart';
 import 'package:flutter_table_football/src/views/dashboard/player/create_player.view.dart';
 import 'package:go_router/go_router.dart';

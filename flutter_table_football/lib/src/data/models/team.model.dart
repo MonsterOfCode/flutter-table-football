@@ -3,6 +3,7 @@ import 'package:flutter_table_football/src/core/data/models/stats.model.dart';
 import 'package:flutter_table_football/src/data/models/game.model.dart';
 import 'package:flutter_table_football/src/data/models/lite/player_lite.model.dart';
 import 'package:flutter_table_football/src/core/data/models/searchable.model.dart';
+import 'package:flutter_table_football/src/data/models/lite/team_lite.model.dart';
 
 /// Team Model
 ///
@@ -108,6 +109,9 @@ class Team extends Stats implements Searchable {
       lastGames: lastGames,
     );
   }
+
+  // convert a Team model to a TeamLite
+  TeamLite get toLite => TeamLite(id: id, name: name, players: players);
 
   @override
   String toString() {
