@@ -1,22 +1,30 @@
-# Planning Roadmap
+# Planning Roadmap for Flutter App
 
-## Geral Issues to be created
-- [ ] Create and configure flutter project
+This roadmap outlines the development overview plans for this project. Can and will  change as needed, but should provide a good starting point to understand where we are going with this project.
 
-- [ ] Create screen route system
+## Issues
+- [x] Create and configure flutter project
 
-- [ ] Create navigation bar for app
+- [x] Create screen route system
+
+- [x] Create navigation bar for app
     - we can use the widget bottomNavigationBar
-    - [ ] Create a Empty Dashboard/Home Screen
-    - [ ] Create a Empty Teams Screen
-    - [ ] Create a Empty Games Screen
-    - [ ] Create a Empty Profile Screen
+    - [x] Create a Empty Dashboard/Home Screen
+    - [x] Create a Empty Teams Screen
+    - [x] Create a Empty Games Screen
+    - [x] Create a Empty Profile Screen
 
-- [ ] Create models:
-    - [ ] Create Player Model
+- [x] Create models:
+    - [x] Create Player Model
         - [string] Name (unique)
-        - [int] points (to help calculate rankings)
-    - [ ] Create Team Model
+        - [int] wins
+        - [int] losses
+        - [int] points
+        - [double] [Calculated] Ratio (Games Played/Win)
+        - [int] GF (Goals For)
+        - [int] GA (Goals Against)
+        - [int] [Calculated] matches
+    - [x] Create Team Model
         - [increment] id (unique)
         - [string] Name
         - [int] wins
@@ -25,110 +33,137 @@
         - [double] [Calculated] Ratio (Games Played/Win)
         - [int] GF (Goals For)
         - [int] GA (Goals Against)
-        - [int] [Calculated] GD (Goals Difference)
-    - [ ] Create Game Model
-        - [increment] (idTeam1) (Composed  Key, Unique Constraint)
-        - [increment] (idTeam2) (Composed  Key, Unique Constraint)
+        - [int] [Calculated] matches
+        - [List<Player>] Players
+    - [x] Create Game Model
+        - [increment] (id) (unique)
+        - [int] (idTeam1)
+        - [int] (idTeam2)
         - [int] ScoreTeam1
         - [int] ScoreTeam2
         - [int] [computed] winTeam
         - [DateTime] DateTime
         - [bool] done
 
-- [ ] Create searchable data for Team, player and game models
+- [x] Create searchable data for Team, player and game models
 
-- [ ] Create searchable list widget
+- [x] Create searchable list widget
 
-- [ ] Create User story 1 widgets
-    - [ ] Create Team button
-    - [ ] Create form to create Team
-        - [ ] Prompt by team name
-        - [ ] Selectable list to select team 1
-        - [ ] Selectable list to select team 2
-        - [ ] Option to Create and Start Game
+- [x] Create User story 1 widgets
+    - [x] Create Team button
+    - [x] Create form to create Team
+        - [x] Prompt by team name
+        - [x] Option to check if is for 1 or 2 players
+        - [x] Selectable list to select player 1
+        - [x] Selectable list to select player 2 (Optional)
+        - [x] Option to create team
+        - [x] Navigate to Team View
+    - [x] Create Team View widgets
+        - [x] Title
+        - [x] members of team
+        - [x] Show stats about the team
+            - [x] Games Played
+            - [x] Goals For
+            - [x] Goals Against
+            - [x] Winning percentage
+        - [x] Last games played
+            - [x] Show the last X games played
+            - [x] Result of the games
+            - [x] Other team of the game
 
-- [ ] Create User story 1 widgets
-    - [ ] Create Team button
-    - [ ] Create form to create Team
-        - [ ] Prompt by team name
-        - [ ] Option to check if is for 1 or 2 players
-        - [ ] Selectable list to select player 1
-        - [ ] Selectable list to select player 2 (Optional)
-        - [ ] Option to create team
-        - [ ] Navigate to Team View
-    - [ ] Create Team View widgets
-        - [ ] Title
-        - [ ] members of team
-        - [ ] Show stats about the team
-            - [ ] Games Played
-            - [ ] Goals For
-            - [ ] Goals Against
-            - [ ] Winning percentage
-        - [ ] Last games played
-            - [ ] Show the last X games played
-            - [ ] Result of the games
-            - [ ] Other team of the game
+- [x] Create User story 2 widgets
+    - [x] Title
+    - [x] My ranking compared to other players
+    - [x] Number of games played
+    - [x] GF
+    - [x] GA
+    - [x] % of wins
+    - [x] % of losses
+    - [x] My best team
+        - [x] Number of games played
+        - [x] GF
+        - [x] GA
+        - [x] points 
+        - [x] % of wins
+    - [x] Top Teams List
 
-- [ ] Create User story 2 widgets
-    - [ ] Title
-    - [ ] My ranking compared to other players
-    - [ ] Number of games played
-    - [ ] GF
-    - [ ] GA
-    - [ ] % of wins
-    - [ ] % of losses
-    - [ ] My best team
-        - [ ] Number of games played
-        - [ ] GF
-        - [ ] GA
-        - [ ] Position on ranking 
-        - [ ] % of wins
-        - [ ] % of losses
-    - [ ] Top Teams List
-
-- [ ] Create User story 3 widgets
-    - [ ] Create Game button
-    - [ ] Create form to create Game
-        - [ ] Selectable list to select Team 1
-        - [ ] Selectable list to select Team 2
-        - [ ] Option to Create and Start Game
-    - [ ] Create Game View Widget
-        - [ ] Title
-        - [ ] Team members
-        - [ ] Show stats about the team
-            - [ ] Goals For
-            - [ ] Goals Against
+- [x] Create User story 3 widgets
+    - [x] Create Game button
+    - [x] Create form to create Game
+        - [x] Selectable list to select Team 1
+        - [x] Selectable list to select Team 2
+        - [x] Option to Create and Start Game
+    - [x] Create Game View Widget
+        - [x] Title
+        - [x] Team members
+        - [x] Show stats about the team
+            - [x] Goals For
+            - [x] Goals Against
         - Game still running
-            - [ ] Option increment goals of each team
-            - [ ] Option to end the game manually
-            - [ ] Implement auto end game
+            - [x] Option increment goals of each team
+            - [x] Option to end the game manually
+            - [x] Implement auto end game
                 - If the sum of the goals is 9 the game ends automatically.
 
-- [ ] Create User story 4 widgets
-    - [ ] At form to create Game
-        - [ ] Add option to mark the game as finished already
-        - [ ] After that request to insert game result.
-        - [ ] Create Game
+- [x] Create User story 4 widgets
+    - [x] Create List of Players
+    - [x] Create Player button
+    - [x] Create form to create Player
+        - [x] insert name
+        - [x] Option to check the availability of unique name
+        - [x] Option to Create
 
-- [ ] Implement a statement system
-    - [ ] User Story 1
-    - [ ] User Story 2
-    - [ ] User Story 3
-    - [ ] User Story 4
+- [x] Create User story 5 widgets
+    - [x] At form to create Game
+        - [x] Add option to mark the game as finished already
+        - [x] After that request to insert game result.
+        - [x] Create Game
 
-- [ ] Implement a local storage system 
-    - [ ] User Story 1
-    - [ ] User Story 2
-    - [ ] User Story 3
-    - [ ] User Story 4
+- [x] Create User story 6 widgets
+    - [x] Create a simple form that allow the user to identify himself
+        - [x] input to insert the nickname
+        - [x] Continue (create or authentication)
+    - The user is already authenticated
+        - [x] button to delete account
+        - [x] input that allow edit the player nickname
 
-- [ ] Create a simple way to user identify himself in order to access to private data (like his own teams)
+- [x] Implement a local storage system 
+    - [x] User Story 6
 
-- [ ] Implement error validations in forms
-    - [ ] Create Player form
-    - [ ] Create Game form
-    - [ ] User identification form
+- [x] Implement error validations in forms
+    - [x] Create Player form
+    - [x] Create Game form
+    - [x] User identification form
 
+- [ ] Create web view port
+
+- [ ] Create API
+    - [ ] authenticate user
+    - [ ] Games
+        - [ ] Create
+        - [ ] search
+        - [ ] update
+    - [ ] Player
+        - [ ] Create
+        - [ ] load full model
+        - [ ] search
+        - [ ] check nickname available
+        - [ ] load top 10
+    - [ ] Teams
+        - [ ] Create
+        - [ ] load full model
+        - [ ] search
+        - [ ] load top 10
+        - [ ] load top 10 of a player
+
+- [ ] Connect app to API
+    - [ ] Refactor Player provider
+    - [ ] Refactor Auth provider
+    - [ ] Refactor Team provider
+    - [ ] Refactor Game provider
+
+## Other Issues that was nice/important to implement
+- [ ] Test
 
 ## User Story 1: Create a Team
 Objective: Allow the creation of teams with one or two players.
@@ -156,10 +191,6 @@ This is the US#3 from the requested US.
 8. [Action] Select player 1 ( and 2 optional)
 9. [Action] Create team
 10. [Screen] Team
-
-## Required Issues
-- Create 
-
 
 ## User Story 2: Create Dashboard Screen
 Objective: Provide a dashboard displaying team and individual player statistics to identify top performers.
@@ -208,9 +239,28 @@ This is the US#1 from the requested US.
 7. [Action] Create and Start the game
 8. [Screen] Game page
 
+## User Story 4: Authenticated Player
+Objective: Allow users to identify (Authentication) thyself with their player profile. The users can also remove they identification (UnAuthentication).
 
+## Steps
 
-## User Story 4: Create a Past Game
+1. The user click on "Me" in the bottom menu.
+2. If not authenticated
+    1. The user insert his nickname and submit
+    2. If the nickname exists is authenticated
+    3. If the nickname do not exists it creates a new player with this nickname
+3. If is already authenticated
+    1. Can edit the nickname to change/create profile
+
+## Required Features
+
+1. [Screen] Dashboard
+2. [Screen] Me
+3. [Widget] Form to create/edit nickname
+4. [Action] insert nickname
+5. [Action] Submit Nickname
+
+## User Story 5: Create a Past Game
 Objective: Allow users to input results of games that have already been played.
 This is the US#2 from the requested US.
 
@@ -233,18 +283,6 @@ This is the US#2 from the requested US.
 8. [Action] Insert the result of the game
 9. [Action] Create game
 10. [Screen] Game page
-
-## Extra information
-
-### Orders
-- Always by asc
-- Games
-    -  Order: by play DateTime
-- Players
-    - Order: by Name
-- Teams
-    - Order: by Name
-
 
 
 
