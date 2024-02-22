@@ -8,6 +8,7 @@ class TeamsProvider {
   ///
   /// If fail returns null
   static Future<Team?> create(Map<String, dynamic> data) async {
+    // TODO Connect to the real API
     await Future.delayed(const Duration(milliseconds: 500));
     return staticTeams.last;
   }
@@ -16,6 +17,7 @@ class TeamsProvider {
   ///
   /// If fail returns null
   static Future<Team?> requestProfile(int id) async {
+    // TODO Connect to the real API
     await Future.delayed(const Duration(milliseconds: 500));
     return staticTeams.firstWhereOrNull((element) => element.id == id);
   }
@@ -24,6 +26,7 @@ class TeamsProvider {
   ///
   /// If fail returns null
   static Future<Team?> getById(int id) async {
+    // TODO Connect to the real API
     await Future.delayed(const Duration(milliseconds: 500));
     return staticTeams.firstWhereOrNull((element) => element.id == id);
   }
@@ -32,6 +35,7 @@ class TeamsProvider {
   ///
   /// If fail returns null
   static Future<List<TeamLite>> getByQuery({String query = ''}) async {
+    // TODO Connect to the real API
     await Future.delayed(const Duration(milliseconds: 500));
     return staticTeamsLite.where((element) => element.searchable.contains(query)).toList();
   }
@@ -40,6 +44,7 @@ class TeamsProvider {
   ///
   /// If fail returns an empty List
   static Future<List<Team>> fetchTop10() async {
+    // TODO Connect to the real API
     return await Future.delayed(const Duration(milliseconds: 500)).then((value) => staticTeams).catchError((onError) {
       return List<Team>.empty(growable: true);
     });
@@ -49,6 +54,7 @@ class TeamsProvider {
   ///
   /// If fail returns an empty List
   static Future<List<Team>> fetchTopPlayerTeams(String playerName, int nOfTeams) async {
+    // TODO Connect to the real API
     return await Future.delayed(const Duration(milliseconds: 500)).then((value) => staticTeams).catchError((onError) {
       return List<Team>.empty(growable: true);
     });

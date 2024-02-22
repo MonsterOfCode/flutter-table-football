@@ -6,9 +6,7 @@ import 'package:flutter_table_football/src/data/repositories/auth.repository.dar
 import 'package:flutter_table_football/src/views/dashboard/player/create_player.view.dart';
 import 'package:go_router/go_router.dart';
 
-/// Widget that allow to create or make the user authentication
-///
-/// [isToCreate] is the flag if the user is creating or making the login
+/// Widget that allow the user make authentication
 class PlayerDialog extends StatefulWidget {
   const PlayerDialog({super.key});
 

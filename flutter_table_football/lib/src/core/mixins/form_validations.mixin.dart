@@ -66,17 +66,28 @@ mixin FormHelper<T extends StatefulWidget> on State<T> {
   void addErrorMessage(Map<String, dynamic> errors) {
     setState(() => _errorsMessages = errors);
   }
-  // void addErrorMessage(Map<String, dynamic> errors) => setState(() => _errorsMessages = errors);
 
+  /// Change the formState to Idle
   void toIdle() => setState(() => _formState = FormStates.idle);
+
+  /// Change the formState to Loading
   void toLoading() => setState(() => _formState = FormStates.loading);
+
+  /// Change the formState to submitting
   void toSubmitting() => setState(() => _formState = FormStates.submitting);
 
+  /// enables the auto validator to always
   void activeAutoValidator() => setState(() => _formValidatorEnabled = true);
 
   AutovalidateMode get autovalidateMode => _formValidatorEnabled ? AutovalidateMode.always : AutovalidateMode.disabled;
+
+  /// returns is the formState is idle
   bool get isIdle => _formState == FormStates.idle;
+
+  /// returns is the formState is loading
   bool get isLoading => _formState == FormStates.loading;
+
+  /// returns is the formState is submitting
   bool get isSubmitting => _formState == FormStates.submitting;
   GlobalKey<FormState> get formKey => _formKey;
 

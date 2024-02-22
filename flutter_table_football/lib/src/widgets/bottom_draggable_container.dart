@@ -7,6 +7,7 @@ import 'package:flutter_table_football/src/core/data/models/searchable.model.dar
 import 'package:flutter_table_football/src/core/extensions/widgets/container.extension.dart';
 import 'package:flutter_table_football/src/widgets/lists/searchable_list.dart';
 
+/// Container that Adapts the DraggableScrollableSheet to works as a bottom modal that is draggable too
 class BottomDraggableScrollableContainer<T extends Searchable> extends StatelessWidget {
   final String title;
   final void Function()? addAction;

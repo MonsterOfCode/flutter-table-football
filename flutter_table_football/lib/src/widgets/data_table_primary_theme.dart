@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
 
+/// Our DataTable theme
 class DataTablePrimaryTheme extends StatelessWidget {
   final List<DataColumn> columns;
   final List<DataRow> rows;

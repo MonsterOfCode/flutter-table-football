@@ -8,7 +8,7 @@ import 'package:flutter_table_football/src/data/models/game.model.dart';
 import 'package:flutter_table_football/src/data/models/lite/team_lite.model.dart';
 import 'package:flutter_table_football/src/data/repositories/games.repository.dart';
 import 'package:flutter_table_football/src/widgets/scaffolds/glass_scaffold.dart';
-import 'package:flutter_table_football/src/widgets/lists/simple_list.dart';
+import 'package:flutter_table_football/src/widgets/lists/players_simple_list.dart';
 
 class GameView extends StatefulWidget {
   final Game game;
@@ -70,13 +70,14 @@ class _GameViewState extends State<GameView> {
         children: [
           _renderGameInfo(),
           const SizedBox(height: kSpacingExtraLarge),
-          SimpleList(title: "${_game.teamA.name} members", players: _game.teamA.players),
-          SimpleList(title: "${_game.teamB.name} members", players: _game.teamB.players),
+          PlayersSimpleList(title: "${_game.teamA.name} members", players: _game.teamA.players),
+          PlayersSimpleList(title: "${_game.teamB.name} members", players: _game.teamB.players),
         ],
       ).scrollable(),
     );
   }
 
+  // render the Game info section
   Widget _renderGameInfo() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -123,6 +124,7 @@ class _GameMinute extends StatelessWidget {
       );
 }
 
+// Widget that will render the info for each team
 class _GameInfoTeamItem extends StatelessWidget {
   final TeamLite team;
   final bool isLoading;

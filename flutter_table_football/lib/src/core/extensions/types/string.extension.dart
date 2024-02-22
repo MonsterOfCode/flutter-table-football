@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/theme/styles.dart';
 
 extension StringExtension on String {
+  /// Wraps the string in a Text
   Text get toText {
     return Text(this);
   }
 
+  /// Wraps the string in a Text with Title style
   Text get title => Text(this, style: $styles.text.title);
 
+  /// Wraps the string in a Text with Big Title style
   Text bigTitle(context) {
     return Text(
       this,
@@ -15,6 +18,7 @@ extension StringExtension on String {
     );
   }
 
+  /// Wraps the string in a Text with H1
   Text h1(context) {
     return Text(
       this,
@@ -22,6 +26,7 @@ extension StringExtension on String {
     );
   }
 
+  /// Wraps the string in a Text with H2
   Text h2(context) {
     return Text(
       this,
@@ -29,6 +34,7 @@ extension StringExtension on String {
     );
   }
 
+  /// Wraps the string in a Text with H3
   Text h3(context) {
     return Text(
       this,
@@ -36,6 +42,7 @@ extension StringExtension on String {
     );
   }
 
+  /// Wraps the string in a Text with H4
   Text h4(context) {
     return Text(
       this,
@@ -43,27 +50,7 @@ extension StringExtension on String {
     );
   }
 
-  Text h5(context) {
-    return Text(
-      this,
-      style: $styles.text.h5(context),
-    );
-  }
-
-  Text body(context) {
-    return Text(
-      this,
-      style: $styles.text.body(context),
-    );
-  }
-
-  Text w800(context) {
-    return Text(
-      this,
-      style: $styles.text.w800(context),
-    );
-  }
-
+  /// Wraps the string in a Text with bodyBold
   Text bodyBold(context) {
     return Text(
       this,
@@ -71,6 +58,7 @@ extension StringExtension on String {
     );
   }
 
+  /// Wraps the string in a Text with bigNote
   Text bigNote(context) {
     return Text(
       this,
@@ -78,31 +66,11 @@ extension StringExtension on String {
     );
   }
 
+  /// Wraps the string in a Text with note
   Text note(context) {
     return Text(
       this,
       style: $styles.text.note(context),
-    );
-  }
-
-  Text noteStrong(context) {
-    return Text(
-      this,
-      style: $styles.text.noteStrong(context),
-    );
-  }
-
-  Text label(context) {
-    return Text(
-      this,
-      style: $styles.text.bigNote(context),
-    );
-  }
-
-  Text smallNote(context) {
-    return Text(
-      this,
-      style: $styles.text.smallNote(context),
     );
   }
 }

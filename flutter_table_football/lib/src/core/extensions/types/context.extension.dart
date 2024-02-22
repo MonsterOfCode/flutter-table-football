@@ -31,6 +31,7 @@ extension BuildContextExtension on BuildContext {
     ScaffoldMessenger.of(this).showSnackBar(snackBar);
   }
 
+  /// Show a Confirmation Dialog
   Future<bool> showConfirmationAlertDialog(String msg) async {
     final bool? result = await showAlertDialog<bool?>(
       title: 'Confirm Action',
@@ -45,6 +46,7 @@ extension BuildContextExtension on BuildContext {
     return result ?? false;
   }
 
+  /// Show a AlertDialog
   Future<T?> showAlertDialog<T>({String? title, required Widget content, void Function()? onCancel, void Function()? onConfirm}) {
     return showDialog<T>(
       context: this,

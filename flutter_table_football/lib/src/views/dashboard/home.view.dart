@@ -50,7 +50,7 @@ class _HomeViewState extends State<HomeView> {
       title: "Dashboard",
       actions: [
         IconButton(
-          icon: const Icon(Icons.account_circle), // Use user or avatar icon
+          icon: _player != null ? const Icon(Icons.account_circle) : const Icon(Icons.login), // Use user or avatar icon
           onPressed: () {
             if (_player != null) {
               context.pushNamed(AuthView.routeName, extra: _player).then((value) {

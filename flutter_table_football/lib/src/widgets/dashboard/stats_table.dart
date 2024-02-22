@@ -4,7 +4,8 @@ import 'package:flutter_table_football/src/core/extensions/types/context.extensi
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
 import 'package:flutter_table_football/src/widgets/data_table_primary_theme.dart';
 
-const columns = [
+/// Default Columns for the table
+const _columns = [
   DataColumn(label: Text('Team/Player Name')),
   DataColumn(label: Text('Games Played')),
   DataColumn(label: Text('Wins')),
@@ -15,6 +16,7 @@ const columns = [
   DataColumn(label: Text('GD (Goals Difference)')),
 ];
 
+/// Widget that will render Stats in data table format
 class StatsTable<T extends Stats> extends StatelessWidget {
   final Future<List<T>> future;
   final Widget? title;
@@ -38,7 +40,7 @@ class StatsTable<T extends Stats> extends StatelessWidget {
                     return Column(
                       children: [
                         DataTablePrimaryTheme(
-                          columns: columns,
+                          columns: _columns,
                           rows: [
                             DataRow(
                               cells: List.generate(
@@ -78,7 +80,7 @@ class StatsTable<T extends Stats> extends StatelessWidget {
                         ],
                       );
                     }).toList();
-                    return DataTablePrimaryTheme(columns: columns, rows: rows);
+                    return DataTablePrimaryTheme(columns: _columns, rows: rows);
                   }
                   return Center(child: "No results to show".toText);
                 },
@@ -86,6 +88,7 @@ class StatsTable<T extends Stats> extends StatelessWidget {
             ],
           ),
         ),
+        // just layout
         const Divider(),
       ],
     );

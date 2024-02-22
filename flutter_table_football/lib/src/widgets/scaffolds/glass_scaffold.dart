@@ -6,6 +6,7 @@ import 'package:flutter_table_football/src/core/constants/constants.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/widgets/text.extension.dart';
 
+/// Scaffold that makes the glass effect on top of a image
 class GlassScaffold extends StatelessWidget {
   final String? title;
   final List<Widget>? actions;

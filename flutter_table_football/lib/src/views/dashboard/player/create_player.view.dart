@@ -63,7 +63,7 @@ class _CreatePlayerViewState extends State<CreatePlayerView> with FormHelper {
     toSubmitting();
     PlayersRepository.validateNickname(getControllerValue('name').trim()).then((value) {
       toIdle();
-      //TODO change to response type
+      //TODO change to http response data type
       if (value is Map<String, dynamic>) {
         addErrorMessage(value["errors"]);
         return;
@@ -118,6 +118,7 @@ class _CreatePlayerViewState extends State<CreatePlayerView> with FormHelper {
     );
   }
 
+  // render the resume section
   Widget renderResume() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -10,9 +10,9 @@ import 'package:flutter_table_football/src/data/repositories/games.repository.da
 import 'package:flutter_table_football/src/data/repositories/teams.repository.dart';
 import 'package:flutter_table_football/src/views/dashboard/game/game.view.dart';
 import 'package:flutter_table_football/src/views/dashboard/team/create_team.view.dart';
-import 'package:flutter_table_football/src/widgets/game/resume_section_create_game.dart';
+import 'package:flutter_table_football/src/widgets/create_game/resume_section_create_game.dart';
 import 'package:flutter_table_football/src/widgets/bottom_draggable_container.dart';
-import 'package:flutter_table_football/src/widgets/game/score_section_create_game.dart';
+import 'package:flutter_table_football/src/widgets/create_game/score_section_create_game.dart';
 import 'package:flutter_table_football/src/widgets/list_items/default_searchable_list_item.dart';
 import 'package:flutter_table_football/src/widgets/stepped.dart';
 import 'package:go_router/go_router.dart';
@@ -139,8 +139,8 @@ class _CreateGameViewState extends State<CreateGameView> with FormHelper {
       done: _createAndNavigateToTeamView,
       executeOnStepContinue: {0: _executeOnStep0, 1: _executeOnStep1},
       steps: [
-        StepItem(title: const Text('1º Team'), content: renderSelectTeamSection(0)),
-        StepItem(title: const Text('2º Team'), content: renderSelectTeamSection(1)),
+        StepItem(title: const Text('1º Team'), content: _renderSelectTeamSection(0)),
+        StepItem(title: const Text('2º Team'), content: _renderSelectTeamSection(1)),
         StepItem(
             title: const Text('Game Result'),
             content: _alreadyFinishedGame
@@ -165,9 +165,10 @@ class _CreateGameViewState extends State<CreateGameView> with FormHelper {
     );
   }
 
-  Widget renderSelectTeamSection(int p) {
+  // render the items to the user see the selected team or the messages to select one
+  Widget _renderSelectTeamSection(int p) {
     return TextButton(
-      onPressed: () => openBottomSheetToSelectTeams(),
+      onPressed: () => _openBottomSheetToSelectTeams(),
       child: Row(
         children: [
           // if the current player do not exists yet
@@ -183,7 +184,7 @@ class _CreateGameViewState extends State<CreateGameView> with FormHelper {
     );
   }
 
-  void createTeamAction() {
+  void _createTeamAction() {
     context.pushNamed(CreateTeamView.routeName, extra: true).then(
       (value) {
         // if the route returns the value as Team
@@ -199,7 +200,7 @@ class _CreateGameViewState extends State<CreateGameView> with FormHelper {
   }
 
   /// This function will open the bottom sheet to select the team
-  void openBottomSheetToSelectTeams() {
+  void _openBottomSheetToSelectTeams() {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -208,7 +209,7 @@ class _CreateGameViewState extends State<CreateGameView> with FormHelper {
         return BottomDraggableScrollableContainer<TeamLite>(
           title: "Teams",
           fetchItems: TeamsRepository.getByQuery,
-          addAction: createTeamAction,
+          addAction: _createTeamAction,
           renderItem: (element) {
             return DefaultSearchableListItem<TeamLite>(
               model: element,

@@ -1,48 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
 import 'package:flutter_table_football/src/core/theme/styles.dart';
 
 extension TextExtension on Text {
+  /// replaces the current Text to other with the new color
   Text color(Color? color) {
     return Text(data!, style: style != null ? style!.copyWith(color: color) : TextStyle(color: color));
   }
 
-  Text primary(BuildContext context) {
-    Color primary = context.colorScheme.primary;
-    return Text(data!, style: style != null ? style!.copyWith(color: primary, fontWeight: FontWeight.bold) : $styles.text.bold(context).copyWith(color: primary));
-  }
-
-  Text primaryBold(BuildContext context) {
-    Color primary = context.colorScheme.primary;
-    return Text(data!, style: style != null ? style!.copyWith(color: primary) : TextStyle(color: primary));
-  }
-
-  Text get center {
-    return Text(data!, style: style, textAlign: TextAlign.center);
-  }
-
-  Text invertColor(BuildContext context) {
-    return Text(data!, style: style != null ? style!.copyWith(color: context.colorScheme.background) : TextStyle(color: context.colorScheme.background));
-  }
-
+  /// replaces the current Text to other with the fontWeight bold
   Text bold(context) {
     return Text(data!, style: style != null ? style!.copyWith(fontWeight: FontWeight.bold) : $styles.text.bold(context));
-  }
-
-  SelectableText selectable() {
-    return SelectableText(data!, style: style);
   }
 }
 
 extension TextStyleExtension on TextStyle {
+  /// allow to change the color
   TextStyle newColor(Color color) {
     return copyWith(color: color);
   }
 
+  /// Changes the fontWeight to bold
   TextStyle bold() {
     return copyWith(fontWeight: FontWeight.bold);
   }
 
+  /// Changes the fontWeight to w800
   TextStyle w800() {
     return copyWith(fontWeight: FontWeight.w800);
   }

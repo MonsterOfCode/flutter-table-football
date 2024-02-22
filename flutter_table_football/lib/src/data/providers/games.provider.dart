@@ -7,6 +7,7 @@ class GamesProvider {
   ///
   /// If fail returns null
   static Future<Game?> create(Map<String, dynamic> data) async {
+    // TODO Connect to the real API
     await Future.delayed(const Duration(milliseconds: 500));
     return staticGames.last;
   }
@@ -15,6 +16,7 @@ class GamesProvider {
   ///
   /// If fail returns null
   static Future<List<Game>> getByQuery({String query = ''}) async {
+    // TODO Connect to the real API
     await Future.delayed(const Duration(milliseconds: 500));
     return staticGames.where((element) => element.searchable.contains(query)).toList();
   }
@@ -28,6 +30,7 @@ class GamesProvider {
   ///
   /// If fail returns null
   static Future<Game?> updateTeamGoal(int gameId, int teamId, int currentScore, {bool toIncrement = true}) async {
+    // TODO Connect to the real API
     Game? game = staticGames.firstWhereOrNull((element) => element.id == gameId);
     if (game != null) {
       game = game.updateScoreOfTeam(teamId, toIncrement: toIncrement);
@@ -41,6 +44,7 @@ class GamesProvider {
   ///
   /// If fail returns null
   static Future<Game?> endGame(int gameId) async {
+    // TODO Connect to the real API
     Game? game = staticGames.firstWhereOrNull((element) => element.id == gameId);
     if (game != null) {
       game = game.copyWith(done: true);

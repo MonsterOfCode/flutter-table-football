@@ -3,11 +3,12 @@ import 'package:flutter_table_football/src/core/constants/constants.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
 import 'package:flutter_table_football/src/data/models/lite/player_lite.model.dart';
 
-class SimpleList extends StatelessWidget {
+/// Simple widget to render a Players list
+class PlayersSimpleList extends StatelessWidget {
   final String title;
   final List<PlayerLite> players;
 
-  const SimpleList({
+  const PlayersSimpleList({
     super.key,
     required this.title,
     required this.players,

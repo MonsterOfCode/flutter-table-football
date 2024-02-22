@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/constants/constants.dart';
 import 'package:flutter_table_football/src/core/data/models/searchable.model.dart';
 
+///Default Searchable List that receives a future for the items
+///
+///And allow have a call back to you render the item as you want
 class SearchableList<T extends Searchable> extends StatefulWidget {
   final ScrollController? scrollController;
   final Widget Function(T element) renderItem;

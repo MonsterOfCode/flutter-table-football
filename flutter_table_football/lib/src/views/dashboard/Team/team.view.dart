@@ -8,7 +8,7 @@ import 'package:flutter_table_football/src/data/models/lite/team_lite.model.dart
 import 'package:flutter_table_football/src/data/models/team.model.dart';
 import 'package:flutter_table_football/src/data/repositories/teams.repository.dart';
 import 'package:flutter_table_football/src/widgets/list_items/game_item.dart';
-import 'package:flutter_table_football/src/widgets/lists/simple_list.dart';
+import 'package:flutter_table_football/src/widgets/lists/players_simple_list.dart';
 import 'package:flutter_table_football/src/widgets/scaffolds/glass_scaffold.dart';
 
 class TeamView extends StatefulWidget {
@@ -73,7 +73,7 @@ class _TeamViewState extends State<TeamView> {
                       ),
                     ),
                   ),
-                SimpleList(title: "Team members", players: _team.players),
+                PlayersSimpleList(title: "Team members", players: _team.players),
                 if (_team.lastGames.isNotEmpty) _LastGamesSection(team: _team),
               ],
             ).scrollable(),

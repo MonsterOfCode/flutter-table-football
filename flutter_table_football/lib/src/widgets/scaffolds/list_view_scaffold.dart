@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
 
+/// Scaffold used on the bottom sheets lists
 class ListViewScaffold extends StatelessWidget {
   final String title;
   final Widget child;

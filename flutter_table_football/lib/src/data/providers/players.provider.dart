@@ -10,6 +10,7 @@ class PlayersProvider {
   ///
   /// If fail returns null
   static Future<Player?> create(Map<String, dynamic> data) async {
+    // TODO Connect to the real API
     await Future.delayed(const Duration(milliseconds: 500));
     return const Player(name: "New Player", points: 0);
   }
@@ -18,6 +19,7 @@ class PlayersProvider {
   ///
   /// If fail returns null
   static Future<Player?> authenticate(String nickname) async {
+    // TODO Connect to the real API
     await Future.delayed(const Duration(milliseconds: 500));
     Player? p = staticPlayers.firstWhereOrNull((element) => element.name.toLowerCase() == nickname);
     return p;
@@ -27,6 +29,7 @@ class PlayersProvider {
   ///
   /// If fail returns null
   static Future<Player?> requestProfile(String nickname) async {
+    // TODO Connect to the real API
     await Future.delayed(const Duration(milliseconds: 500));
     return staticPlayers.firstWhereOrNull((element) => element.name == nickname);
   }
@@ -35,6 +38,7 @@ class PlayersProvider {
   ///
   /// If fail returns null
   static Future<List<PlayerLite>> getByQuery({String query = ''}) async {
+    // TODO Connect to the real API
     await Future.delayed(const Duration(milliseconds: 500));
     return staticPlayersLite.where((element) => element.searchable.contains(query)).toList();
   }
@@ -44,6 +48,7 @@ class PlayersProvider {
   /// [true] the nickname is available
   /// if not available it will return the error Map
   static Future<dynamic> validateNickname(String nickname) async {
+    // TODO Connect to the real API
     await Future.delayed(const Duration(milliseconds: 500));
     return staticPlayersLite.firstWhereOrNull((element) => element.name == nickname) != null ? staticApiErrorResponse : true;
   }
@@ -52,6 +57,7 @@ class PlayersProvider {
   ///
   /// If fail returns an empty List
   static Future<List<Player>> fetchTop10() async {
+    // TODO Connect to the real API
     return await Future.delayed(const Duration(milliseconds: 500)).then((value) => staticPlayers).catchError((onError) {
       return List<Player>.empty(growable: true);
     });
@@ -61,6 +67,7 @@ class PlayersProvider {
   ///
   /// If fail returns null
   static Future<Player> getByName(String name) async {
+    // TODO Connect to the real API
     return await Future.delayed(const Duration(milliseconds: 500)).then(
       (value) => staticPlayers[Random().nextInt(staticPlayers.length - 1)],
     );
