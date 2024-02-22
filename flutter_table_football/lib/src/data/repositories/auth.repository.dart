@@ -1,4 +1,5 @@
 import 'package:flutter_table_football/src/data/models/player.model.dart';
+import 'package:flutter_table_football/src/data/providers/auth.provider.dart';
 import 'package:flutter_table_football/src/data/providers/players.provider.dart';
 import 'package:flutter_table_football/src/data/storage/auth.storage.dart';
 
@@ -14,7 +15,7 @@ class AuthRepository {
   ///
   /// If something wrong returns null
   static Future<Player?> authenticate(String nickname) async {
-    return PlayersProvider.authenticate(nickname).then((player) async {
+    return AuthProvider.authenticate(nickname).then((player) async {
       if (player != null) {
         await AuthStorage().write(player);
       }

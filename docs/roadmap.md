@@ -1,4 +1,4 @@
-# Planning Roadmap
+# Planning Roadmap for Flutter App
 
 This roadmap outlines the development overview plans for this project. Can and will  change as needed, but should provide a good starting point to understand where we are going with this project.
 
@@ -105,13 +105,13 @@ This roadmap outlines the development overview plans for this project. Can and w
             - [x] Implement auto end game
                 - If the sum of the goals is 9 the game ends automatically.
 
-- [ ] Create User story 4 widgets
-    - [ ] Create List of Players
-    - [ ] Create Player button
-    - [ ] Create form to create Player
-        - [ ] insert name
-        - [ ] Option to check the availability of unique name
-        - [ ] Option to Create
+- [x] Create User story 4 widgets
+    - [x] Create List of Players
+    - [x] Create Player button
+    - [x] Create form to create Player
+        - [x] insert name
+        - [x] Option to check the availability of unique name
+        - [x] Option to Create
 
 - [x] Create User story 5 widgets
     - [x] At form to create Game
@@ -119,32 +119,30 @@ This roadmap outlines the development overview plans for this project. Can and w
         - [x] After that request to insert game result.
         - [x] Create Game
 
-- [ ] Create User story 6 widgets
-    - [ ] Create a simple form that allow the user to identify himself
-        - [ ] input to insert the nickname
-        - [ ] Continue (create or authentication)
+- [x] Create User story 6 widgets
+    - [x] Create a simple form that allow the user to identify himself
+        - [x] input to insert the nickname
+        - [x] Continue (create or authentication)
     - The user is already authenticated
-        - [ ] button to delete account
-        - [ ] input that allow edit the player nickname
+        - [x] button to delete account
+        - [x] input that allow edit the player nickname
 
-- [ ] Implement a local storage system 
-    - [ ] User Story 1
-    - [ ] User Story 2
-    - [ ] User Story 3
-    - [ ] User Story 4
-    - [ ] User Story 5
+- [x] Implement a local storage system 
+    - [x] User Story 6
 
-- [ ] Create a simple way to user identify himself in order to access to private data (like his own teams)
+- [x] Implement error validations in forms
+    - [x] Create Player form
+    - [x] Create Game form
+    - [x] User identification form
 
-- [ ] Implement error validations in forms
-    - [ ] Create Player form
-    - [ ] Create Game form
-    - [ ] User identification form
+- [ ] Connect app to API
+    - [ ] Refactor Player provider
+    - [ ] Refactor Auth provider
+    - [ ] Refactor Team provider
+    - [ ] Refactor Game provider
 
 ## Other Issues that was nice/important to implement
 - [ ] Test
-- [ ] Git hooks
-
 
 ## User Story 1: Create a Team
 Objective: Allow the creation of teams with one or two players.
@@ -264,18 +262,6 @@ This is the US#2 from the requested US.
 8. [Action] Insert the result of the game
 9. [Action] Create game
 10. [Screen] Game page
-
-## Extra information
-
-### Orders
-- Always by asc
-- Games
-    -  Order: by play DateTime
-- Players
-    - Order: by Name
-- Teams
-    - Order: by Name
-
 
 
 

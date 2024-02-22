@@ -15,16 +15,6 @@ class PlayersProvider {
     return const Player(name: "New Player", points: 0);
   }
 
-  /// Request to the API to authenticate a Player and return it as a model if success
-  ///
-  /// If fail returns null
-  static Future<Player?> authenticate(String nickname) async {
-    // TODO Connect to the real API
-    await Future.delayed(const Duration(milliseconds: 500));
-    Player? p = staticPlayers.firstWhereOrNull((element) => element.name.toLowerCase() == nickname);
-    return p;
-  }
-
   /// Request to the API by the full data of a player
   ///
   /// If fail returns null
