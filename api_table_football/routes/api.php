@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\PlayersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,8 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// List all teams
-Route::get('/teams', [TeamController::class, 'index']);
+// Routes only as authenticated user
+Route::prefix('players')->name('players.')->group(function () {
+    // List top player
+    Route::get('/', [PlayersController::class, 'top']);
 
-// Get a specific team by ID
-Route::get('/teams/{id}', [TeamController::class, 'show']);
+    // Get a specific player by nickname
+    Route::get('/{player}', [PlayersController::class, 'show']);
+});

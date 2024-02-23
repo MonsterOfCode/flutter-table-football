@@ -22,6 +22,16 @@ class Player extends Model
         return self::orderBy('points', 'DESC')->take($limit)->get();
     }
 
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'name'; // Custom column name instead of id
+    }
+
 
     /**
      * The teams that belong to the player.

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Player\StorePlayerRequest;
+use App\Http\Resources\Player\PlayerResource;
 use App\Models\Player;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -26,7 +27,20 @@ class PlayersController extends Controller
     public function store(StorePlayerRequest $request)
     {
         $player = Player::create($request->validated());
-        return response()->json($player, 201);
+        return response()->json([
+            'data' => new PlayerResource($player),
+        ], Response::HTTP_CREATED);
+    }
+
+    /**
+     * Get the top players of all time.
+     */
+    public function top()
+    {
+        $list = Player::getTopPlayers();
+        return response()->json([
+            'data' => PlayerResource::collection($list),
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -34,7 +48,9 @@ class PlayersController extends Controller
      */
     public function show(Player $player)
     {
-        //
+        return response()->json([
+            'data' => new PlayerResource($player),
+        ], Response::HTTP_OK);
     }
 
     /**
