@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('teams', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('wins');
-            $table->integer('losses');
-            $table->integer('points');
-            $table->integer('goals_for'); // Goals For
-            $table->integer('goals_against'); // Goals Against
+            $table->integer('wins')->default(0);
+            $table->integer('losses')->default(0);
+            $table->integer('points')->default(0);
+            $table->integer('goals_for')->default(0);
+            $table->integer('goals_against')->default(0);
             $table->timestamps();
         });
     }

@@ -22,6 +22,10 @@ class StorePlayerRequest extends FormRequest
     public function rules(): array
     {
         return [
+            /**
+             * The player nickname.
+             * @var string
+             */
             'name' => 'required|string|max:255|unique:players,name',
         ];
     }

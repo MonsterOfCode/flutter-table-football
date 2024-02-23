@@ -139,17 +139,18 @@ This roadmap outlines the development overview plans for this project. Can and w
 
 - [ ] Create API
     - [ ] authenticate user
-    - [x] Player
+    - [ ] Player
         - [x] Create
         - [x] load full model
         - [x] search
         - [x] check nickname available
         - [x] load top 10
+        - [ ] load top 10 player teams 
     - [ ] Teams
-        - [ ] Create
-        - [ ] load full model
-        - [ ] search
-        - [ ] load top 10
+        - [x] Create
+        - [x] load full model
+        - [x] search
+        - [x] load top 10
         - [ ] load top 10 of a player
      - [ ] Games
         - [ ] Create

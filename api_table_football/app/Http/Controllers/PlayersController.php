@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Player\StorePlayerRequest;
 use App\Http\Resources\Player\PlayerLiteResource;
 use App\Http\Resources\Player\PlayerResource;
+use App\Http\Resources\Team\TeamLiteResource;
 use App\Models\Player;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -19,6 +20,10 @@ class PlayersController extends Controller
     {
 
         $request->validate([
+            /**
+             * The player nickname.
+             * @var string
+             */
             'name' => 'required|string|max:255|unique:players,name',
         ]);
 
@@ -43,6 +48,16 @@ class PlayersController extends Controller
     public function top()
     {
         return PlayerLiteResource::collection(Player::getTopPlayers());
+    }
+
+    /**
+     * List of top teams player.
+     *
+     * @return array<TeamLiteResource>
+     */
+    public function topTeams(Player $player)
+    {
+        return TeamLiteResource::collection($player->topTeams());
     }
 
 
@@ -81,6 +96,10 @@ class PlayersController extends Controller
     public function search(Request $request)
     {
         $request->validate([
+            /**
+             * The string to be used on query.
+             * @var string
+             */
             'query' => 'required|string|max:255',
         ]);
 

@@ -15,8 +15,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $teams = Team::factory(10)->create();
         $players = Player::factory(50)->create();
+        $teams = Team::factory(20)->create();
 
         // For each team, attach 1 or 2 random players
         $teams->each(function ($team) use ($players) {

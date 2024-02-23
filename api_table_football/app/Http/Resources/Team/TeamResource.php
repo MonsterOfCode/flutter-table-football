@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Team;
 
 use App\Http\Resources\GameResource;
+use App\Http\Resources\GamesCollection;
 use App\Http\Resources\Player\PlayerLiteResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -24,8 +25,8 @@ class TeamResource extends JsonResource
             'losses' => $this->losses,
             'goalsFor' => $this->goals_for,
             'goalsAgainst' => $this->goals_against,
-            'players' => PlayerLiteResource::collection($this->players()),
-            'lastGames' => GameResource::collection($this->lastGames()),
+            'players' => PlayerLiteResource::collection($this->players()->get()),
+            'lastGames' => new GamesCollection($this->lastGames(), false),
         ];
     }
 }

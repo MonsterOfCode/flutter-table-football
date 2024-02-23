@@ -33,10 +33,12 @@ class Team extends Model
 
     /**
      * Get the last games for the team.
+     * @param int $limit Number of teams to return.
+     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function lastGames()
+    public function lastGames($limit = 5)
     {
-        return $this->games->latest()->take(5);
+        return $this->homeGames->merge($this->awayGames)->sortByDesc('game_date')->take($limit);
     }
 
     /**
@@ -56,7 +58,7 @@ class Team extends Model
     }
 
     // Combine both home and away games
-    public function games()
+    public function getGamesAttribute()
     {
         return $this->homeGames->merge($this->awayGames);
     }

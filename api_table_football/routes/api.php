@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PlayersController;
+use App\Http\Controllers\TeamsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,10 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Routes only as authenticated user
+
 Route::prefix('players')->name('players.')->group(function () {
-    // List top player
-    Route::get('/', [PlayersController::class, 'top']);
+    // List top players
+    Route::get('/top', [PlayersController::class, 'top']);
+
+    // List top teams of player
+    Route::get('/top/{player}/teams', [PlayersController::class, 'topTeams']);
 
     // Create a player
     Route::post('/new', [PlayersController::class, 'store']);
@@ -25,9 +29,23 @@ Route::prefix('players')->name('players.')->group(function () {
     // Search for a player
     Route::get('/search', [PlayersController::class, 'search']);
 
-    // Search for a player
+    // Check if nickname is available
     Route::get('/nickname', [PlayersController::class, 'checkNickname']);
 
     // Get a specific player by nickname
     Route::get('/{player}', [PlayersController::class, 'show']);
+});
+
+Route::prefix('teams')->name('teams.')->group(function () {
+    // List top teams
+    Route::get('/top', [TeamsController::class, 'top']);
+
+    // Create a Team
+    Route::post('/new', [TeamsController::class, 'store']);
+
+    // Search for a Team
+    Route::get('/search', [TeamsController::class, 'search']);
+
+    // Get a specific team by id
+    Route::get('/{team}', [TeamsController::class, 'show']);
 });

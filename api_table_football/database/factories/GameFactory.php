@@ -28,8 +28,8 @@ class GameFactory extends Factory
         $team_b_score = $this->faker->numberBetween(0, 9 - $team_a_score);
 
         return [
-            'team_a_id' => Team::factory(),
-            'team_b_id' => Team::factory(),
+            'team_a_id' => Team::inRandomOrder()->first()->id,
+            'team_b_id' => Team::inRandomOrder()->first()->id,
             'team_a_score' => $team_a_score,
             'team_b_score' => $team_b_score,
             'done' => $this->faker->boolean,
