@@ -9,7 +9,7 @@ class Player extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'points'];
+    protected $fillable = ['name', 'points', 'wins', 'losses', 'goals_for', 'goals_against'];
 
     /**
      * Get the top players globally based on points.
