@@ -23,7 +23,7 @@ Nickname to authentication:
 4. Run `php artisan key:generate`command
 5. Run `php artisan migrate` command
 6. Set up your database connection on .env file
-7. Run server with `php artisan serve` command
+7. Run server with `php artisan serve` command or if you using Herd just `herd link`
 
 ## [Roadmap](./docs/roadmap.md)
 
@@ -34,3 +34,6 @@ Here there is the packages that i used in this project:
 
 #### Scramble
 This package is based on OpenAPI to generate API documentations
+
+##### Dependencies
+    `doctrine/dbal` package
