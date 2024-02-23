@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Player;
+use App\Models\Team;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,11 +15,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        $teams = Team::factory(10)->create();
+        $players = Player::factory(50)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // For each team, attach 1 or 2 random players
+        $teams->each(function ($team) use ($players) {
+            // Get 1 or 2 random player IDs
+            $randomPlayers = $players->random(rand(1, 2))->pluck('id');
+
+            // Attach the players to the team
+            $team->players()->attach($randomPlayers);
+        });
+
+        $this->call([
+            GamesTableSeeder::class,
+        ]);
     }
 }

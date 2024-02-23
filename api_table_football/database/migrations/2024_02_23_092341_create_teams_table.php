@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('teams', function (Blueprint $table) {
             $table->id();
-            $table->string('Name');
+            $table->string('name');
             $table->integer('wins');
             $table->integer('losses');
             $table->integer('points');
-            $table->integer('GF'); // Goals For
-            $table->integer('GA'); // Goals Against
+            $table->integer('goalsFor'); // Goals For
+            $table->integer('goalsAgainst'); // Goals Against
             $table->timestamps();
         });
     }

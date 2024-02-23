@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Team;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +10,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TeamFactory extends Factory
 {
+
+    protected $model = Team::class;
+
     /**
      * Define the model's default state.
      *
@@ -17,7 +21,12 @@ class TeamFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->unique()->company,
+            'wins' => $this->faker->numberBetween(0, 50),
+            'losses' => $this->faker->numberBetween(0, 50),
+            'points' => $this->faker->numberBetween(0, 1500),
+            'goalsFor' => $this->faker->numberBetween(0, 200),
+            'goalsAgainst' => $this->faker->numberBetween(0, 200),
         ];
     }
 }
