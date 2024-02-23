@@ -32,8 +32,8 @@ class Player extends Model
     /**
      * Get the top teams that the player belongs.
      */
-    public function topTeams()
+    public function topTeams($limit = 5)
     {
-        return $this->teams->orderBy('points', 'DESC');
+        return $this->teams->orderBy('points', 'DESC')->take($limit);
     }
 }

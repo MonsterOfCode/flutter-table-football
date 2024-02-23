@@ -25,22 +25,4 @@ class Game extends Model
     {
         return $this->belongsTo(Team::class, 'team_b_id');
     }
-
-    /**
-     * Get the winning team of the game.
-     *
-     * @return mixed
-     */
-    public function getWinTeamAttribute()
-    {
-        if ($this->team_a_score > $this->team_b_score) {
-            return $this->teamHome;
-        }
-
-        if ($this->team_a_score < $this->team_b_score) {
-            return $this->teamAway;
-        }
-
-        return null; // No team won, it's a tie
-    }
 }
