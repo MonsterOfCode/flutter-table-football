@@ -9,7 +9,7 @@ class Player extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'points'];
 
     /**
      * Get the top players globally based on points.
@@ -46,6 +46,6 @@ class Player extends Model
      */
     public function topTeams($limit = 5)
     {
-        return $this->teams->orderBy('points', 'DESC')->take($limit);
+        return $this->teams()->orderBy('points', 'DESC')->take($limit)->get();
     }
 }

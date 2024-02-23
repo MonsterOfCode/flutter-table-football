@@ -19,6 +19,15 @@ Route::prefix('players')->name('players.')->group(function () {
     // List top player
     Route::get('/', [PlayersController::class, 'top']);
 
+    // Create a player
+    Route::post('/new', [PlayersController::class, 'store']);
+
+    // Search for a player
+    Route::get('/search', [PlayersController::class, 'search']);
+
+    // Search for a player
+    Route::get('/nickname', [PlayersController::class, 'checkNickname']);
+
     // Get a specific player by nickname
     Route::get('/{player}', [PlayersController::class, 'show']);
 });
