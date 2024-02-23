@@ -139,12 +139,12 @@ This roadmap outlines the development overview plans for this project. Can and w
 
 - [ ] Create API
     - [ ] authenticate user
-    - [ ] Player
-        - [ ] Create
-        - [ ] load full model
-        - [ ] search
-        - [ ] check nickname available
-        - [ ] load top 10
+    - [x] Player
+        - [x] Create
+        - [x] load full model
+        - [x] search
+        - [x] check nickname available
+        - [x] load top 10
     - [ ] Teams
         - [ ] Create
         - [ ] load full model
