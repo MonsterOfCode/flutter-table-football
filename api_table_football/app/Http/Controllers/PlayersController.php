@@ -2,33 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Player\StorePlayerRequest;
 use App\Models\Player;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class PlayersController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * check if a nickname is available for new player.
+     * We use the StorePlayerRequest to validate if it's empty or already in use.
      */
-    public function index()
+    public function checkNickname(StorePlayerRequest $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return response()->json([
+            'message' => 'Success',
+        ], Response::HTTP_OK);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePlayerRequest $request)
     {
-        //
+        $player = Player::create($request->validated());
+        return response()->json($player, 201);
     }
 
     /**
