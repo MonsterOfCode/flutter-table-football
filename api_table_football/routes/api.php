@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// List all teams
+Route::get('/teams', [TeamController::class, 'index']);
+
+// Get a specific team by ID
+Route::get('/teams/{id}', [TeamController::class, 'show']);

@@ -37,3 +37,9 @@ This package is based on OpenAPI to generate API documentations
 
 ##### Dependencies
     `doctrine/dbal` package
+
+
+### Decisions
+Some of my decisions about the development of the API and DB
+#### DB
+1. In the Player model, I added fields that could be retrieved through queries to the teams where the player had played. However, this approach would require significantly more processing on the server. To avoid this, considering it's a small amount of data I take this approach. 

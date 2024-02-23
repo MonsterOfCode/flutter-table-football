@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->integer('points');
             $table->integer('wins');
-            $table->integer('ties');
             $table->integer('losses');
             $table->integer('goalsFor');
             $table->integer('goalsAgainst');

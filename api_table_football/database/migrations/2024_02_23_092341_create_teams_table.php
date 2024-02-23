@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('Name');
             $table->integer('wins');
             $table->integer('losses');
-            $table->integer('ties');
             $table->integer('points');
             $table->integer('GF'); // Goals For
             $table->integer('GA'); // Goals Against
