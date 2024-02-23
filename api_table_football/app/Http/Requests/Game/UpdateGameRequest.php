@@ -22,13 +22,37 @@ class UpdateGameRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|exists:games,id',
-            // to avoid any conflicts with other async action
-            // we require the score of each team and the action, -1 => remove, 0, 1 => add
-            'teamAScore' => 'required|integer|min:0',
-            'teamBScore' => 'required|integer|min:0',
-            'teamAScoreAction' => 'sometimes|required|integer|min:-1|max:1',
-            'teamBScoreAction' => 'sometimes|required|integer|min:-1|max:1',
+            /**
+             * to avoid any conflicts with other async action
+             * we require the score of each team and the action:
+             *  -1 to remove, 1 to add and 0 no action
+             * @var int
+             * @example 4
+             */
+            'team_a_score' => 'required|integer|min:0',
+            /**
+             * Same situation of  `teamAScore` but for Team B.
+             * @var int
+             * @example 4
+             */
+            'team_b_score' => 'required|integer|min:0',
+            /**
+             * Is a increment of Team A score
+             * @var int
+             * @example 1
+             */
+            'team_a_action' => 'sometimes|required|integer|min:-1|max:1',
+            /**
+             * No action on Team B
+             * @var int
+             * @example 0
+             */
+            'team_b_action' => 'sometimes|required|integer|min:-1|max:1',
+            /**
+             * If the game is done or not
+             * @var boolean
+             * @example false
+             */
             'done' => 'sometimes|required|boolean',
         ];
     }

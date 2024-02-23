@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GamesController;
 use App\Http\Controllers\PlayersController;
 use App\Http\Controllers\TeamsController;
 use Illuminate\Support\Facades\Route;
@@ -48,4 +49,22 @@ Route::prefix('teams')->name('teams.')->group(function () {
 
     // Get a specific team by id
     Route::get('/{team}', [TeamsController::class, 'show']);
+});
+
+Route::prefix('games')->name('games.')->group(function () {
+    // List top games
+    Route::get('/', [GamesController::class, 'last']);
+
+    // Create a game
+    Route::post('/new', [GamesController::class, 'store']);
+
+    // Update a game
+    Route::put('/{id}', [GamesController::class, 'update']);
+
+
+    // // Search for a game
+    // Route::get('/search', [TeamsController::class, 'search']);
+
+    // Get a specific game by id
+    Route::get('/{game}', [GamesController::class, 'show']);
 });

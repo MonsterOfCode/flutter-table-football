@@ -145,15 +145,16 @@ This roadmap outlines the development overview plans for this project. Can and w
         - [x] search
         - [x] check nickname available
         - [x] load top 10
-        - [ ] load top 10 player teams 
+        - [x] load top 10 player teams 
     - [ ] Teams
         - [x] Create
+            - [ ] protect to avoid create duplicated teams same name and same players
         - [x] load full model
         - [x] search
         - [x] load top 10
-        - [ ] load top 10 of a player
      - [ ] Games
         - [ ] Create
+            - [ ] protect to avoid create duplicated games, based on same teams and same time
         - [ ] search
         - [ ] update
 

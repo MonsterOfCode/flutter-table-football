@@ -2,8 +2,7 @@
 
 namespace App\Http\Resources\Team;
 
-use App\Http\Resources\GameResource;
-use App\Http\Resources\GamesCollection;
+use App\Http\Resources\Game\GamesCollection;
 use App\Http\Resources\Player\PlayerLiteResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;

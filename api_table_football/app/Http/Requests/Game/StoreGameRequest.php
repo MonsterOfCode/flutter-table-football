@@ -22,12 +22,29 @@ class StoreGameRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'teamAId' => 'required|exists:teams,id',
-            'teamBId' => 'required|exists:teams,id|different:team_a_id',
-            'teamAScore' => 'required|integer|min:0',
-            'teamBScore' => 'required|integer|min:0',
+            /**
+             * @example 12
+             */
+            'team_a_id' => 'required|exists:teams,id',
+            /**
+             * @example 7
+             */
+            'team_b_id' => 'required|exists:teams,id|different:team_a_id',
+            /**
+             * @example 5
+             */
+            'team_a_score' => 'required|integer|min:0',
+            /**
+             * @example 4
+             */
+            'team_b_score' => 'required|integer|min:0',
             'done' => 'required|boolean',
-            'gameDate' => 'required|date',
+            /**
+             * Game DataTime.
+             * @var string
+             * @example 23-02-2024 15:30
+             */
+            'game_date' => 'required|date_format:d-m-Y H:i',
         ];
     }
 }

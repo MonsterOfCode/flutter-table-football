@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Game;
 
 use App\Http\Resources\Team\TeamLiteResource;
 use Illuminate\Http\Request;
@@ -10,8 +10,6 @@ class GameResource extends JsonResource
 {
     /**
      * The resource instance.
-     *
-     * @var bool
      */
     protected $includeTeams;
 
@@ -42,7 +40,7 @@ class GameResource extends JsonResource
             'done' => $this->done,
             'gameDate' => $this->game_date,
         ];
-
+        // dd($this->includeTeams);
         if ($this->includeTeams) {
             $response += [
                 'teamA' => new TeamLiteResource($this->teamHome),
