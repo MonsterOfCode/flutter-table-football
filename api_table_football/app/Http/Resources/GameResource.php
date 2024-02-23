@@ -20,10 +20,10 @@ class GameResource extends JsonResource
             'name' => $this->name,
             'teamA' => new TeamLiteResource($this->teamHome()),
             'teamB' => new TeamLiteResource($this->teamAway()),
-            'team_a_score' => $this->team_a_score,
-            'team_b_score' => $this->team_b_score,
+            'teamAScore' => $this->team_a_score,
+            'teamBScore' => $this->team_b_score,
             'done' => $this->done,
-            'game_date' => $this->game_date,
+            'gameDate' => $this->game_date,
         ];
     }
 }

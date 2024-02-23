@@ -9,6 +9,8 @@ class Player extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name'];
+
     /**
      * Get the top players globally based on points.
      *

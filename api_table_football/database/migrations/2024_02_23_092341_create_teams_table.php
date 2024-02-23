@@ -17,8 +17,8 @@ return new class extends Migration
             $table->integer('wins');
             $table->integer('losses');
             $table->integer('points');
-            $table->integer('goalsFor'); // Goals For
-            $table->integer('goalsAgainst'); // Goals Against
+            $table->integer('goals_for'); // Goals For
+            $table->integer('goals_against'); // Goals Against
             $table->timestamps();
         });
     }

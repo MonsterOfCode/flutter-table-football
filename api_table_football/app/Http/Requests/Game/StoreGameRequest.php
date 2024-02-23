@@ -27,7 +27,7 @@ class StoreGameRequest extends FormRequest
             'teamAScore' => 'required|integer|min:0',
             'teamBScore' => 'required|integer|min:0',
             'done' => 'required|boolean',
-            'game_date' => 'required|date',
+            'gameDate' => 'required|date',
         ];
     }
 }

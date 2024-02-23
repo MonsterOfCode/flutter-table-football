@@ -25,8 +25,8 @@ class PlayerFactory extends Factory
             'wins' => $this->faker->numberBetween(0, 50),
             'losses' => $this->faker->numberBetween(0, 50),
             'points' => $this->faker->numberBetween(0, 1500),
-            'goalsFor' => $this->faker->numberBetween(0, 200),
-            'goalsAgainst' => $this->faker->numberBetween(0, 200),
+            'goals_for' => $this->faker->numberBetween(0, 200),
+            'goals_against' => $this->faker->numberBetween(0, 200),
         ];
     }
 }

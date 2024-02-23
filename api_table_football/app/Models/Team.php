@@ -9,6 +9,8 @@ class Team extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'wins', 'losses', 'points', 'goals_for', 'goals_against'];
+
     /**
      * Get the top teams globally based on points.
      *

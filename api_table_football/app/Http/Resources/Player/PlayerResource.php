@@ -20,8 +20,8 @@ class PlayerResource extends JsonResource
             'points' => $this->points,
             'wins' => $this->wins,
             'losses' => $this->losses,
-            'goalsFor' => $this->goalsFor,
-            'goalsAgainst' => $this->goalsAgainst,
+            'goalsFor' => $this->goals_for,
+            'goalsAgainst' => $this->goals_against,
             'topTeams' => TeamLiteResource::collection($this->topTeams()),
         ];
     }
