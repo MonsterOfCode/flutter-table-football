@@ -51,7 +51,7 @@ class DioService {
   /// [tag] - tag used to identify request to allow cancelation of the request
   /// [path] - relative path to the endpoint
   /// [data] - map of data to be sent
-  Future<Response> post(String tag, String path, {Map<String, dynamic>? data}) async {
+  Future<Response?> post(String tag, String path, {Map<String, dynamic>? data}) async {
     _tokens[tag] = CancelToken();
     return await _dio.post(path, data: data, cancelToken: _tokens[tag]).catchError((e) {
       if (CancelToken.isCancel(e)) {

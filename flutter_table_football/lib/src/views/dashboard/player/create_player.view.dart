@@ -35,7 +35,6 @@ class _CreatePlayerViewState extends State<CreatePlayerView> with FormHelper {
       "name": getControllerValue("name").trim().toLowerCase(),
     };
     PlayersRepository.create(data).then((newPlayer) {
-      print(newPlayer);
       if (newPlayer is Player) {
         // navigates to the Team view after create the team
         debugPrint("Player Created successfully");
@@ -101,6 +100,7 @@ class _CreatePlayerViewState extends State<CreatePlayerView> with FormHelper {
                         children: ["Validating the nickname".toText, const CircularProgressIndicator.adaptive()],
                       )
                     : TextFormField(
+                        maxLength: 15,
                         decoration: InputDecoration(
                           errorText: getErrorFor('name'),
                         ),

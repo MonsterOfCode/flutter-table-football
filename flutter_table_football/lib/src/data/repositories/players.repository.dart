@@ -11,7 +11,7 @@ class PlayersRepository {
   static Future<dynamic> create(Map<String, dynamic> data) async {
     try {
       final response = await PlayersProvider.create(data);
-      if (response.statusCode == 201) {
+      if (response != null && response.statusCode == 201) {
         return Player.fromMap(response.data);
       }
       return {'error': 'Unknown error', 'response': response};
@@ -65,7 +65,7 @@ class PlayersRepository {
     }
   }
 
-  static void cancelGetByQuery() => PlayersProvider.cancel("getByQuery");
+  static void cancelGetByQuery() => PlayersProvider.cancel("getByQueryPlayer");
 
   /// Check if a nickname is available
   ///
@@ -108,5 +108,5 @@ class PlayersRepository {
     }
   }
 
-  static void cancelGetTop10() => PlayersProvider.cancel("getTop10");
+  static void cancelGetTop10() => PlayersProvider.cancel("getTop10Player");
 }

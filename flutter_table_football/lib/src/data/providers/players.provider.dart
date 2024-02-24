@@ -5,15 +5,15 @@ const basePath = "/players";
 
 class PlayersProvider {
   /// Request to the API to create a new Player
-  static Future<Response> create(Map<String, dynamic> data) async => DioService().post(
-        "authenticate",
+  static Future<Response?> create(Map<String, dynamic> data) async => DioService().post(
+        "createPlayer",
         "$basePath/new",
         data: data,
       );
 
   /// Request from the API for a list of Players using a query
   static Future<Response?> getByQuery({String query = ''}) async => DioService().get(
-        "getByQuery",
+        "getByQueryPlayer",
         "$basePath/search",
         queryParams: {"query": query},
       );
@@ -27,13 +27,13 @@ class PlayersProvider {
 
   /// Request to the API by the top 10 playersLite
   static Future<Response?> fetchTop10() async => DioService().get(
-        "getTop10",
+        "getTop10Player",
         "$basePath/top",
       );
 
   /// Request to the API by the full data of a player
   static Future<Response?> getByName(String nickname) async => DioService().get(
-        "loadProfile",
+        "loadProfilePlayer",
         "$basePath/$nickname",
       );
 

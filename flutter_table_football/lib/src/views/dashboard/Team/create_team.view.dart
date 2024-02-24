@@ -6,6 +6,7 @@ import 'package:flutter_table_football/src/core/extensions/types/string.extensio
 import 'package:flutter_table_football/src/core/mixins/form_validations.mixin.dart';
 import 'package:flutter_table_football/src/data/models/lite/player_lite.model.dart';
 import 'package:flutter_table_football/src/data/models/player.model.dart';
+import 'package:flutter_table_football/src/data/models/team.model.dart';
 import 'package:flutter_table_football/src/data/repositories/players.repository.dart';
 import 'package:flutter_table_football/src/data/repositories/teams.repository.dart';
 import 'package:flutter_table_football/src/views/dashboard/player/create_player.view.dart';
@@ -34,22 +35,27 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
     // create the team and navigate to the game page
     Map<String, dynamic> data = {
       "name": getControllerValue("name"),
-      "players": _selectedPlayers,
+      "player1": _selectedPlayers.first.name,
+      "player2": _selectedPlayers.last.name,
     };
     TeamsRepository.create(data).then((newTeam) {
-      // navigates to the Team view after create the team
-      debugPrint("Team Created successfully");
-      context.showErrorSnackBar("Team Created successfully!", type: MessageTypes.success);
-      if (widget.isToReturn ?? false) {
-        Navigator.of(context).pop(newTeam);
+      if (newTeam is Team) {
+        // navigates to the Team view after create the team
+        debugPrint("Team Created successfully");
+        context.showErrorSnackBar("Team Created successfully!", type: MessageTypes.success);
+        if (widget.isToReturn ?? false) {
+          Navigator.of(context).pop(newTeam);
+          return;
+        }
+        // is is not to return we take the user to view the created team
+        context.replace(TeamView.routePath, extra: newTeam);
         return;
       }
-      // is is not to return we take the user to view the created team
-      context.replace(TeamView.routePath, extra: newTeam);
+      throw Exception("An error occurred while creating the Team.");
     }).catchError((error) {
       toIdle();
       context.showErrorSnackBar("Ups! Please try later.", type: MessageTypes.error);
-      debugPrint("An error occurred while creating the team : $error");
+      debugPrint("An error occurred while creating the Team : $error");
     });
   }
 
@@ -126,6 +132,7 @@ class _CreateTeamViewState extends State<CreateTeamView> with FormHelper {
             autovalidateMode: autovalidateMode,
             key: formKey,
             child: TextFormField(
+              maxLength: 15,
               validator: (value) => notEmpty(value, msg: "The Team name is required"),
               controller: getController("name"),
               focusNode: getNodeFocus("name"),
