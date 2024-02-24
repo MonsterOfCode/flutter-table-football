@@ -72,20 +72,6 @@ class TeamsController extends Controller
      */
     public function show(Team $team)
     {
-        // this never will happens, because is handled in app/Exceptions/Handler.php on render()
-        // but is to show on api docs
-        if ($team == null) {
-            /**
-             * A Team resource.
-             *
-             * @status 404
-             * @body array{ error: "Team not found"}
-             */
-            return response()->json([
-                'error' => 'Team not found'
-            ], Response::HTTP_NOT_FOUND);
-        }
-
         return new TeamResource($team);
     }
 }

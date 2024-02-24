@@ -138,8 +138,8 @@ This roadmap outlines the development overview plans for this project. Can and w
 - [x] Create web view port
 
 - [ ] Create API
-    - [ ] authenticate user
-    - [ ] Player
+    - [x] authenticate user
+    - [x] Player
         - [x] Create
         - [x] load full model
         - [x] search
@@ -152,11 +152,11 @@ This roadmap outlines the development overview plans for this project. Can and w
         - [x] load full model
         - [x] search
         - [x] load top 10
-     - [ ] Games
-        - [ ] Create
+     - [x] Games
+        - [x] Create
             - [ ] protect to avoid create duplicated games, based on same teams and same time
-        - [ ] search
-        - [ ] update
+        - [x] search
+        - [x] update
 
 - [ ] Connect app to API
     - [ ] Refactor Player provider

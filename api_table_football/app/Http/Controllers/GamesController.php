@@ -8,7 +8,6 @@ use App\Http\Resources\Game\GameResource;
 use App\Http\Resources\Game\GamesCollection;
 use App\Models\Game;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
@@ -63,20 +62,6 @@ class GamesController extends Controller
      */
     public function show(Game $game)
     {
-        // this never will happens, because is handled in app/Exceptions/Handler.php on render()
-        // but is to show on api docs
-        if ($game == null) {
-            /**
-             * A Team resource.
-             *
-             * @status 404
-             * @body array{ error: "Game not found"}
-             */
-            return response()->json([
-                'error' => 'Game not found'
-            ], Response::HTTP_NOT_FOUND);
-        }
-
         return new GameResource($game);
     }
 

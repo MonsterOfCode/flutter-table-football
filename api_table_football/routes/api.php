@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GamesController;
 use App\Http\Controllers\PlayersController;
 use App\Http\Controllers\TeamsController;
@@ -15,6 +16,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+Route::prefix('auth')->name('auth.')->group(function () {
+    // List top players
+    Route::get('/{player}', [AuthController::class, 'authenticate']);
+});
 
 
 Route::prefix('players')->name('players.')->group(function () {

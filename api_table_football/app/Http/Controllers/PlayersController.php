@@ -110,26 +110,11 @@ class PlayersController extends Controller
         return PlayerLiteResource::collection($players);
     }
 
-
     /**
-     * Get a Player resource.
+     * Get a Player resource by nickname.
      */
     public function show(Player $player)
     {
-        // this never will happens, because is handled in app/Exceptions/Handler.php on render()
-        // but is to show on api docs
-        if ($player == null) {
-            /**
-             * A Player resource.
-             *
-             * @status 404
-             * @body array{ error: "Player not found"}
-             */
-            return response()->json([
-                'error' => 'Player not found'
-            ], Response::HTTP_NOT_FOUND);
-        }
-
         return new PlayerResource($player);
     }
 }
