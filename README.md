@@ -18,12 +18,9 @@ This project aims to resolve the issue of table football enthusiasts struggling 
 
 - As a user, I want to see a dashboard with team and individual player statistics so that I can see who is the ultimate champion.
 #
-[View the full project documentation here](./docs/table-football-react-updated.pdf)
+[Full challenge info here](./docs/table-football-react-updated.pdf)
 #
 
 
 ## [Flutter App](./flutter_table_football/README.md)
-
-## Installation and Setup Instructions
-## Getting Started with the Application (Flutter)
 

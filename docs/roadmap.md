@@ -135,26 +135,28 @@ This roadmap outlines the development overview plans for this project. Can and w
     - [x] Create Game form
     - [x] User identification form
 
-- [ ] Create web view port
+- [x] Create web view port
 
 - [ ] Create API
-    - [ ] authenticate user
-    - [ ] Games
-        - [ ] Create
-        - [ ] search
-        - [ ] update
-    - [ ] Player
-        - [ ] Create
-        - [ ] load full model
-        - [ ] search
-        - [ ] check nickname available
-        - [ ] load top 10
+    - [x] authenticate user
+    - [x] Player
+        - [x] Create
+        - [x] load full model
+        - [x] search
+        - [x] check nickname available
+        - [x] load top 10
+        - [x] load top 10 player teams 
     - [ ] Teams
-        - [ ] Create
-        - [ ] load full model
-        - [ ] search
-        - [ ] load top 10
-        - [ ] load top 10 of a player
+        - [x] Create
+            - [ ] protect to avoid create duplicated teams same name and same players
+        - [x] load full model
+        - [x] search
+        - [x] load top 10
+     - [x] Games
+        - [x] Create
+            - [ ] protect to avoid create duplicated games, based on same teams and same time
+        - [x] search
+        - [x] update
 
 - [ ] Connect app to API
     - [ ] Refactor Player provider
