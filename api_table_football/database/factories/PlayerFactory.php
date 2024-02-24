@@ -21,7 +21,7 @@ class PlayerFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name,
+            'name' => $this->faker->userName,
             'wins' => $this->faker->numberBetween(0, 50),
             'losses' => $this->faker->numberBetween(0, 50),
             'points' => $this->faker->numberBetween(0, 1500),
