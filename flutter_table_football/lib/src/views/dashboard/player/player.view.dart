@@ -39,12 +39,20 @@ class _PlayerViewState extends State<PlayerView> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    PlayersRepository.cancelLoadProfile();
+    super.dispose();
+  }
+
   void _requestPlayerProfile() {
     PlayersRepository.loadProfile((widget.player as PlayerLite).name).then((value) {
       if (value == null) {
         context.showErrorSnackBar("Ups! Please try later", type: MessageTypes.error);
         return;
       }
+      if (!mounted) return;
+
       setState(() {
         _player = value;
         _isLoading = false;
@@ -81,7 +89,7 @@ class _PlayerViewState extends State<PlayerView> {
                       width: double.infinity,
                       child: StatsTable(
                         title: "Your best Teams".h3(context).color(context.colorScheme.primary),
-                        future: TeamsRepository.getTopPlayerTeams(_player.name),
+                        future: Future.value(_player.topTeams),
                       ),
                     ),
                   ),

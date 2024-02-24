@@ -3,6 +3,7 @@ import 'package:flutter_table_football/src/core/data/enums/message_types.enum.da
 import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
 import 'package:flutter_table_football/src/core/mixins/form_validations.mixin.dart';
+import 'package:flutter_table_football/src/data/models/player.model.dart';
 import 'package:flutter_table_football/src/data/repositories/players.repository.dart';
 import 'package:flutter_table_football/src/views/dashboard/player/player.view.dart';
 import 'package:flutter_table_football/src/widgets/stepped.dart';
@@ -34,15 +35,20 @@ class _CreatePlayerViewState extends State<CreatePlayerView> with FormHelper {
       "name": getControllerValue("name").trim().toLowerCase(),
     };
     PlayersRepository.create(data).then((newPlayer) {
-      // navigates to the Team view after create the team
-      debugPrint("Player Created successfully");
-      context.showErrorSnackBar("Player Created successfully!", type: MessageTypes.success);
-      if (widget.isToReturn ?? false) {
-        Navigator.of(context).pop(newPlayer);
+      print(newPlayer);
+      if (newPlayer is Player) {
+        // navigates to the Team view after create the team
+        debugPrint("Player Created successfully");
+        context.showErrorSnackBar("Player Created successfully!", type: MessageTypes.success);
+        if (widget.isToReturn ?? false) {
+          Navigator.of(context).pop(newPlayer);
+          return;
+        }
+        // is is not to return we take the user to view the created player
+        context.replace(PlayerView.routePath, extra: newPlayer);
         return;
       }
-      // is is not to return we take the user to view the created player
-      context.replace(PlayerView.routePath, extra: newPlayer);
+      throw Exception("An error occurred while creating the player.");
     }).catchError((error) {
       toIdle();
       context.showErrorSnackBar("Ups! Please try later.", type: MessageTypes.error);
@@ -63,7 +69,6 @@ class _CreatePlayerViewState extends State<CreatePlayerView> with FormHelper {
     toSubmitting();
     PlayersRepository.validateNickname(getControllerValue('name').trim()).then((value) {
       toIdle();
-      //TODO change to http response data type
       if (value is Map<String, dynamic>) {
         addErrorMessage(value["errors"]);
         return;

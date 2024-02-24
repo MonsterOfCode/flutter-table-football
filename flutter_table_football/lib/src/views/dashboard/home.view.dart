@@ -31,6 +31,12 @@ class _HomeViewState extends State<HomeView> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    PlayersRepository.cancelGetTop10();
+    super.dispose();
+  }
+
   void loadPlayer() async {
     setState(() {
       _isLoading = true;
