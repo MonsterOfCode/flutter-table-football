@@ -34,6 +34,7 @@ class _CreatePlayerViewState extends State<CreatePlayerView> with FormHelper {
     Map<String, dynamic> data = {
       "name": getControllerValue("name").trim().toLowerCase(),
     };
+
     PlayersRepository.create(data).then((newPlayer) {
       if (newPlayer is Player) {
         // navigates to the Team view after create the team
