@@ -54,7 +54,7 @@ class _TeamViewState extends State<TeamView> {
   @override
   Widget build(BuildContext context) {
     return GlassScaffold(
-      title: _isLoading ? "Loading..." : _team.name,
+      title: _isLoading ? "Loading..." : _team.name.truncateString(15),
       backgroundPath: 'assets/team/background.jpeg',
       child: _isLoading
           ? const Center(child: CircularProgressIndicator.adaptive())
@@ -116,7 +116,7 @@ class _TeamInfoSection extends StatelessWidget {
                 children: [
                   _TeamInfoItem(
                     title: "Win",
-                    value: "${team.ratio} %",
+                    value: "${team.ratio.toStringAsFixed(2)} %",
                   ),
                 ],
               ),

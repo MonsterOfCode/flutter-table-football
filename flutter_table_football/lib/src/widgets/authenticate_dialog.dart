@@ -30,6 +30,7 @@ class _PlayerDialogState extends State<PlayerDialog> {
 
       context.showConfirmationAlertDialog("No Player founded with this nickname \nDo you want to create a new one?").then((value) {
         setState(() {
+          _isLoading = false;
           // is the value is true is because the user wants to create a user
           if (value) {
             _onCancel();
@@ -62,6 +63,7 @@ class _PlayerDialogState extends State<PlayerDialog> {
         key: _formKey,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: TextFormField(
+          maxLength: 15,
           validator: (value) => FormValidations.notEmpty(value, msg: "The nickname is required"),
           controller: _textController,
           keyboardType: TextInputType.text,

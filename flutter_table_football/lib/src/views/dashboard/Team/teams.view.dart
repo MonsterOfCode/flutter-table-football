@@ -8,8 +8,22 @@ import 'package:flutter_table_football/src/widgets/lists/searchable_list.dart';
 import 'package:flutter_table_football/src/widgets/scaffolds/list_view_scaffold.dart';
 import 'package:go_router/go_router.dart';
 
-class TeamsView extends StatelessWidget {
+/// Screen to show list of teams and search for
+///
+/// Is stateful to allow cancel request when user leaves the screen
+class TeamsView extends StatefulWidget {
   const TeamsView({super.key});
+
+  @override
+  State<TeamsView> createState() => _TeamsViewState();
+}
+
+class _TeamsViewState extends State<TeamsView> {
+  @override
+  void dispose() {
+    TeamsRepository.cancelGetByQuery();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

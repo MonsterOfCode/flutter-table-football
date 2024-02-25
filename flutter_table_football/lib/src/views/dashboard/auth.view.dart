@@ -53,7 +53,7 @@ class AuthView extends StatelessWidget {
                 width: double.infinity,
                 child: StatsTable(
                   title: "Your best Teams".h3(context).color(context.colorScheme.primary),
-                  future: TeamsRepository.getTopPlayerTeams(player.name),
+                  future: Future.value(player.topTeams),
                 ),
               ),
             ),

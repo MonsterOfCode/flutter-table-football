@@ -4,6 +4,7 @@ import 'package:flutter_table_football/src/core/data/enums/message_types.enum.da
 import 'package:flutter_table_football/src/core/extensions/types/context.extension.dart';
 import 'package:flutter_table_football/src/core/extensions/types/string.extension.dart';
 import 'package:flutter_table_football/src/core/mixins/form_validations.mixin.dart';
+import 'package:flutter_table_football/src/data/models/game.model.dart';
 import 'package:flutter_table_football/src/data/models/lite/team_lite.model.dart';
 import 'package:flutter_table_football/src/data/models/team.model.dart';
 import 'package:flutter_table_football/src/data/repositories/games.repository.dart';
@@ -39,15 +40,21 @@ class _CreateGameViewState extends State<CreateGameView> with FormHelper {
     toSubmitting();
     // create the team and navigate to the game page
     Map<String, dynamic> data = {
-      "players": _selectedTeams,
-      "scoreTeamA": _scoreTeamA,
-      "scoreTeamB": _scoreTeamB,
+      "team_a_id": _selectedTeams.first.id,
+      "team_b_id": _selectedTeams.last.id,
+      "team_a_score": _scoreTeamA,
+      "team_b_score": _scoreTeamB,
+      "done": _alreadyFinishedGame,
     };
     GamesRepository.create(data).then((newGame) {
-      // navigates to the Team view after create the team
-      debugPrint("Game Created successfully");
-      context.showErrorSnackBar("Game Created successfully!", type: MessageTypes.success);
-      context.replace(GameView.routePath, extra: newGame);
+      if (newGame is Game) {
+        // navigates to the Team view after create the team
+        debugPrint("Game Created successfully");
+        context.showErrorSnackBar("Game Created successfully!", type: MessageTypes.success);
+        context.replace(GameView.routePath, extra: newGame);
+        return;
+      }
+      throw Exception("An error occurred while creating a game.");
     }).catchError((error) {
       toIdle();
       context.showErrorSnackBar("Ups! Please try later.", type: MessageTypes.error);

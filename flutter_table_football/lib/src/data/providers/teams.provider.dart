@@ -1,53 +1,35 @@
-import 'package:flutter_table_football/src/core/constants/constants.dart';
-import 'package:flutter_table_football/src/core/extensions/types/iterable.extension.dart';
-import 'package:flutter_table_football/src/data/models/lite/team_lite.model.dart';
-import 'package:flutter_table_football/src/data/models/team.model.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter_table_football/src/core/services/dio.service.dart';
+
+const basePath = "/teams";
 
 class TeamsProvider {
-  /// Request to the API to create a new Team and return it as a model if success
-  ///
-  /// If fail returns null
-  static Future<Team?> create(Map<String, dynamic> data) async {
-    // TODO Connect to the real API
-    await Future.delayed(const Duration(milliseconds: 500));
-    return staticTeams.last;
-  }
+  /// Request to the API to create a new Team
+  static Future<Response?> create(Map<String, dynamic> data) async => DioService().post(
+        "createPlayer",
+        "$basePath/new",
+        data: data,
+      );
 
   /// Request to the API by the full data of a Team
-  ///
-  /// If fail returns null
-  static Future<Team?> getById(int id) async {
-    // TODO Connect to the real API
-    await Future.delayed(const Duration(milliseconds: 500));
-    return staticTeams.firstWhereOrNull((element) => element.id == id);
-  }
+  static Future<Response?> getById(int id) async => DioService().get(
+        "getByIdTeam",
+        "$basePath/$id",
+      );
 
   /// Request from the API for a list of Teams using a query
-  ///
-  /// If fail returns null
-  static Future<List<TeamLite>> getByQuery({String query = ''}) async {
-    // TODO Connect to the real API
-    await Future.delayed(const Duration(milliseconds: 500));
-    return staticTeamsLite.where((element) => element.searchable.contains(query)).toList();
-  }
+  static Future<Response?> getByQuery({String query = ''}) async => DioService().get(
+        "getByQueryTeams",
+        "$basePath/search",
+        queryParams: {"query": query},
+      );
 
   /// Request to the API by the top 10 teams
-  ///
-  /// If fail returns an empty List
-  static Future<List<Team>> fetchTop10() async {
-    // TODO Connect to the real API
-    return await Future.delayed(const Duration(milliseconds: 500)).then((value) => staticTeams).catchError((onError) {
-      return List<Team>.empty(growable: true);
-    });
-  }
+  static Future<Response?> fetchTop10() async => DioService().get(
+        "getTop10Teams",
+        "$basePath/top",
+      );
 
-  /// Request to the API by the top [nOfTeams] teams of a player
-  ///
-  /// If fail returns an empty List
-  static Future<List<Team>> fetchTopPlayerTeams(String playerName, int nOfTeams) async {
-    // TODO Connect to the real API
-    return await Future.delayed(const Duration(milliseconds: 500)).then((value) => staticTeams).catchError((onError) {
-      return List<Team>.empty(growable: true);
-    });
-  }
+  /// Cancel the authenticate request
+  static void cancel(String request) async => DioService().cancelRequests(tag: request);
 }

@@ -10,6 +10,7 @@ import 'package:flutter_table_football/src/core/extensions/widgets/text.extensio
 class GlassScaffold extends StatelessWidget {
   final String? title;
   final List<Widget>? actions;
+  final Widget? leading;
   final Widget? child;
   final String backgroundPath;
 
@@ -19,6 +20,7 @@ class GlassScaffold extends StatelessWidget {
     this.child,
     required this.backgroundPath,
     this.actions,
+    this.leading,
   }) : super(key: key);
 
   @override
@@ -30,6 +32,7 @@ class GlassScaffold extends StatelessWidget {
         title: title?.title.color(Colors.white),
         iconTheme: const IconThemeData(color: Colors.white),
         actions: actions,
+        leading: leading,
       ),
       body: Stack(
         children: <Widget>[

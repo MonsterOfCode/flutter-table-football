@@ -23,6 +23,7 @@ class GameView extends StatefulWidget {
 class _GameViewState extends State<GameView> {
   late Game _game;
   bool _isLoading = false;
+  bool _gameUpdated = false;
   int? _idTeamUpdating;
 
   @override
@@ -31,23 +32,47 @@ class _GameViewState extends State<GameView> {
     super.initState();
   }
 
-  void _updateTeamGoals(int teamId, int currentGoals, {bool toIncrement = true}) {
+  void _updateTeamGoals(int teamId, {bool toIncrement = true}) {
     setState(() {
       _isLoading = true;
       _idTeamUpdating = teamId;
     });
-    GamesRepository.updateTeamGoal(_game.id, teamId, currentGoals, toIncrement: toIncrement).then((updatedGame) {
-      setState(() {
-        _game = updatedGame!;
-        _isLoading = false;
-      });
+    int action = toIncrement ? 1 : -1;
+    Map<String, dynamic> data = {
+      "team_a_score": _game.scoreTeamA,
+      "team_b_score": _game.scoreTeamB,
+      "team_a_action": _game.teamA.id == teamId ? action : 0,
+      "team_b_action": _game.teamB.id == teamId ? action : 0,
+    };
+    GamesRepository.updateTeamGoal(_game.id, data).then((updatedGame) {
+      if (!mounted) return;
+      if (updatedGame is Game) {
+        setState(() {
+          _game = updatedGame;
+          _isLoading = false;
+          _gameUpdated = true;
+        });
+        return;
+      }
+      throw Exception("An error occurred while incrementing score in a game.");
     });
   }
 
   void _endGame() {
     context.showConfirmationAlertDialog("Are you sure want to finish the match?").then((response) {
       if (response) {
-        GamesRepository.endGame(_game.id);
+        GamesRepository.endGame(_game.id).then((updatedGame) {
+          if (!mounted) return;
+          if (updatedGame is Game) {
+            setState(() {
+              _game = updatedGame;
+              _isLoading = false;
+              _gameUpdated = true;
+            });
+            return;
+          }
+          throw Exception("An error occurred while finishing a game.");
+        });
       }
     });
   }
@@ -56,6 +81,15 @@ class _GameViewState extends State<GameView> {
   Widget build(BuildContext context) {
     return GlassScaffold(
       title: _game.done ? "Finished" : "Running ⏳",
+      // to allow return a flag when the list must be updated after changes on game models
+      leading: Padding(
+        padding: const EdgeInsets.only(left: 11),
+        child: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () => Navigator.of(context).pop(_gameUpdated ? _game : false),
+          tooltip: 'Go Back',
+        ),
+      ),
       actions: !_game.done
           ? [
               IconButton(
@@ -129,7 +163,7 @@ class _GameInfoTeamItem extends StatelessWidget {
   final TeamLite team;
   final bool isLoading;
   final int teamScore;
-  final void Function(int, int, {bool toIncrement})? onPressed;
+  final void Function(int, {bool toIncrement})? onPressed;
 
   const _GameInfoTeamItem({
     Key? key,
@@ -143,16 +177,16 @@ class _GameInfoTeamItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        team.name.bigTitle(context),
+        team.name.truncateString(5).bigTitle(context),
         if (onPressed != null)
           IconButton(
-            onPressed: () => onPressed!(team.id, teamScore),
+            onPressed: () => onPressed!(team.id),
             icon: isLoading ? const SizedBox(width: 50, height: 50, child: CircularProgressIndicator.adaptive()) : const Icon(Icons.add, color: Colors.white, size: 50),
           ),
         teamScore.toString().bigTitle(context),
         if (onPressed != null)
           IconButton(
-            onPressed: () => onPressed!(team.id, teamScore, toIncrement: false),
+            onPressed: () => onPressed!(team.id, toIncrement: false),
             icon: isLoading ? const SizedBox(width: 50, height: 50, child: CircularProgressIndicator.adaptive()) : const Icon(Icons.remove, color: Colors.white, size: 50),
           ),
       ],

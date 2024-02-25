@@ -1,15 +1,12 @@
-import 'package:flutter_table_football/src/core/constants/constants.dart';
-import 'package:flutter_table_football/src/core/extensions/types/iterable.extension.dart';
-import 'package:flutter_table_football/src/data/models/player.model.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter_table_football/src/core/services/dio.service.dart';
+
+const basePath = "/auth/";
 
 class AuthProvider {
-  /// Request to the API to authenticate a Player and return it as a model if success
-  ///
-  /// If fail returns null
-  static Future<Player?> authenticate(String nickname) async {
-    // TODO Connect to the real API
-    await Future.delayed(const Duration(milliseconds: 500));
-    Player? p = staticPlayers.firstWhereOrNull((element) => element.name.toLowerCase() == nickname);
-    return p;
-  }
+  /// Request to the API to authenticate a Player
+  static Future<Response?> authenticate(String nickname) async => DioService().get("authenticate", "$basePath/$nickname");
+
+  /// Cancel the authenticate request
+  static void cancelAuthenticateRequest() async => DioService().cancelRequests(tag: "cancelAuthenticateRequest");
 }

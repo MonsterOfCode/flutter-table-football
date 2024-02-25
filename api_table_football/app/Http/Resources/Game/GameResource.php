@@ -35,12 +35,12 @@ class GameResource extends JsonResource
     {
         $response = [
             'id' => $this->id,
-            'teamAScore' => $this->team_a_score,
-            'teamBScore' => $this->team_b_score,
-            'done' => $this->done,
+            'scoreTeamA' => $this->team_a_score,
+            'scoreTeamB' => $this->team_b_score,
+            'done' => $this->done == 1,
             'gameDate' => $this->game_date,
         ];
-        // dd($this->includeTeams);
+
         if ($this->includeTeams) {
             $response += [
                 'teamA' => new TeamLiteResource($this->teamHome),

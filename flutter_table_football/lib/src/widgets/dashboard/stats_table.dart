@@ -55,7 +55,7 @@ class StatsTable<T extends Stats> extends StatelessWidget {
                       ],
                     );
                   }
-                  if (snapshot.hasData) {
+                  if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                     // Build and display table rows once data is available
                     final rows = snapshot.data!.asMap().entries.map<DataRow>((entry) {
                       int index = entry.key; // Get the current index
@@ -73,7 +73,7 @@ class StatsTable<T extends Stats> extends StatelessWidget {
                           DataCell(Text(item.matches.toString())),
                           DataCell(Text(item.wins.toString())),
                           DataCell(Text(item.losses.toString())),
-                          DataCell(Text(item.ratio.toString())),
+                          DataCell(Text(item.ratio.toStringAsFixed(2))),
                           DataCell(Text(item.goalsFor.toString())),
                           DataCell(Text(item.goalsAgainst.toString())),
                           DataCell(Text(item.goalsDiference.toString())),

@@ -16,7 +16,7 @@ class PlayerLiteResource extends JsonResource
     {
         return [
             'name' => $this->name,
-            'points' => $this->points,
+            'points' => $this->points ?? 0,
         ];
     }
 }

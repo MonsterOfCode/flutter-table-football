@@ -31,6 +31,13 @@ class _HomeViewState extends State<HomeView> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    PlayersRepository.cancelGetTop10();
+    TeamsRepository.cancelGetTop10();
+    super.dispose();
+  }
+
   void loadPlayer() async {
     setState(() {
       _isLoading = true;
@@ -92,7 +99,7 @@ class _HomeViewState extends State<HomeView> {
                   const SizedBox(height: kSpacingExtraLarge),
                   StatsTable(
                     title: "My best Teams".h3(context).color(context.colorScheme.primary),
-                    future: TeamsRepository.getTopPlayerTeams(_player!.name),
+                    future: Future.value(_player!.topTeams),
                   ),
                   const SizedBox(height: kSpacingLarge)
                 ],
