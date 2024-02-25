@@ -23,8 +23,8 @@ class StoreTeamRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'teamAId' => 'required|exists:teams,id',
-            'teamBId' => 'required|exists:teams,id|different:team_a_id',
+            'player1' => 'required|exists:players,name',
+            'player2' => 'required|exists:players,name|different:player1',
         ];
     }
 }

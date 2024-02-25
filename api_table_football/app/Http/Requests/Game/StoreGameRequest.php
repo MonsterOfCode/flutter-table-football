@@ -39,12 +39,6 @@ class StoreGameRequest extends FormRequest
              */
             'team_b_score' => 'required|integer|min:0',
             'done' => 'required|boolean',
-            /**
-             * Game DataTime.
-             * @var string
-             * @example 23-02-2024 15:30
-             */
-            'game_date' => 'required|date_format:d-m-Y H:i',
         ];
     }
 }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->smallInteger('team_a_score')->default(0);
             $table->smallInteger('team_b_score')->default(0);
             $table->boolean('done')->default(false);
-            $table->date('game_date');
+            $table->dateTime('game_date', $precision = 0);
 
             $table->foreign('team_a_id')->references('id')->on('teams')->onDelete('cascade');
             $table->foreign('team_b_id')->references('id')->on('teams')->onDelete('cascade');

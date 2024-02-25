@@ -19,7 +19,11 @@ class TeamLiteResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'points' => $this->points,
+            'points' => $this->points ?? 0,
+            'wins' => $this->wins ?? 0,
+            'losses' => $this->losses ?? 0,
+            'goalsFor' => $this->goals_for ?? 0,
+            'goalsAgainst' => $this->goals_against ?? 0,
             'players' => PlayerLiteResource::collection($this->players()->get()),
         ];
     }

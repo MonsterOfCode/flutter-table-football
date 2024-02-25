@@ -17,7 +17,7 @@ class Game extends Model
      * @param int $limit Number of top teams to return.
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public static function getLastGames($limit = 10)
+    public static function getLastGames($limit = 20)
     {
         return self::orderBy('game_date', 'DESC')->take($limit)->get();
     }

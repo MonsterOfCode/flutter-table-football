@@ -43,11 +43,11 @@ class PlayersController extends Controller
     /**
      * List of top players.
      *
-     * @return array<PlayerLiteResource>
+     * @return array<PlayerResource>
      */
     public function top()
     {
-        return PlayerLiteResource::collection(Player::getTopPlayers());
+        return PlayerResource::collection(Player::getTopPlayers());
     }
 
     /**
@@ -100,12 +100,17 @@ class PlayersController extends Controller
              * The string to be used on query.
              * @var string
              */
-            'query' => 'required|string|max:255',
+            'query' => 'nullable|string|max:255',
         ]);
 
         $query = $request->input('query');
 
-        $players = Player::where('name', 'LIKE', '%' . $query . '%')->get();
+        if (!empty($query)) {
+            $players = Player::where('name', 'LIKE', '%' . $query . '%')->get();
+        } else {
+            $players = Player::getTopPlayers();
+        }
+
 
         return PlayerLiteResource::collection($players);
     }
