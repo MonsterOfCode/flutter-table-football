@@ -22,5 +22,10 @@ This project aims to resolve the issue of table football enthusiasts struggling 
 #
 
 
+## Web Phone Simulation: [ Here ](https://app.table-football.monsterofcode.com/)
+
+## API documentation: [ Here ](https://api.table-football.monsterofcode.com/docs/api#/)
+
 ## [Flutter App](./flutter_table_football/README.md)
+## [Laravel API](./api_table_football/README.md)
 

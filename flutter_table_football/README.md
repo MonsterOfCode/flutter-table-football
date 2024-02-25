@@ -1,7 +1,7 @@
 # Table Football Coding Challenge
 This is the flutter app for a table football game.
 
-## User Stories
+## Required User Stories
 1. As a user, I want to start a new game between two teams so that I can keep track of score as the game is being played.
 
 2. As a user, I want to create a game that has already been played so that I can enter the result of that game.
@@ -16,20 +16,15 @@ This is the flutter app for a table football game.
 [View the full project documentation here](../docs/table-football-react-updated.pdf)
 #
 
-## Web Phone Simulation: [ Here ](https://monsterofcode.com/table_football_challenge/alpha/)
-Nickname to authentication:
-- player 1
+## API documentation: [ Here ](https://api.table-football.monsterofcode.com/docs/api#/)
 
-## Running instructions:
-1. Clone the repository
-2. On flutter app folder: Flutter pub get
-3. Flutter run 
-4. Select the target device from list
-
+## Web Phone Simulation: [ Here ](https://app.table-football.monsterofcode.com/)
 
 ## [Roadmap](./docs/roadmap.md)
 
 ## About project 
+
+[IMPORTANT] This project was developed and tested on iOS system.
 
 ### Packages
 Here there is the packages that i used in this project:
@@ -43,6 +38,9 @@ Package used to format date times
 #### Shared Preferences
 To save some local data, I chose to use the package shared_preferences, which is the simplest way of saving and retrieving data from local storage. Since the data we need to store in this app involves only small amounts, the package can easily handle the situation and is very simple to use. 
 
+#### Dio
+I chose to use this package for making HTTP requests because it allows for the cancellation of the request if needed.
+
 ### State Manager
 For state management, I chose to use Flutter’s native setState, because it’s already included and can easily handle the state correctly for the current app.
 
@@ -55,8 +53,17 @@ For improved performance during API requests and to reduce the data size loaded 
 ### Authentication
 As it is a simple app that does not contain any sensitive data, for quick implementation, I chose to create a basic system for identifying authenticated users. This identification is based on a nickname that is unique for each player.
 
-### Static Data
-Until the app is connected to an API, it uses static data created to allow the development of features without waiting for server-side implementation. With this static data, it is possible to test all features.
+
+## Prerequisites:
+To run this application you need Flutter SDK installed in your system.
+
+## Running instructions:
+1. Clone the repository
+2. On flutter app folder: Flutter pub get
+3. Flutter run 
+4. Select the target device from list
+
+
 
 ### Folder Structure
 
@@ -74,6 +81,7 @@ Until the app is connected to an API, it uses static data created to allow the d
                 - **widgets/**: Extensions of widgets.
             - **mixins/**: Mixins used in the app.
             - **routes/**: Routes and route manager.
+            - **services/**: Service that handle communication with APIs.
             - **theme/**: Styles and colors for the app.
             - **utils/**: Utility classes.
     - **data/**: Contains all models and data sources handles used in the app.

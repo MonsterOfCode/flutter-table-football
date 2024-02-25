@@ -1,14 +1,9 @@
 # Table Football Coding Challenge
 This is the Laravel API for the table football game.
 
+## API documentation: [ Here ](https://api.table-football.monsterofcode.com/docs/api#/)
 
-#
-[View the full project documentation here](../docs/table-football-react-updated.pdf)
-#
-
-## Web Phone Simulation: [ Here ](https://monsterofcode.com/table_football_challenge/alpha/)
-Nickname to authentication:
-- player 1
+## Web Phone Simulation: [ Here ](https://app.table-football.monsterofcode.com/)
 
 ## Prerequisites:
  * PHP 8.1 or higher
@@ -43,3 +38,8 @@ This package is based on OpenAPI to generate API documentations
 Some of my decisions about the development of the API and DB
 #### DB
 1. In the Player model, I added fields that could be retrieved through queries to the teams where the player had played. However, this approach would require significantly more processing on the server. To avoid this, considering it's a small amount of data I take this approach. 
+
+
+#
+[View the full project documentation here](../docs/table-football-react-updated.pdf)
+#
