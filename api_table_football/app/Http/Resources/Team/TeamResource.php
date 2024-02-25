@@ -19,13 +19,13 @@ class TeamResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'points' => $this->points,
-            'wins' => $this->wins,
-            'losses' => $this->losses,
-            'goalsFor' => $this->goals_for,
-            'goalsAgainst' => $this->goals_against,
+            'points' => $this->points ?? 0,
+            'wins' => $this->wins ?? 0,
+            'losses' => $this->losses ?? 0,
+            'goalsFor' => $this->goals_for ?? 0,
+            'goalsAgainst' => $this->goals_against ?? 0,
             'players' => PlayerLiteResource::collection($this->players()->get()),
-            'lastGames' => new GamesCollection($this->lastGames(), false),
+            'lastGames' => new GamesCollection($this->lastGames()),
         ];
     }
 }

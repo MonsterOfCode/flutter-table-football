@@ -29,25 +29,29 @@ class UpdateGameRequest extends FormRequest
              * @var int
              * @example 4
              */
-            'team_a_score' => 'required|integer|min:0',
+            'team_a_score' => 'sometimes|required|integer|min:0',
+
             /**
              * Same situation of  `teamAScore` but for Team B.
              * @var int
              * @example 4
              */
-            'team_b_score' => 'required|integer|min:0',
+            'team_b_score' => 'sometimes|required|integer|min:0',
+
             /**
              * Is a increment of Team A score
              * @var int
              * @example 1
              */
             'team_a_action' => 'sometimes|required|integer|min:-1|max:1',
+
             /**
              * No action on Team B
              * @var int
              * @example 0
              */
             'team_b_action' => 'sometimes|required|integer|min:-1|max:1',
+
             /**
              * If the game is done or not
              * @var boolean

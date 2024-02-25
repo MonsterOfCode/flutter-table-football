@@ -6,6 +6,7 @@ use App\Http\Requests\Team\StoreTeamRequest;
 use App\Http\Resources\Team\TeamLiteResource;
 use App\Http\Resources\Team\TeamResource;
 use App\Models\Team;
+use App\Models\Player;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -33,7 +34,10 @@ class TeamsController extends Controller
 
         try {
             $team = Team::create($request->validated());
-            $team->players()->attach([$request->teamAId, $request->teamBId]);
+            $player1 = Player::where('name', '=', $request->player1)->first();
+            $player2 = Player::where('name', '=', $request->player2)->first();
+
+            $team->players()->attach([$player1->id, $player2->id]);
 
             // Commit the transaction
             DB::commit();
@@ -57,12 +61,16 @@ class TeamsController extends Controller
     public function search(Request $request)
     {
         $request->validate([
-            'query' => 'required|string|max:255',
+            'query' => 'nullable|string|max:255',
         ]);
 
         $query = $request->input('query');
 
-        $teams = Team::where('name', 'LIKE', '%' . $query . '%')->get();
+        if (!empty($query)) {
+            $teams = Team::where('name', 'LIKE', '%' . $query . '%')->get();
+        } else {
+            $teams = Team::getTopTeams();
+        }
 
         return TeamLiteResource::collection($teams);
     }

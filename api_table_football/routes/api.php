@@ -59,7 +59,7 @@ Route::prefix('teams')->name('teams.')->group(function () {
 
 Route::prefix('games')->name('games.')->group(function () {
     // List top games
-    Route::get('/', [GamesController::class, 'last']);
+    Route::get('/last', [GamesController::class, 'lastGames']);
 
     // Create a game
     Route::post('/new', [GamesController::class, 'store']);

@@ -33,7 +33,7 @@ class GameFactory extends Factory
             'team_a_score' => $team_a_score,
             'team_b_score' => $team_b_score,
             'done' => $this->faker->boolean,
-            'game_date' => $this->faker->dateTimeThisYear(),
+            'game_date' => $this->faker->dateTimeBetween('-2 months', 'now'),
         ];
     }
 }

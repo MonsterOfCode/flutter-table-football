@@ -13,13 +13,17 @@ use Illuminate\Support\Facades\DB;
 
 class GamesController extends Controller
 {
+
     /**
-     * List of top teams.
+     * List of last 20 games.
      *
      * @return array<Game>
      */
-    public function last()
+    public function lastGames()
     {
+        /**
+         * @body array<GameResource>
+         */
         return new GamesCollection(Game::getLastGames());
     }
 
@@ -36,10 +40,14 @@ class GamesController extends Controller
 
             $validated = $request->validated();
 
-            $datetime = Carbon::createFromFormat('d-m-Y H:i', $request->game_date);
+            $datetime = Carbon::now();
             $validated['game_date'] = $datetime;
 
             $game = Game::create($validated);
+
+            if ($game->done) {
+                $game->concludeGame();
+            }
 
             // Commit the transaction
             DB::commit();
@@ -80,14 +88,24 @@ class GamesController extends Controller
 
             $game = Game::findOrFail($id);
 
+            if ($game->done) {
+                return new GameResource($game);
+            }
+
+            $scoreSum = $game->team_a_score + $game->team_b_score;
+
             //if there is an action to team A/Home
             if ($request->team_a_action != 0) {
                 // the received score most be equals to the current from DB
                 if ($game->team_a_score == $request->team_a_score) {
                     if ($request->team_a_action == 1) {
                         $game->increment('team_a_score');
+                        $scoreSum++;
+                        $game->incrementTeamAndPlayersGoals($game->teamHome, 1);
                     } else {
                         $game->decrement('team_a_score');
+                        $scoreSum--;
+                        $game->incrementTeamAndPlayersGoals($game->teamHome, -1);
                     }
                 }
             }
@@ -98,14 +116,20 @@ class GamesController extends Controller
                 if ($game->team_b_score == $request->team_b_score) {
                     if ($request->team_b_action == 1) {
                         $game->increment('team_b_score');
+                        $scoreSum++;
+                        $game->incrementTeamAndPlayersGoals($game->teamAway, 1);
                     } else {
                         $game->decrement('team_b_score');
+                        $scoreSum--;
+                        $game->incrementTeamAndPlayersGoals($game->teamAway, -1);
                     }
                 }
             }
 
-            if ($request->has('done')) {
-                $game->done = $request->done;
+
+            if (($request->has('done') && $request->done == true) || $scoreSum == 9) {
+                $game->done = true;
+                $game->concludeGame();
             }
 
             $game->save();
