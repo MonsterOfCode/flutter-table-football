@@ -2,6 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_table_football/src/core/theme/styles.dart';
 
 extension StringExtension on String {
+  String truncateString(int maxLength) {
+    if (length <= maxLength) {
+      return this;
+    } else {
+      return '${substring(0, maxLength)}...';
+    }
+  }
+
   /// Wraps the string in a Text
   Text get toText {
     return Text(this);

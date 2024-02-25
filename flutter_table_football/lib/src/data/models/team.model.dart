@@ -92,8 +92,10 @@ class Team extends Stats implements Searchable {
 
     // get the players
     List<Game> lastGames = List.empty(growable: true);
-    for (var game in map['lastGames']) {
-      lastGames.add(Game.fromMap(game));
+    if (map.containsKey('lastGames')) {
+      for (var game in map['lastGames']) {
+        lastGames.add(Game.fromMap(game));
+      }
     }
 
     return Team(

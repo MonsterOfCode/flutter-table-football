@@ -17,7 +17,7 @@ class GameListItem extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  game.teamA.name.toText,
+                  game.teamA.name.truncateString(10).toText,
                   const SizedBox(width: 10),
                   "${game.scoreTeamA}".toText,
                 ],
@@ -27,7 +27,7 @@ class GameListItem extends StatelessWidget {
                 children: [
                   "${game.scoreTeamB}".toText,
                   const SizedBox(width: 10),
-                  game.teamB.name.toText,
+                  game.teamB.name.truncateString(10).toText,
                 ],
               ),
             ],

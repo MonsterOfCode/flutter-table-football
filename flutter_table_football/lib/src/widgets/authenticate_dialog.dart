@@ -63,6 +63,7 @@ class _PlayerDialogState extends State<PlayerDialog> {
         key: _formKey,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: TextFormField(
+          maxLength: 15,
           validator: (value) => FormValidations.notEmpty(value, msg: "The nickname is required"),
           controller: _textController,
           keyboardType: TextInputType.text,

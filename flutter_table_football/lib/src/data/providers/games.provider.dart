@@ -1,54 +1,36 @@
-import 'package:flutter_table_football/src/core/constants/constants.dart';
-import 'package:flutter_table_football/src/core/extensions/types/iterable.extension.dart';
-import 'package:flutter_table_football/src/data/models/game.model.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter_table_football/src/core/services/dio.service.dart';
+
+const basePath = "/games";
 
 class GamesProvider {
-  /// Request to the API to create a new Team and return it as a model if success
-  ///
-  /// If fail returns null
-  static Future<Game?> create(Map<String, dynamic> data) async {
-    // TODO Connect to the real API
-    await Future.delayed(const Duration(milliseconds: 500));
-    return staticGames.last;
-  }
+  /// Request to the API to create a new Game
+  static Future<Response?> create(Map<String, dynamic> data) async => DioService().post(
+        "createGame",
+        "$basePath/new",
+        data: data,
+      );
 
-  /// Request from the API for a list of Games using a query
-  ///
-  /// If fail returns null
-  static Future<List<Game>> getByQuery({String query = ''}) async {
-    // TODO Connect to the real API
-    await Future.delayed(const Duration(milliseconds: 500));
-    return staticGames.where((element) => element.searchable.contains(query)).toList();
-  }
+  /// Request from the API for a list of next 10 Games
+  static Future<Response?> getLast20() async => DioService().get(
+        "getLast20Games",
+        "$basePath/last",
+      );
 
   /// Request to the API to add a new goal to a team
-  ///
-  ///Return the game model to update in UI with the new score and other update on new updates
-  ///
-  ///We sent the current score to prevent multiple increments when called
-  ///on diferente devices for the same goal and team
-  ///
-  /// If fail returns null
-  static Future<Game?> updateTeamGoal(int gameId, int teamId, int currentScore, {bool toIncrement = true}) async {
-    // TODO Connect to the real API
-    Game? game = staticGames.firstWhereOrNull((element) => element.id == gameId);
-    if (game != null) {
-      game = game.updateScoreOfTeam(teamId, toIncrement: toIncrement);
-    }
-    return await Future.delayed(const Duration(milliseconds: 500)).then((value) => game);
-  }
+  static Future<Response?> updateTeamGoal(int id, Map<String, dynamic> data) async => DioService().put(
+        "updateTeamGoal",
+        "$basePath/$id",
+        data: data,
+      );
 
   /// Request to the API to finish the game
-  ///
-  ///Return the game model to update in UI with the new score and other update on new updates
-  ///
-  /// If fail returns null
-  static Future<Game?> endGame(int gameId) async {
-    // TODO Connect to the real API
-    Game? game = staticGames.firstWhereOrNull((element) => element.id == gameId);
-    if (game != null) {
-      game = game.copyWith(done: true);
-    }
-    return await Future.delayed(const Duration(milliseconds: 500)).then((value) => game);
-  }
+  static Future<Response?> endGame(int id) async => DioService().put(
+        "endGame",
+        "$basePath/$id",
+        data: {"done": true},
+      );
+
+  /// Cancel the authenticate request
+  static void cancel(String request) async => DioService().cancelRequests(tag: request);
 }

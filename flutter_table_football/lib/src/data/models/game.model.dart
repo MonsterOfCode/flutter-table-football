@@ -97,7 +97,7 @@ class Game implements Searchable {
       teamB: TeamLite.fromMap(map['teamB']),
       scoreTeamA: map['scoreTeamA'] as int,
       scoreTeamB: map['scoreTeamB'] as int,
-      dateTime: DateTime.fromMillisecondsSinceEpoch(map['dateTime'] as int),
+      dateTime: DateTime.parse(map['gameDate']),
       done: map['done'] as bool,
     );
   }
