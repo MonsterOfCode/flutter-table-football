@@ -16,8 +16,8 @@ class AuthRepository {
       }
     }).onError((error, stackTrace) {
       if (error is DioException) {
-        // api returns 404 if no player found
-        if (error.response?.statusCode == 404) {
+        // api returns 404 if no player found or on web can return error.response == null also
+        if (error.response == null || error.response?.statusCode == 404) {
           return null;
         }
         throw error;
