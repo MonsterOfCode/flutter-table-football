@@ -26,7 +26,7 @@ if [ -n "$BRANCH_PATH" ]; then
     mkdir -p $DEPLOY_PATH
     echo "Copying the files..."
     cp -R ./build/web/ $DEPLOY_PATH
-    echo "Navigating to app web folder to make the commit..."
+    cp -R ./web/app.html $DEPLOY_PATH
 
 
 else

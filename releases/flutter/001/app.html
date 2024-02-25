@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="flutter_table_football">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>flutter_table_football</title>
+  <link rel="manifest" href="manifest.json">
+
+  <script>
+    // The value below is injected by flutter build, do not touch.
+    const serviceWorkerVersion = "1200260515";
+  </script>
+  <!-- This script adds the flutter initialization JS code -->
+  <script src="flutter.js" defer></script>
+  <style>
+      .iphone-frame {
+          width: 375px; /* iPhone width */
+          height: 812px; /* iPhone height */
+          background-color: #000;
+          border-radius: 40px; /* Rounded corners */
+          padding: 60px; /* Space for screen content */
+          box-shadow: 0 0 30px rgba(0, 0, 0, 0.5); /* Shadow effect */
+          margin: 0 auto; /* Center horizontally */
+          position: relative;
+          overflow: hidden;
+      }
+      .iphone-frame:before {
+          content: '';
+          display: block;
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          background: #fff;
+          border-radius: 40px;
+          z-index: -1; /* Behind the phone */
+      }
+      .screen-content {
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+          position: absolute;
+          top: 0;
+          left: 0;
+      }
+  </style>
+</head>
+<body>
+  <div class="iphone-frame">
+    <div class="screen-content">
+      <!-- Embed Flutter web app using an iframe -->
+      <iframe src="index.html" frameborder="0" scrolling="no" style="width: 100%; height: 100%;"></iframe>
+    </div>
+  </div>
+</body>
+</html>
