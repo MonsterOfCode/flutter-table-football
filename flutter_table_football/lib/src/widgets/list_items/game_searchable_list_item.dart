@@ -6,57 +6,66 @@ import 'package:flutter_table_football/src/data/models/game.model.dart';
 import 'package:flutter_table_football/src/views/dashboard/game/game.view.dart';
 import 'package:go_router/go_router.dart';
 
-///  Widget to show the game item in the searchable list
-///
-/// This widget is stateful to better render optimizations
-class GameSearchableListItem extends StatefulWidget {
+/// This widget is stateful to update after the model changes on game view and comes back
+class GameListItemWithResult extends StatefulWidget {
   final Game game;
-
-  const GameSearchableListItem({
-    super.key,
-    required this.game,
-  });
+  const GameListItemWithResult({super.key, required this.game});
 
   @override
-  State<GameSearchableListItem> createState() => _GameSearchableListItemState();
+  State<GameListItemWithResult> createState() => _GameListItemWithResultState();
 }
 
-class _GameSearchableListItemState extends State<GameSearchableListItem> {
-  bool isSelected = false;
+class _GameListItemWithResultState extends State<GameListItemWithResult> {
+  Game? game;
+
+  @override
+  void initState() {
+    game = widget.game;
+    super.initState();
+  }
+
+  void navigateToGameView(BuildContext context) {
+    context.pushNamed(GameView.routeName, extra: game).then((value) {
+      // if the user makes changes on game model the list must updates
+      if (value is Game) {
+        setState(() {
+          game = value;
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () => context.pushNamed(GameView.routeName, extra: widget.game),
-      leading: isSelected ? const Icon(Icons.local_play) : null,
+      onTap: () => navigateToGameView(context),
       title: Row(
         children: [
-          Row(
+          Column(
             children: [
               Row(
                 children: [
-                  widget.game.teamA.name.toText,
+                  game!.teamA.name.truncateString(10).toText,
                   const Icon(Icons.close),
-                  widget.game.teamB.name.toText,
+                  game!.teamB.name.truncateString(10).toText,
                 ],
               ),
               const SizedBox(width: kSpacingLarge),
-              widget.game.dateTime.toStringDateTime.note(context),
+              game!.dateTime.toStringDateTime.note(context),
             ],
           ),
           const Spacer(),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              "${widget.game.scoreTeamA}".title,
+              "${game!.scoreTeamA}".title,
               ":".title,
-              "${widget.game.scoreTeamB}".title,
-              if (!widget.game.done) "⏳".toText,
+              "${game!.scoreTeamB}".title,
+              if (!game!.done) "⏳".toText,
             ],
           ),
         ],
       ),
-      selected: isSelected,
     );
   }
 }

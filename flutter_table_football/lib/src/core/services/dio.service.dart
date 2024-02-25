@@ -61,6 +61,21 @@ class DioService {
     });
   }
 
+  /// Put request method with cancellation support
+  ///
+  /// [tag] - tag used to identify request to allow cancelation of the request
+  /// [path] - relative path to the endpoint
+  /// [data] - map of data to be sent
+  Future<Response?> put(String tag, String path, {Map<String, dynamic>? data}) async {
+    _tokens[tag] = CancelToken();
+    return await _dio.put(path, data: data, cancelToken: _tokens[tag]).catchError((e) {
+      if (CancelToken.isCancel(e)) {
+        debugPrint("Request canceled!");
+      }
+      throw e;
+    });
+  }
+
   /// Cancel all the tokens or just one if receives a tag
   ///
   /// [tag] - tag of the request to cancel
