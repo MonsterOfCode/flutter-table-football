@@ -39,10 +39,10 @@ class DioService {
         debugPrint("Request canceled!");
         return null;
       }
+      rethrow;
     } catch (error) {
       rethrow;
     }
-    return null;
   }
 
   /// Post request method with cancellation support
@@ -60,10 +60,10 @@ class DioService {
         debugPrint("Request canceled!");
         return null;
       }
+      rethrow;
     } catch (error) {
       rethrow;
     }
-    return null;
   }
 
   /// Put request method with cancellation support
@@ -81,10 +81,10 @@ class DioService {
         debugPrint("Request canceled!");
         return null;
       }
+      rethrow;
     } catch (error) {
       rethrow;
     }
-    return null;
   }
 
   /// Cancel all the tokens or just one if receives a tag
