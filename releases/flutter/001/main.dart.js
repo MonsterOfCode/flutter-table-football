@@ -91820,7 +91820,9 @@ $S:553}
 A.a1D.prototype={
 $2(a,b){var s
 if(a instanceof A.dy){s=a.b
-if((s==null?null:s.c)===404)return null
+if(s!=null)s=s.c===404
+else s=!0
+if(s)return null
 throw A.c(a)}return null},
 $S:554}
 A.QD.prototype={}
