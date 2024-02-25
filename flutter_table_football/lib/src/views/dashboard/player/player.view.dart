@@ -8,7 +8,6 @@ import 'package:flutter_table_football/src/core/extensions/widgets/widget.extens
 import 'package:flutter_table_football/src/data/models/lite/player_lite.model.dart';
 import 'package:flutter_table_football/src/data/models/player.model.dart';
 import 'package:flutter_table_football/src/data/repositories/players.repository.dart';
-import 'package:flutter_table_football/src/data/repositories/teams.repository.dart';
 import 'package:flutter_table_football/src/widgets/dashboard/stats_table.dart';
 import 'package:flutter_table_football/src/widgets/scaffolds/glass_scaffold.dart';
 
