@@ -80,12 +80,14 @@ class DioService {
   ///
   /// [tag] - tag of the request to cancel
   void cancelRequests({String? tag}) {
-    if (tag != null && _tokens.containsKey(tag)) {
-      _tokens[tag]!.cancel('Cancelled by user');
-      _tokens.remove(tag);
-    } else {
+    if (tag == null) {
       _tokens.values.forEach((element) => element.cancel('All requests was cancelled'));
       _tokens.clear();
+      return;
+    }
+    if (_tokens.containsKey(tag)) {
+      _tokens[tag]!.cancel('Cancelled by user');
+      _tokens.remove(tag);
     }
   }
 }

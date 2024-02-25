@@ -41,7 +41,7 @@ class PlayersRepository {
     return null;
   }
 
-  static void cancelLoadProfile() => PlayersProvider.cancel("getByName");
+  static void cancelLoadProfile() => PlayersProvider.cancel("loadProfilePlayer");
 
   /// Fetch the teams registered on the platform
   ///
