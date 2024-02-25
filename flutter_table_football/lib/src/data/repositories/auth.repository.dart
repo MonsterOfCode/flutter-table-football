@@ -10,7 +10,9 @@ class AuthRepository {
   static Future<Player?> authenticate(String nickname) async {
     return AuthProvider.authenticate(nickname).then((response) async {
       if (response != null && response.statusCode == 200) {
-        return Player.fromMap(response.data["data"]);
+        final Player player = Player.fromMap(response.data["data"]);
+        AuthStorage().write(player);
+        return player;
       }
     }).onError((error, stackTrace) {
       if (error is DioException) {
