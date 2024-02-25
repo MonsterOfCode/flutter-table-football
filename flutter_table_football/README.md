@@ -27,7 +27,7 @@ This is the flutter app for a table football game.
 [IMPORTANT] This project was developed and tested on iOS system.
 
 ### Packages
-Here there is the packages that i used in this project:
+Here are the packages that i used in this project:
 
 #### GoRouter
 GoRouter is a package that allows us to navigate between screens in our app using URLs and route names, which simplifies navigation. I have also used it in other projects, and it meets all the requirements for this project.

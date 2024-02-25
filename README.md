@@ -1,6 +1,6 @@
 # Table Football Coding Challenge
 
-The objective of this project is to develop a solution for a coding challenge that necessitates the creation of an application alongside a service that delivers a REST API.
+The objective of this project is to develop a solution for a coding challenge, which involves creating an application together with a service that provides a REST API.
 
 ## Resume
 This project aims to resolve the issue of table football enthusiasts struggling to keep track of scores and determine the ultimate champion. By developing a simple application, users can monitor scores in real-time, store game results, and view comprehensive statistics.
