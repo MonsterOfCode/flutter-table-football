@@ -65,10 +65,10 @@ class TeamsController extends Controller
         ]);
 
         $query = $request->input('query');
-        
+
         if (!empty($query)) {
             $teams = Team::where('name', 'LIKE', '%' . $query . '%')->get();
-        }else{
+        } else {
             $teams = Team::getTopTeams();
         }
 

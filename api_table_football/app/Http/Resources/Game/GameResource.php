@@ -40,7 +40,7 @@ class GameResource extends JsonResource
             'done' => $this->done == 1,
             'gameDate' => $this->game_date,
         ];
-        
+
         if ($this->includeTeams) {
             $response += [
                 'teamA' => new TeamLiteResource($this->teamHome),

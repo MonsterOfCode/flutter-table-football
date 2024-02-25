@@ -111,7 +111,6 @@ class PlayersController extends Controller
             $players = Player::getTopPlayers();
         }
 
-
         return PlayerLiteResource::collection($players);
     }
 

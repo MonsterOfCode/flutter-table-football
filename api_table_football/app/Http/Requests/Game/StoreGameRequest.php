@@ -26,18 +26,22 @@ class StoreGameRequest extends FormRequest
              * @example 12
              */
             'team_a_id' => 'required|exists:teams,id',
+
             /**
              * @example 7
              */
             'team_b_id' => 'required|exists:teams,id|different:team_a_id',
+
             /**
              * @example 5
              */
             'team_a_score' => 'required|integer|min:0',
+
             /**
              * @example 4
              */
             'team_b_score' => 'required|integer|min:0',
+
             'done' => 'required|boolean',
         ];
     }
