@@ -21,7 +21,7 @@ class TeamFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->unique()->company,
+            'name' => $this->faker->unique()->word,
             'wins' => $this->faker->numberBetween(0, 50),
             'losses' => $this->faker->numberBetween(0, 50),
             'points' => $this->faker->numberBetween(0, 1500),
