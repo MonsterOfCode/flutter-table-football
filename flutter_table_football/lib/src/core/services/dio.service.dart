@@ -31,19 +31,18 @@ class DioService {
   /// [queryParams] - map of params to add to the request
   Future<Response?> get(String tag, String path, {Map<String, dynamic>? queryParams}) async {
     _tokens[tag] = CancelToken();
+
     try {
-      // Attempt the request
       return await _dio.get(path, queryParameters: queryParams, cancelToken: _tokens[tag]);
-    } on DioException catch (e) {
-      // Check if the error is due to cancellation
-      if (CancelToken.isCancel(e)) {
+    } on DioException catch (error) {
+      if (CancelToken.isCancel(error)) {
         debugPrint("Request canceled!");
         return null;
-      } else {
-        // For non-cancellation errors, rethrow them to be handled elsewhere
-        rethrow;
       }
+    } catch (error) {
+      rethrow;
     }
+    return null;
   }
 
   /// Post request method with cancellation support
@@ -53,12 +52,18 @@ class DioService {
   /// [data] - map of data to be sent
   Future<Response?> post(String tag, String path, {Map<String, dynamic>? data}) async {
     _tokens[tag] = CancelToken();
-    return await _dio.post(path, data: data, cancelToken: _tokens[tag]).catchError((e) {
-      if (CancelToken.isCancel(e)) {
+
+    try {
+      return await _dio.post(path, data: data, cancelToken: _tokens[tag]);
+    } on DioException catch (error) {
+      if (CancelToken.isCancel(error)) {
         debugPrint("Request canceled!");
+        return null;
       }
-      throw e;
-    });
+    } catch (error) {
+      rethrow;
+    }
+    return null;
   }
 
   /// Put request method with cancellation support
@@ -80,13 +85,6 @@ class DioService {
       rethrow;
     }
     return null;
-
-    // return await _dio.put(path, data: data, cancelToken: _tokens[tag]).catchError((e) {
-    //   if (CancelToken.isCancel(e)) {
-    //     debugPrint("Request canceled!");
-    //   }
-    //   throw e;
-    // });
   }
 
   /// Cancel all the tokens or just one if receives a tag
